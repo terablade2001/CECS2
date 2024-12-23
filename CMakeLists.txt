@@ -16,5 +16,7 @@ file(GLOB_RECURSE TEST_SOURCE_FILES
 
 add_library(CECS SHARED
   ${LIB_SOURCE_FILES}
-  ${TEST_SOURCE_FILES}
 )
+
+add_executable(CECS_Tests ${TEST_SOURCE_FILES})
+target_link_libraries(CECS_Tests PRIVATE CECS)
