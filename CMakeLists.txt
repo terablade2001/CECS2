@@ -2,6 +2,19 @@ cmake_minimum_required(VERSION 3.30)
 project(CECS)
 
 set(CMAKE_CXX_STANDARD 11)
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/API-Headers)
-add_library(CECS SHARED src/CECS.cpp
-  API-Headers/CECS.hpp)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/unitTests/include/)
+
+file(GLOB_RECURSE LIB_SOURCE_FILES
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
+)
+
+file(GLOB_RECURSE TEST_SOURCE_FILES
+  ${CMAKE_CURRENT_SOURCE_DIR}/unitTests/*.cpp
+)
+
+add_library(CECS SHARED
+  ${LIB_SOURCE_FILES}
+  ${TEST_SOURCE_FILES}
+)

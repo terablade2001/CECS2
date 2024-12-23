@@ -1,17 +1,34 @@
 #pragma once
+// NOLINTBEGIN
+#include <memory>
 #include <string>
+#include <utility>
+#include <mutex>
+#include <memory>
+#include <string>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+#include <fstream>
+#include <sstream>
+#include <cctype>
+#include <cassert>
+// NOLINTEND
 
-class CECS {
+class BaseCECS {
 public:
-  CECS() = delete;
-  explicit CECS(const std::string& modNameStr_ = "", const std::string& ecsNameStr_ = "");
-  CECS(const CECS& obj)  = delete; // No copy constructor.
-  ~CECS();
+  BaseCECS() = delete;
+  BaseCECS(const BaseCECS&) = delete; // Prevent copy
+  BaseCECS& operator=(const BaseCECS&) = delete; // Prevent assignment
+  ~BaseCECS();
 
-  static CECS* getInstance();
+  static BaseCECS* getInstance(const std::string& ecsNameStr_);
+  std::string getECSName() const;
 
 private:
-  static CECS* instancePtr;
+  explicit BaseCECS(std::string ecsNameStr_);
+  static BaseCECS* instancePtr;
   std::string ecsName;
-  std::string modName;
 };
+
