@@ -11,12 +11,12 @@ BaseCECS::~BaseCECS() {
   delete instancePtr;
 }
 
-BaseCECS *BaseCECS::getInstance(const std::string &ecsNameStr_) {
+BaseCECS *BaseCECS::getInstance() {
   static std::mutex instanceMutex; // Ensure thread safety
   std::lock_guard<std::mutex> lock(instanceMutex);
 
   if (instancePtr == nullptr) {
-    instancePtr = new BaseCECS(ecsNameStr_);
+    instancePtr = new BaseCECS("CECS-Default");
   }
   return instancePtr;
 }

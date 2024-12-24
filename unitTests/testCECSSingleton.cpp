@@ -1,15 +1,19 @@
 #include <CECS.hpp>
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include <doctest.h>
-
+#include <TestsDescriptionLogger.hpp>
+#include <cstring>
 
 namespace docTests {
+
   DOCTEST_TEST_SUITE("Basic Operations") {
     TEST_CASE("Test CECS Singleton") {
-      const BaseCECS * ecsPtr = BaseCECS::getInstance("testECS");
+      addTestCase({"Basic Operations", "Test CECS Singleton", __FNAME__, __LINE__});
+      const BaseCECS * ecsPtr = BaseCECS::getInstance();
       CHECK_NE(ecsPtr, nullptr);
-      CHECK_EQ(ecsPtr->getECSName(), "testECS");
+      // Ensure that acquisition of instances, generate at any moment in time
+      // will generate a default name for the instance "CECS-Default". This can
+      // change by one static variable constructor.
+      CHECK_EQ(ecsPtr->getECSName(), "CECS-Default");
     }
   }
-  DOCTEST_TEST_SUITE_END();
+
 }

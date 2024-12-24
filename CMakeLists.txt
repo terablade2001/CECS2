@@ -28,5 +28,7 @@ add_library(CECS SHARED
 )
 target_link_libraries(CECS PUBLIC spdlog::spdlog)
 
-add_executable(CECS_Tests ${TEST_SOURCE_FILES})
+add_executable(CECS_Tests ${TEST_SOURCE_FILES}
+  unitTests/include/TestsDescriptionLogger.hpp
+  unitTests/TestsDescriptionLogger.cpp)
 target_link_libraries(CECS_Tests PRIVATE CECS)

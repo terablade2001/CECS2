@@ -1,4 +1,4 @@
-#include <doctest.h>
+#include <TestsDescriptionLogger.hpp>
 #include <spdlog/spdlog.h>
 
 namespace docTests {

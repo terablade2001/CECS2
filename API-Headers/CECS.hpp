@@ -16,6 +16,13 @@
 #include <cassert>
 // NOLINTEND
 
+// NOLINTBEGIN
+#ifndef __FNAME__
+  #define __FNAMEBSL__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
+  #define __FNAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FNAMEBSL__ )
+#endif
+// NOLINTEND
+
 class BaseCECS {
 public:
   BaseCECS() = delete;
@@ -23,7 +30,7 @@ public:
   BaseCECS& operator=(const BaseCECS&) = delete; // Prevent assignment
   ~BaseCECS();
 
-  static BaseCECS* getInstance(const std::string& ecsNameStr_);
+  static BaseCECS* getInstance();
   std::string getECSName() const;
 
 private:
