@@ -20,11 +20,10 @@ void exportTestCasesToLog(const std::string& filename) {
     std::cerr << "Error: Unable to open file for writing tests documentation: [" << filename << "]" << std::endl;
     return;
   }
-  logFile << "Test Cases Documentation\n";
-  logFile << "=========================\n";
+  logFile << "Test Cases Reference List\n";
+  logFile << "==================================================\n";
   for (const auto& testCase : testCases) {
-    logFile << "["<<testCase.suite<<"]["<<testCase.name<<"]("<<testCase.filename<<": "<<testCase.lineNumber<<")"<<std::endl;
-    logFile << "-------------------------\n";
+    logFile << "["<<testCase.suite<<":: "<<testCase.name<<"]("<<testCase.filename<<": "<<testCase.lineNumber<<")"<<std::endl;
   }
 }
 

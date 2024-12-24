@@ -6,7 +6,7 @@ namespace docTests {
 
   DOCTEST_TEST_SUITE("Basic Operations") {
     TEST_CASE("Test CECS Singleton") {
-      addTestCase({"Basic Operations", "Test CECS Singleton", __FNAME__, __LINE__});
+      LOG_TEST_CASE("Basic Operations", "Test CECS Singleton")
       const BaseCECS * ecsPtr = BaseCECS::getInstance();
       CHECK_NE(ecsPtr, nullptr);
       // Ensure that acquisition of instances, generate at any moment in time

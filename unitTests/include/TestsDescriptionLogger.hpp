@@ -17,7 +17,7 @@ struct TestCaseInfo {
   size_t lineNumber;
 };
 
-#define DOCUMENT_TEST_CASE(suiteName, testName)  addTestCase({suiteName, testName, __FNAME__, __LINE__});
+#define LOG_TEST_CASE(suiteName, testName)  addTestCase({suiteName, testName, __FNAME__, __LINE__});
 
 
 // #define DOCUMENT_TEST_CASE(suiteName, testName)  \
