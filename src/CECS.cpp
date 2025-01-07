@@ -2,25 +2,23 @@
 
 
 
-BaseCECS* BaseCECS::instancePtr = nullptr;
+CECSSingleton CECSSingleton::instance{"CECS-Default"};
 
-BaseCECS::BaseCECS(std::string ecsNameStr_)
-    : ecsName(std::move(ecsNameStr_)) { }
-
-BaseCECS::~BaseCECS() {
-  delete instancePtr;
+CECSSingleton::CECSSingleton(std::string ecsNameStr_)
+    : ecsName(std::move(ecsNameStr_)) {
+  // Initialize Logger.
 }
 
-BaseCECS *BaseCECS::getInstance() {
+CECSSingleton::~CECSSingleton() {
+  // Clean Logger.
+}
+
+CECSSingleton& CECSSingleton::getInstance() {
   static std::mutex instanceMutex; // Ensure thread safety
   std::lock_guard<std::mutex> lock(instanceMutex);
-
-  if (instancePtr == nullptr) {
-    instancePtr = new BaseCECS("CECS-Default");
-  }
-  return instancePtr;
+  return instance;
 }
 
-std::string BaseCECS::getECSName() const {
+std::string CECSSingleton::getECSName() const {
   return ecsName;
 }
