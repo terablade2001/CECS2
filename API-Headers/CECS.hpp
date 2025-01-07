@@ -48,9 +48,9 @@ public:
   explicit CECSSingleton(std::string ecsNameStr_);
 
   static CECSSingleton &getInstance();
-  std::string           getECSName() const;
-  void                  setECSName(const std::string &ecsName_);
-  void                  setECSConfiguration(const CECSConfiguration &config);
+  std::string           getECSName() const noexcept;
+  void                  setECSName(const std::string &ecsName_) noexcept;
+  void                  setECSConfiguration(const CECSConfiguration &config) noexcept(false);
 
 private:
   static CECSSingleton instance;

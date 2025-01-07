@@ -26,11 +26,11 @@ CECSSingleton::~CECSSingleton() {
 
 CECSSingleton &CECSSingleton::getInstance() { return instance; }
 
-std::string CECSSingleton::getECSName() const { return ecsName; }
+std::string CECSSingleton::getECSName() const noexcept { return ecsName; }
 
 void CECSSingleton::setECSName(
     const std::string &ecsName_
-) {
+) noexcept {
   static std::mutex           instanceMutex;
   std::lock_guard<std::mutex> lock(instanceMutex);
   ecsName = ecsName_;
@@ -38,11 +38,10 @@ void CECSSingleton::setECSName(
 
 void CECSSingleton::setECSConfiguration(
     const CECSConfiguration &config
-) {
-  bool err = false;
-  // TODO :: Set the ECS Configuration
-  if (err) {
+) noexcept(false) {
+  if (config.loggerName.empty()) {
     state = State::INTERNAL_ERROR;
-    throw std::runtime_error("Error while setting CECS Configuration!\n" + config.str());
+    throw std::invalid_argument("Logger name can not be empty!");
   }
+  // TODO :: Set the ECS Configuration
 }

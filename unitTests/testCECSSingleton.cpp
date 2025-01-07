@@ -16,6 +16,16 @@ namespace docTests {
         CHECK_EQ(CECS.getECSName(), "Test");
       }
     }
+    TEST_CASE("Configure CECS Singleton") {
+      LOG_TEST_CASE("Basic Operations", "Trying to configure CECS singleton")
+      auto &CECS = CECSSingleton::getInstance();
+
+      CECSConfiguration invalidConfig;
+      invalidConfig.loggerName = "";
+      CHECK_THROWS_AS(CECS.setECSConfiguration(invalidConfig), std::invalid_argument);
+      invalidConfig.loggerName = "SomeName";
+      CHECK_NOTHROW(CECS.setECSConfiguration(invalidConfig));
+    }
   }
 
 } // namespace docTests
