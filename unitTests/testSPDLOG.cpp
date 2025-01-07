@@ -2,7 +2,9 @@
 #include <spdlog/spdlog.h>
 
 namespace docTests {
-  DOCTEST_TEST_SUITE("SPDLOG Tests") {
+  DOCTEST_TEST_SUITE(
+      "SPDLOG Tests"
+  ) {
     TEST_CASE("Test Basic SPDLOG") {
       LOG_TEST_CASE("SPDLOG Tests", "Test Basic SPDLOG")
       // Log a message
@@ -13,5 +15,6 @@ namespace docTests {
       CHECK(true);
     }
   }
+
   DOCTEST_TEST_SUITE_END();
-}
+} // namespace docTests
