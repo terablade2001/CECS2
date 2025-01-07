@@ -4,16 +4,18 @@
 
 namespace docTests {
 
-  DOCTEST_TEST_SUITE("Basic Operations") {
+  DOCTEST_TEST_SUITE(
+      "Basic Operations"
+  ) {
     TEST_CASE("Test CECS Singleton") {
-      LOG_TEST_CASE("Basic Operations", "Test CECS Singleton")
-      auto ECS = CECSSingleton::getInstance();
-      CHECK_NE(ecsPtr, nullptr);
-      // Ensure that acquisition of instances, generate at any moment in time
-      // will generate a default name for the instance "CECS-Default". This can
-      // change by one static variable constructor.
-      CHECK_EQ(ecsPtr->getECSName(), "CECS-Default");
+      LOG_TEST_CASE("Basic Operations", "CECS has default argument")
+      auto &CECS = CECSSingleton::getInstance();
+      CHECK_EQ(CECS.getECSName(), "CECS-Default");
+      SUBCASE("Changing the CECSSingleton name") {
+        CECS.setECSName("Test");
+        CHECK_EQ(CECS.getECSName(), "Test");
+      }
     }
   }
 
-}
+} // namespace docTests

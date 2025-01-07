@@ -28,11 +28,13 @@ public:
   CECSSingleton& operator=(const CECSSingleton&) = delete; // Prevent assignment
   ~CECSSingleton();
 
+  explicit CECSSingleton(std::string ecsNameStr_);
+
   static CECSSingleton& getInstance();
   std::string getECSName() const;
+  void setECSName(const std::string &ecsName_);
 
 private:
-  explicit CECSSingleton(std::string ecsNameStr_);
   static CECSSingleton instance;
   std::string ecsName;
 };

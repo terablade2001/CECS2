@@ -14,11 +14,15 @@ CECSSingleton::~CECSSingleton() {
 }
 
 CECSSingleton& CECSSingleton::getInstance() {
-  static std::mutex instanceMutex; // Ensure thread safety
-  std::lock_guard<std::mutex> lock(instanceMutex);
   return instance;
 }
 
-std::string CECSSingleton::getECSName() const {
-  return ecsName;
+std::string CECSSingleton::getECSName() const { return ecsName; }
+
+void CECSSingleton::setECSName(
+    const std::string &ecsName_
+) {
+  static std::mutex instanceMutex;
+  std::lock_guard<std::mutex> lock(instanceMutex);
+  ecsName = ecsName_;
 }
