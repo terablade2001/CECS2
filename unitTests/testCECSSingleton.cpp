@@ -41,19 +41,21 @@ namespace docTests {
     TEST_CASE("Test CECS Singleton") {
       LOG_TEST_CASE("Basic Operations", "CECS has default argument")
       std::lock_guard<std::mutex> lock(testMutex);
-      auto &CECS = CECSSingleton::getInstance();
+      auto                       &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.getECSName(), "CECS-Default");
       SUBCASE("Changing the CECSSingleton name") {
         CECS.setECSName("Test");
         CHECK_EQ(CECS.getECSName(), "Test");
       }
+      std::remove("CECSLog.log");
     }
 
     TEST_CASE("Configure CECS Singleton") {
       LOG_TEST_CASE("Basic Operations", "Trying to configure CECS singleton")
       std::lock_guard<std::mutex> lock(testMutex);
       SUBCASE("Throw error if logger name provided is empty") {
-        auto             &CECS = CECSSingleton::getInstance();
+        auto &CECS = CECSSingleton::getInstance();
+
         CECSConfiguration invalidConfig;
         invalidConfig.loggerName = "";
         CHECK_THROWS_AS(CECS.setECSConfiguration(invalidConfig), std::invalid_argument);
@@ -71,11 +73,13 @@ namespace docTests {
         CECS.Shutdown();
         int err = remove("TestConfigCECSSingleton.log");
         CHECK_EQ(err, 0);
+        std::remove("CECSLog.log");
       }
       SUBCASE(
           "Check if CECS automatically creates the default file after accessing it's instance"
       ) {
-        std::remove("CECSLog.log");
+        // This ensures that at this moment we don't have any file generated.
+        CHECK_EQ(false, isFileExist("CECSLog.log"));
         {
           auto &CECS = CECSSingleton::getInstance();
           // Modify the default config to test different cases.
