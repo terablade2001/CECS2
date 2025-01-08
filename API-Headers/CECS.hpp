@@ -24,13 +24,10 @@ static_assert(1, "_ERRT macro is already defined...");
 #define CECS_MODULE(moduleName) static CECSModule __ECSOBJ__(moduleName);
 #define CECS_MAIN_MODULE(moduleName, projetName) static CECS __ECSOBJ__(moduleName, projectName);
 
-#define _ECSCLS_                                                                                   \
-  { __ECSOBJ__.clear(); }
-#define _ECSCLS(numberOfLatestRecords)                                                             \
-  { __ECSOBJ__.clear((numberOfLatestRecords)); }
+#define _ECSCLS_ { CECSSingleton::resetNumberOfErrors(); }
+#define _ECSCLS(numberOfLatestRecords) { CECSSingleton::resetNumberOfErrors(numberOfLatestRecords); }
 
-#define _NERR_ (__ECSOBJ__.GetNumberOfErrors())
-#define _NERR(x) (__ECSOBJ__.GetNumberOfErrors(x))
+#define _NERR_ (CECSSingleton::getNumberOfErrors())
 
 #define CECS_MACRO_DISPATCHER(_1, _2, _3, _4, CECS_MACRO_DISPATCH_NAME, ...)                       \
   CECS_MACRO_DISPATCH_NAME

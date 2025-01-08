@@ -20,6 +20,7 @@
 #include <spdlog/logger.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
+
 // NOLINTEND
 
 namespace Logger {
@@ -58,12 +59,16 @@ public:
   void        setConfiguration(const Configuration &config) noexcept(false);
   void        reconfigure() noexcept(false);
   void        logMsg(Logger::L level_, const std::string &log_) const noexcept(false);
-  void        critMsg(const std::string &log_, const std::string& errId = "") const noexcept(false);
+  void        critMsg(const std::string &log_, const std::string &errId = "") noexcept(false);
+
+  static uint32_t getNumberOfErrors() noexcept;
+  static void resetNumberOfErrors(uint32_t reduceValue = std::numeric_limits<uint32_t>::max()) noexcept;
 
 private:
   explicit CECSSingleton(std::string ecsNameStr_);
   static CECSSingleton                   instance;
   std::string                            projectName;
+  static uint32_t                        numberOfRecordedErrors;
   static std::shared_ptr<spdlog::logger> logger;
   static void                            verifyEnumsHaveNotChange() noexcept(false);
 };

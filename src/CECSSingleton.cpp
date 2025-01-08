@@ -3,6 +3,7 @@
 using namespace std;
 
 CECSSingleton              CECSSingleton::instance{"CECS-Default"};
+uint32_t                   CECSSingleton::numberOfRecordedErrors{0};
 shared_ptr<spdlog::logger> CECSSingleton::logger{nullptr};
 
 std::string CECSSingleton::Configuration::str() const {
@@ -201,7 +202,7 @@ void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) cons
   }
 }
 
-void CECSSingleton::critMsg(const std::string &log_, const std::string &errId) const noexcept(false){
+void CECSSingleton::critMsg(const std::string &log_, const std::string &errId)  noexcept(false){
   if (logger == nullptr) {
     throw std::runtime_error(
         "CECS - critMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
@@ -213,10 +214,11 @@ void CECSSingleton::critMsg(const std::string &log_, const std::string &errId) c
     );
   }
 
+  numberOfRecordedErrors++;
+
   if (!errId.empty()) {
     // TODO : Handle the errId via proper mechanism.
   }
-
 
   try {
     logger->log(spdlog::level::critical, log_);
@@ -226,6 +228,20 @@ void CECSSingleton::critMsg(const std::string &log_, const std::string &errId) c
     errMsg += e.what();
     throw std::runtime_error(errMsg);
   }
+}
+
+uint32_t CECSSingleton::getNumberOfErrors() noexcept { return numberOfRecordedErrors; }
+
+void CECSSingleton::resetNumberOfErrors(
+    const uint32_t reduceValue
+) noexcept {
+  static std::mutex           instanceMutex;
+  std::lock_guard<std::mutex> lock(instanceMutex);
+  if (reduceValue >= numberOfRecordedErrors) {
+    numberOfRecordedErrors = 0;
+    return;
+  }
+  numberOfRecordedErrors -= reduceValue;
 }
 
 void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
