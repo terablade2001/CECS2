@@ -57,7 +57,7 @@ public:
   CECSSingleton()                                 = delete;
   CECSSingleton(const CECSSingleton &)            = delete; // Prevent copy
   CECSSingleton &operator=(const CECSSingleton &) = delete; // Prevent assignment
-  ~CECSSingleton();
+  ~CECSSingleton()                                = default;
 
   explicit CECSSingleton(std::string ecsNameStr_);
   void Shutdown();

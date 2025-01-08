@@ -30,8 +30,6 @@ void CECSSingleton::Shutdown() {
   state  = NOT_INIT;
 }
 
-CECSSingleton::~CECSSingleton() {}
-
 CECSSingleton &CECSSingleton::getInstance() { return instance; }
 
 std::string CECSSingleton::getECSName() const noexcept { return ecsName; }
@@ -141,6 +139,5 @@ void CECSSingleton::setECSConfiguration(
     throw e;
   }
 
-  cout << "CECS: Initialized!" << endl;
   state = INIT;
 }
