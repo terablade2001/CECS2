@@ -6,7 +6,7 @@ using namespace std;
 CECSSingleton              CECSSingleton::instance{"CECS-Default"};
 shared_ptr<spdlog::logger> CECSSingleton::logger{nullptr};
 
-std::string CECSConfiguration::str() const {
+std::string CECSSingleton::CECSConfiguration::str() const {
   std::ostringstream os;
   os << "CECSConfiguration:\n"
      << " loggerName: " << loggerName << "\n screenLogLevel: " << static_cast<int>(screenLogLevel)

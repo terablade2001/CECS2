@@ -61,12 +61,12 @@ namespace docTests {
       // Shutdown()
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
-        CECSConfiguration defaultConfig;
+        CECSSingleton::CECSConfiguration defaultConfig;
         CECS.setCECSConfiguration(defaultConfig);
         CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       }
 
-      CECSConfiguration invalidConfig;
+      CECSSingleton::CECSConfiguration invalidConfig;
       invalidConfig.loggerName = "";
       CHECK_THROWS_AS(CECS.setCECSConfiguration(invalidConfig), std::invalid_argument);
       CECS.Shutdown();
@@ -85,12 +85,12 @@ namespace docTests {
       // Shutdown()
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
-        CECSConfiguration defaultConfig;
+        CECSSingleton::CECSConfiguration defaultConfig;
         CECS.setCECSConfiguration(defaultConfig);
         CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       }
 
-      CECSConfiguration invalidConfig;
+      CECSSingleton::CECSConfiguration invalidConfig;
       invalidConfig.loggerName   = "SomeName";
       invalidConfig.logFileName  = "TestConfigCECSSingleton.log";
       invalidConfig.fileLogLevel = 3;
@@ -113,7 +113,7 @@ namespace docTests {
       // Shutdown()
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
-        CECSConfiguration defaultConfig;
+        CECSSingleton::CECSConfiguration defaultConfig;
         CECS.setCECSConfiguration(defaultConfig);
         CECS.state = CECSSingleton::State::INIT;
       }
@@ -136,7 +136,7 @@ namespace docTests {
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
-        CECSConfiguration defaultConfig;
+        CECSSingleton::CECSConfiguration defaultConfig;
         CECS.setCECSConfiguration(defaultConfig);
         CECS.state = CECSSingleton::State::INIT;
       }

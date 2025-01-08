@@ -29,22 +29,7 @@
 // -------------------------------------------------------------------------------------------------
 
 namespace Logger {
-  enum L {
-    TRC = 0, DBG = 1, INFO = 2, WARN = 3, ERR = 4, CRIT = 5, NONE = 6
-  };
-};
-
-struct CECSConfiguration {
-  std::string loggerName{"IL"};
-  uint8_t     screenLogLevel{Logger::L::TRC};
-  uint8_t     fileLogLevel{Logger::L::NONE};
-  std::string logFileName{"CECSLog.log"};
-  uint32_t    logFileMaxSizeBytes{10000};
-  uint8_t     logFileNumOfRotatingFiles{3};
-  bool        useLogCustomFormat{true};
-  std::string logCustomFormat{"(%m/%d %H:%M:%S) [%^%L%$] [t:%t] %v"};
-
-  std::string str() const;
+  enum L { TRC = 0, DBG = 1, INFO = 2, WARN = 3, ERR = 4, CRIT = 5, NONE = 6 };
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -56,7 +41,18 @@ class CECSSingleton {
 public:
   enum State { NOT_INIT, INIT, INTERNAL_ERROR } state{NOT_INIT};
 
-  CECSConfiguration defaultConfiguration;
+  struct CECSConfiguration {
+    std::string loggerName{"IL"};
+    uint8_t     screenLogLevel{Logger::L::TRC};
+    uint8_t     fileLogLevel{Logger::L::NONE};
+    std::string logFileName{"CECSLog.log"};
+    uint32_t    logFileMaxSizeBytes{10000};
+    uint8_t     logFileNumOfRotatingFiles{3};
+    bool        useLogCustomFormat{true};
+    std::string logCustomFormat{"(%m/%d %H:%M:%S) [%^%L%$] [t:%t] %v"};
+
+    std::string str() const;
+  } defaultConfiguration;
 
   CECSSingleton()                                 = delete;
   CECSSingleton(const CECSSingleton &)            = delete; // Prevent copy
