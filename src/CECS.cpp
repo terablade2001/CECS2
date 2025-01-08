@@ -1,4 +1,3 @@
-
 #include <CECS.hpp>
 
 
@@ -10,10 +9,10 @@ shared_ptr<spdlog::logger> CECSSingleton::logger{nullptr};
 std::string CECSConfiguration::str() const {
   std::ostringstream os;
   os << "CECSConfiguration:\n"
-     << " loggerName: " << loggerName << "\n screenLogLevel: " << screenLogLevel
-     << "\n fileLogLevel: " << fileLogLevel << "\n logFileName: " << logFileName
+     << " loggerName: " << loggerName << "\n screenLogLevel: " << static_cast<int>(screenLogLevel)
+     << "\n fileLogLevel: " << static_cast<int>(fileLogLevel) << "\n logFileName: " << logFileName
      << "\n logFileMaxSizeBytes: " << logFileMaxSizeBytes
-     << "\n logFileNumOfRotatingFiles: " << logFileNumOfRotatingFiles
+     << "\n logFileNumOfRotatingFiles: " << static_cast<int>(logFileNumOfRotatingFiles)
      << "\n useLogCustomFormat: " << useLogCustomFormat << "\n logCustomFormat: " << logCustomFormat
      << std::endl;
   return os.str();
@@ -22,7 +21,7 @@ std::string CECSConfiguration::str() const {
 CECSSingleton::CECSSingleton(
     std::string ecsNameStr_
 ) : ecsName(std::move(ecsNameStr_)) {
-  setECSConfiguration(defaultConfiguration);
+  setCECSConfiguration(defaultConfiguration);
 }
 
 void CECSSingleton::Shutdown() {
@@ -36,9 +35,9 @@ CECSSingleton &CECSSingleton::getInstance() noexcept(
   return instance;
 }
 
-std::string CECSSingleton::getECSName() const noexcept { return ecsName; }
+std::string CECSSingleton::getCECSName() const noexcept { return ecsName; }
 
-void CECSSingleton::setECSName(
+void CECSSingleton::setCECSName(
     const std::string &ecsName_
 ) noexcept {
   static std::mutex           instanceMutex;
@@ -46,7 +45,7 @@ void CECSSingleton::setECSName(
   ecsName = ecsName_;
 }
 
-void CECSSingleton::setECSConfiguration(
+void CECSSingleton::setCECSConfiguration(
     const CECSConfiguration &config
 ) noexcept(false) {
   if (state == INTERNAL_ERROR) {
@@ -97,32 +96,32 @@ void CECSSingleton::setECSConfiguration(
     }
 
     // Setup File Log sink -------------------------------------------------------------------------
-    if (config.fileLogLevel > 0) {
+    if (config.fileLogLevel < static_cast<uint8_t>(Logger::L::NONE)) {
       const auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
           config.logFileName.c_str(), config.logFileMaxSizeBytes, config.logFileNumOfRotatingFiles
       );
       switch (config.fileLogLevel) {
-        case (5): {
+        case (static_cast<int>(Logger::L::TRC)): {
           file_sink->set_level(spdlog::level::trace);
           break;
         }
-        case (4): {
+        case (static_cast<int>(Logger::L::DBG)): {
           file_sink->set_level(spdlog::level::debug);
           break;
         }
-        case (3): {
+        case (static_cast<int>(Logger::L::INFO)): {
           file_sink->set_level(spdlog::level::info);
           break;
         }
-        case (2): {
+        case (static_cast<int>(Logger::L::WARN)): {
           file_sink->set_level(spdlog::level::warn);
           break;
         }
-        case (1): {
+        case (static_cast<int>(Logger::L::ERR)): {
           file_sink->set_level(spdlog::level::err);
           break;
         }
-        case (0): {
+        case (static_cast<int>(Logger::L::CRIT)): {
           file_sink->set_level(spdlog::level::critical);
           break;
         }
@@ -147,10 +146,17 @@ void CECSSingleton::setECSConfiguration(
   state = INIT;
 }
 
+void CECSSingleton::reloadCECSConfiguration() noexcept(
+    false
+) {
+  Shutdown();
+  setCECSConfiguration(defaultConfiguration);
+}
+
 void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) const noexcept(false) {
   if (logger == nullptr) {
     throw std::runtime_error(
-        "CECS - logMsg() Failed:: Logger has not initialized. Use setECSConfiguration() ..."
+        "CECS - logMsg() Failed:: Logger has not initialized. Use setCECSConfiguration() ..."
     );
   }
   if (state != INIT) {
@@ -183,10 +189,11 @@ void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) cons
   }
 
   try {
+    cout << "Logging: " << log_ << endl;
     logger->log(spdLogLevel, log_);
   } catch (std::exception &e) {
     string errMsg{
-        "CECS - logMsg() Failed:: Logger has not initialized. Use setECSConfiguration() ..."
+        "CECS - logMsg() Failed:: Logger has not initialized. Use setCECSConfiguration() ..."
     };
     errMsg += e.what();
     throw std::runtime_error(errMsg);
@@ -220,9 +227,7 @@ void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
     isEnumsMatches = false;
   }
 
-  if (!isEnumsMatches) {
-    throw std::invalid_argument(errorMsg);
-  }
+  if (!isEnumsMatches) { throw std::invalid_argument(errorMsg); }
   // NOLINTEND
 }
 

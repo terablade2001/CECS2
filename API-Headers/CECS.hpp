@@ -29,13 +29,15 @@
 // -------------------------------------------------------------------------------------------------
 
 namespace Logger {
-  enum L { CRIT = 5, ERR = 4, WARN = 3, INFO = 2, DBG = 1, TRC = 0 };
+  enum L {
+    TRC = 0, DBG = 1, INFO = 2, WARN = 3, ERR = 4, CRIT = 5, NONE = 6
+  };
 };
 
 struct CECSConfiguration {
   std::string loggerName{"IL"};
-  uint8_t     screenLogLevel{5};
-  uint8_t     fileLogLevel{1};
+  uint8_t     screenLogLevel{Logger::L::TRC};
+  uint8_t     fileLogLevel{Logger::L::NONE};
   std::string logFileName{"CECSLog.log"};
   uint32_t    logFileMaxSizeBytes{10000};
   uint8_t     logFileNumOfRotatingFiles{3};
@@ -65,9 +67,10 @@ public:
   static CECSSingleton &getInstance() noexcept(false);
   void                  Shutdown();
 
-  std::string getECSName() const noexcept;
-  void        setECSName(const std::string &ecsName_) noexcept;
-  void        setECSConfiguration(const CECSConfiguration &config) noexcept(false);
+  std::string getCECSName() const noexcept;
+  void        setCECSName(const std::string &ecsName_) noexcept;
+  void        setCECSConfiguration(const CECSConfiguration &config) noexcept(false);
+  void        reloadCECSConfiguration() noexcept(false);
   void        logMsg(Logger::L level_, const std::string &log_) const noexcept(false);
 
 private:

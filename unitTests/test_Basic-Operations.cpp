@@ -44,10 +44,10 @@ namespace docTests {
       LOG_TEST_CASE("Basic Operations", "Testing that the CECS singleton can be renamed")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-      CHECK_EQ(CECS.getECSName(), "CECS-Default");
+      CHECK_EQ(CECS.getCECSName(), "CECS-Default");
       SUBCASE("Changing the CECSSingleton name") {
-        CECS.setECSName("Test");
-        CHECK_EQ(CECS.getECSName(), "Test");
+        CECS.setCECSName("Test");
+        CHECK_EQ(CECS.getCECSName(), "Test");
       }
       CECS.Shutdown();
       std::remove("CECSLog.log");
@@ -62,13 +62,13 @@ namespace docTests {
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
         CECSConfiguration defaultConfig;
-        CECS.setECSConfiguration(defaultConfig);
+        CECS.setCECSConfiguration(defaultConfig);
         CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       }
 
       CECSConfiguration invalidConfig;
       invalidConfig.loggerName = "";
-      CHECK_THROWS_AS(CECS.setECSConfiguration(invalidConfig), std::invalid_argument);
+      CHECK_THROWS_AS(CECS.setCECSConfiguration(invalidConfig), std::invalid_argument);
       CECS.Shutdown();
       std::remove("CECSLog.log");
     }
@@ -86,7 +86,7 @@ namespace docTests {
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
         CECSConfiguration defaultConfig;
-        CECS.setECSConfiguration(defaultConfig);
+        CECS.setCECSConfiguration(defaultConfig);
         CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       }
 
@@ -94,7 +94,7 @@ namespace docTests {
       invalidConfig.loggerName   = "SomeName";
       invalidConfig.logFileName  = "TestConfigCECSSingleton.log";
       invalidConfig.fileLogLevel = 3;
-      CHECK_NOTHROW(CECS.setECSConfiguration(invalidConfig));
+      CHECK_NOTHROW(CECS.setCECSConfiguration(invalidConfig));
       CHECK_EQ(true, isFileExist(invalidConfig.logFileName));
       CECS.Shutdown();
       int err = remove("TestConfigCECSSingleton.log");
@@ -114,7 +114,7 @@ namespace docTests {
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
         CECSConfiguration defaultConfig;
-        CECS.setECSConfiguration(defaultConfig);
+        CECS.setCECSConfiguration(defaultConfig);
         CECS.state = CECSSingleton::State::INIT;
       }
 
@@ -122,13 +122,35 @@ namespace docTests {
       auto &defaultConfig = CECS.defaultConfiguration;
       if (defaultConfig.fileLogLevel == 0) {
         CHECK_EQ(false, isFileExist(defaultConfig.logFileName));
-      } else if (defaultConfig.fileLogLevel > 0) {
+      } else if (defaultConfig.fileLogLevel < static_cast<uint8_t>(Logger::L::NONE)) {
         CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
         CHECK_EQ(true, isFileExist(defaultConfig.logFileName));
       }
       CECS.Shutdown();
       std::remove("CECSLog.log");
     }
-  }
 
+    TEST_CASE("Test logging with CECS...") {
+      std::lock_guard<std::mutex> lock(testMutex);
+      LOG_TEST_CASE( "Basic Operations", "Basic logging with CECS...")
+      auto &CECS = CECSSingleton::getInstance();
+      CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
+      if (CECS.state == CECSSingleton::State::NOT_INIT) {
+        CECSConfiguration defaultConfig;
+        CECS.setCECSConfiguration(defaultConfig);
+        CECS.state = CECSSingleton::State::INIT;
+      }
+
+      CECS.defaultConfiguration.fileLogLevel = Logger::L::TRC;
+      CHECK_NOTHROW(CECS.reloadCECSConfiguration());
+      CHECK_NOTHROW(CECS.logMsg(Logger::L::TRC, "... Trace Message ... "));
+      CHECK_NOTHROW(CECS.logMsg(Logger::L::DBG, "... Debug Message ... "));
+      CHECK_NOTHROW(CECS.logMsg(Logger::L::INFO, "... Info Message ... "));
+      CHECK_NOTHROW(CECS.logMsg(Logger::L::ERR, "... Error Message ... "));
+      CHECK_NOTHROW(CECS.logMsg(Logger::L::WARN, "... Warning Message ... "));
+
+      CECS.Shutdown();
+      // std::remove("CECSLog.log");
+    }
+  }
 } // namespace docTests
