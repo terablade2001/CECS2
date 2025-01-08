@@ -139,15 +139,15 @@ void CECSSingleton::setECSConfiguration(
     logger = std::make_shared<spdlog::logger>(config.loggerName, sinks.begin(), sinks.end());
     logger->set_level(spdlog::level::trace);
 
-  } catch (std::exception &e) {
+  } catch (std::exception &) {
     state = State::INTERNAL_ERROR;
-    throw e;
+    throw;
   }
 
   state = INIT;
 }
 
-void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) noexcept(false) {
+void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) const noexcept(false) {
   if (logger == nullptr) {
     throw std::runtime_error(
         "CECS - logMsg() Failed:: Logger has not initialized. Use setECSConfiguration() ..."
@@ -196,6 +196,7 @@ void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) noex
 void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
     false
 ) {
+  // NOLINTBEGIN
   bool   isEnumsMatches = true;
   string errorMsg;
   if (static_cast<int8_t>(Logger::L::TRC) != static_cast<int8_t>(spdlog::level::trace)) {
@@ -218,9 +219,11 @@ void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
     errorMsg       = "Logger::L::ERR != ::level::err";
     isEnumsMatches = false;
   }
-  if (!isEnumsMatches) { // NOLINT
+
+  if (!isEnumsMatches) {
     throw std::invalid_argument(errorMsg);
   }
+  // NOLINTEND
 }
 
 // -------------------------------------------------------------------------------------------------
