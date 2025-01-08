@@ -28,6 +28,17 @@
 // NOLINTEND
 // -------------------------------------------------------------------------------------------------
 
+namespace Logger {
+  enum class L : uint8_t {
+    CRIT=5,
+    ERR=4,
+    WARN=3,
+    INFO=2,
+    DBG=1,
+    TRC=0
+  };
+};
+
 
 struct CECSConfiguration {
   std::string loggerName{"IL"};
@@ -51,6 +62,7 @@ struct CECSConfiguration {
 class CECSSingleton {
 public:
   enum State { NOT_INIT, INIT, INTERNAL_ERROR } state{NOT_INIT};
+
 
   CECSConfiguration defaultConfiguration;
 
