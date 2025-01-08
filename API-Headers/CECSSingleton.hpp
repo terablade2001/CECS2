@@ -58,6 +58,7 @@ public:
   void        setConfiguration(const Configuration &config) noexcept(false);
   void        reconfigure() noexcept(false);
   void        logMsg(Logger::L level_, const std::string &log_) const noexcept(false);
+  void        critMsg(const std::string &log_, const std::string& errId = "") const noexcept(false);
 
 private:
   explicit CECSSingleton(std::string ecsNameStr_);

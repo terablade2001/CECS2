@@ -136,9 +136,7 @@ void CECSSingleton::setConfiguration(
 
     logger = std::make_shared<spdlog::logger>(config.loggerName, sinks.begin(), sinks.end());
     logger->set_level(spdlog::level::trace);
-    if (config.useLogCustomFormat) {
-      logger->set_pattern(config.logCustomFormat);
-    }
+    if (config.useLogCustomFormat) { logger->set_pattern(config.logCustomFormat); }
 
   } catch (std::exception &) {
     state = State::INTERNAL_ERROR;
@@ -168,9 +166,12 @@ void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) cons
   }
   spdlog::level::level_enum spdLogLevel;
   switch (level_) {
-    case Logger::CRIT:
-      spdLogLevel = spdlog::level::critical;
-      break;
+    // The logMsg() does not support CRITICAL Logging. Use critMsg() for such logging.
+    // Critical logs, means the system has to abort, and should be handled by the CECS modules via
+    // the critMsg() method.
+    // case Logger::CRIT:
+    //   spdLogLevel = spdlog::level::critical;
+    //   break;
     case Logger::ERR:
       spdLogLevel = spdlog::level::err;
       break;
@@ -191,11 +192,36 @@ void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) cons
   }
 
   try {
-    cout << "Logging: " << log_ << endl;
     logger->log(spdLogLevel, log_);
   } catch (std::exception &e) {
-    string errMsg{
-        "CECS - logMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
+    string errMsg{"CECS - logMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
+    };
+    errMsg += e.what();
+    throw std::runtime_error(errMsg);
+  }
+}
+
+void CECSSingleton::critMsg(const std::string &log_, const std::string &errId) const noexcept(false){
+  if (logger == nullptr) {
+    throw std::runtime_error(
+        "CECS - critMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
+    );
+  }
+  if (state != INIT) {
+    throw std::runtime_error(
+        "CECS - critMsg() Failed:: Logger is in wrong state. Shutdown and reconfigure."
+    );
+  }
+
+  if (!errId.empty()) {
+    // TODO : Handle the errId via proper mechanism.
+  }
+
+
+  try {
+    logger->log(spdlog::level::critical, log_);
+  } catch (std::exception &e) {
+    string errMsg{"CECS - critMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
     };
     errMsg += e.what();
     throw std::runtime_error(errMsg);

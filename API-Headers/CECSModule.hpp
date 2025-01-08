@@ -2,8 +2,6 @@
 #include <CECSSingleton.hpp>
 #include <utility>
 
-
-
 class CECSModule {
   std::string    moduleName;
   CECSSingleton &CECS;
@@ -33,12 +31,12 @@ public:
       const std::string &errId,     // Return Err Id String for the system at exit.
       const char        *msg_,      // String message with format descriptors like printf()
       ...
-  ) const;
+  ) const noexcept(false);
+
   void RecError(
       const char        *fileName_, // __FNAME__ : The filename of the code called
       uint32_t           line_,     // __LINE__ : The line of the coded which was called
       const std::string &errId,     // Return Err Id String for the system at exit.
       const std::string &msg_       // String for the error
-      ...
-  ) const;
+  ) const noexcept(false);
 };
