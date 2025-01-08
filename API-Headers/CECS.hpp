@@ -29,16 +29,8 @@
 // -------------------------------------------------------------------------------------------------
 
 namespace Logger {
-  enum class L : uint8_t {
-    CRIT=5,
-    ERR=4,
-    WARN=3,
-    INFO=2,
-    DBG=1,
-    TRC=0
-  };
+  enum L { CRIT = 5, ERR = 4, WARN = 3, INFO = 2, DBG = 1, TRC = 0 };
 };
-
 
 struct CECSConfiguration {
   std::string loggerName{"IL"};
@@ -63,7 +55,6 @@ class CECSSingleton {
 public:
   enum State { NOT_INIT, INIT, INTERNAL_ERROR } state{NOT_INIT};
 
-
   CECSConfiguration defaultConfiguration;
 
   CECSSingleton()                                 = delete;
@@ -71,16 +62,17 @@ public:
   CECSSingleton &operator=(const CECSSingleton &) = delete; // Prevent assignment
   ~CECSSingleton()                                = default;
 
-  explicit CECSSingleton(std::string ecsNameStr_);
-  void Shutdown();
+  static CECSSingleton &getInstance() noexcept(false);
+  void                  Shutdown();
 
-  static CECSSingleton &getInstance();
-  std::string           getECSName() const noexcept;
-  void                  setECSName(const std::string &ecsName_) noexcept;
-  void                  setECSConfiguration(const CECSConfiguration &config) noexcept(false);
+  std::string getECSName() const noexcept;
+  void        setECSName(const std::string &ecsName_) noexcept;
+  void        setECSConfiguration(const CECSConfiguration &config) noexcept(false);
 
 private:
+  explicit CECSSingleton(std::string ecsNameStr_);
   static CECSSingleton                   instance;
   std::string                            ecsName;
   static std::shared_ptr<spdlog::logger> logger;
+  static void                            verifyEnumsHaveNotChange() noexcept(false);
 };

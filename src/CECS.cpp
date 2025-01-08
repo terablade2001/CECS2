@@ -30,7 +30,9 @@ void CECSSingleton::Shutdown() {
   state  = NOT_INIT;
 }
 
-CECSSingleton &CECSSingleton::getInstance() { return instance; }
+CECSSingleton &CECSSingleton::getInstance() noexcept(
+    false
+) { return instance; }
 
 std::string CECSSingleton::getECSName() const noexcept { return ecsName; }
 
@@ -54,6 +56,7 @@ void CECSSingleton::setECSConfiguration(
   }
 
   try {
+    verifyEnumsHaveNotChange();
     std::vector<spdlog::sink_ptr> sinks;
 
     // Setup console sink --------------------------------------------------------------------------
@@ -140,4 +143,34 @@ void CECSSingleton::setECSConfiguration(
   }
 
   state = INIT;
+}
+
+void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
+    false
+) {
+  bool   isEnumsMatches = true;
+  string errorMsg;
+  if (static_cast<int8_t>(Logger::L::TRC) != static_cast<int8_t>(spdlog::level::trace)) {
+    errorMsg       = "Logger::L::TRC != ::level::trace";
+    isEnumsMatches = false;
+  }
+  if (static_cast<int8_t>(Logger::L::DBG) != static_cast<int8_t>(spdlog::level::debug)) {
+    errorMsg       = "Logger::L::DBG != ::level::debug";
+    isEnumsMatches = false;
+  }
+  if (static_cast<int8_t>(Logger::L::INFO) != static_cast<int8_t>(spdlog::level::info)) {
+    errorMsg       = "Logger::L::INFO != ::level::info";
+    isEnumsMatches = false;
+  }
+  if (static_cast<int8_t>(Logger::L::WARN) != static_cast<int8_t>(spdlog::level::warn)) {
+    errorMsg       = "Logger::L::WARN != ::level::warn";
+    isEnumsMatches = false;
+  }
+  if (static_cast<int8_t>(Logger::L::ERR) != static_cast<int8_t>(spdlog::level::err)) {
+    errorMsg       = "Logger::L::ERR != ::level::err";
+    isEnumsMatches = false;
+  }
+  if (!isEnumsMatches) { // NOLINT
+    throw std::invalid_argument(errorMsg);
+  }
 }
