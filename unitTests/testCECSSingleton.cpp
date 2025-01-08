@@ -25,6 +25,7 @@
 
 namespace docTests {
   static std::mutex testMutex;
+  using namespace std;
 
   bool isFileExist(
       const std::string &filepath_
@@ -38,22 +39,25 @@ namespace docTests {
   DOCTEST_TEST_SUITE(
       "Basic Operations"
   ) {
-    TEST_CASE("Test CECS Singleton") {
-      LOG_TEST_CASE("Basic Operations", "CECS has default argument")
+    TEST_CASE("Renaming the CECS Singleton") {
       std::lock_guard<std::mutex> lock(testMutex);
-      auto                       &CECS = CECSSingleton::getInstance();
-      CHECK_EQ(CECS.getECSName(), "CECS-Default");
-      SUBCASE("Changing the CECSSingleton name") {
-        CECS.setECSName("Test");
-        CHECK_EQ(CECS.getECSName(), "Test");
+      LOG_TEST_CASE("Basic Operations", "Testing that the CECS singleton can be renamed")
+      //.
+      {
+        auto &CECS = CECSSingleton::getInstance();
+        CHECK_EQ(CECS.getECSName(), "CECS-Default");
+        SUBCASE("Changing the CECSSingleton name") {
+          CECS.setECSName("Test");
+          CHECK_EQ(CECS.getECSName(), "Test");
+        }
+        CECS.Shutdown();
       }
       std::remove("CECSLog.log");
     }
 
-    TEST_CASE("Configure CECS Singleton") {
-      LOG_TEST_CASE("Basic Operations", "Trying to configure CECS singleton")
+    TEST_CASE("Configure CECS Singleton with no name should throw") {
       std::lock_guard<std::mutex> lock(testMutex);
-      SUBCASE("Throw error if logger name provided is empty") {
+      LOG_TEST_CASE("Basic Operations", "Configure CECS Singleton with no name should throw") {
         auto &CECS = CECSSingleton::getInstance();
 
         CECSConfiguration invalidConfig;
@@ -61,8 +65,17 @@ namespace docTests {
         CHECK_THROWS_AS(CECS.setECSConfiguration(invalidConfig), std::invalid_argument);
         CECS.Shutdown();
       }
-      SUBCASE("Work and enforce generation of logger file") {
-        remove("TestConfigCECSSingleton.log");
+      std::remove("CECSLog.log");
+    }
+
+    TEST_CASE("Confirm CECS Singleton generates custom log file after reConfigured") {
+      std::lock_guard<std::mutex> lock(testMutex);
+      LOG_TEST_CASE(
+          "Basic Operations", "Confirm CECS Singleton generates custom log file after reConfigured"
+      )
+      //.
+      remove("TestConfigCECSSingleton.log");
+      {
         auto             &CECS = CECSSingleton::getInstance();
         CECSConfiguration invalidConfig;
         invalidConfig.loggerName   = "SomeName";
@@ -71,27 +84,31 @@ namespace docTests {
         CHECK_NOTHROW(CECS.setECSConfiguration(invalidConfig));
         CHECK_EQ(true, isFileExist(invalidConfig.logFileName));
         CECS.Shutdown();
-        int err = remove("TestConfigCECSSingleton.log");
-        CHECK_EQ(err, 0);
-        std::remove("CECSLog.log");
       }
-      SUBCASE(
-          "Check if CECS automatically creates the default file after accessing it's instance"
-      ) {
-        // This ensures that at this moment we don't have any file generated.
-        CHECK_EQ(false, isFileExist("CECSLog.log"));
-        {
-          auto &CECS = CECSSingleton::getInstance();
-          // Modify the default config to test different cases.
-          auto &defaultConfig = CECS.defaultConfiguration;
-          if (defaultConfig.fileLogLevel == 0) {
-            CHECK_EQ(false, isFileExist(defaultConfig.logFileName));
-          } else if (defaultConfig.fileLogLevel > 0) {
-            CHECK_EQ(true, isFileExist(defaultConfig.logFileName));
-          }
+      int err = remove("TestConfigCECSSingleton.log");
+      CHECK_EQ(err, 0);
+      std::remove("CECSLog.log");
+    }
+
+    TEST_CASE("Test if CECS Singleton Generates or Not the default file based on default config") {
+      std::lock_guard<std::mutex> lock(testMutex);
+      LOG_TEST_CASE(
+          "Basic Operations",
+          "Test if CECS Singleton Generates or Not the default file based on default config"
+      )
+      {
+        auto &CECS = CECSSingleton::getInstance();
+        // Modify the default config to test different cases.
+        auto &defaultConfig = CECS.defaultConfiguration;
+        if (defaultConfig.fileLogLevel == 0) {
+          CHECK_EQ(false, isFileExist(defaultConfig.logFileName));
+        } else if (defaultConfig.fileLogLevel > 0) {
+          CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
+          CHECK_EQ(true, isFileExist(defaultConfig.logFileName));
         }
-        std::remove("CECSLog.log");
+        CECS.Shutdown();
       }
+      std::remove("CECSLog.log");
     }
   }
 
