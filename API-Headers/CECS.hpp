@@ -68,6 +68,7 @@ public:
   std::string getECSName() const noexcept;
   void        setECSName(const std::string &ecsName_) noexcept;
   void        setECSConfiguration(const CECSConfiguration &config) noexcept(false);
+  void        logMsg(Logger::L level_, const std::string &log_) noexcept(false);
 
 private:
   explicit CECSSingleton(std::string ecsNameStr_);

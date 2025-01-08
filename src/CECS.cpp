@@ -32,7 +32,9 @@ void CECSSingleton::Shutdown() {
 
 CECSSingleton &CECSSingleton::getInstance() noexcept(
     false
-) { return instance; }
+) {
+  return instance;
+}
 
 std::string CECSSingleton::getECSName() const noexcept { return ecsName; }
 
@@ -145,6 +147,52 @@ void CECSSingleton::setECSConfiguration(
   state = INIT;
 }
 
+void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) noexcept(false) {
+  if (logger == nullptr) {
+    throw std::runtime_error(
+        "CECS - logMsg() Failed:: Logger has not initialized. Use setECSConfiguration() ..."
+    );
+  }
+  if (state != INIT) {
+    throw std::runtime_error(
+        "CECS - logMsg() Failed:: Logger is in wrong state. Shutdown and reconfigure."
+    );
+  }
+  spdlog::level::level_enum spdLogLevel;
+  switch (level_) {
+    case Logger::CRIT:
+      spdLogLevel = spdlog::level::critical;
+      break;
+    case Logger::ERR:
+      spdLogLevel = spdlog::level::err;
+      break;
+    case Logger::WARN:
+      spdLogLevel = spdlog::level::warn;
+      break;
+    case Logger::INFO:
+      spdLogLevel = spdlog::level::info;
+      break;
+    case Logger::DBG:
+      spdLogLevel = spdlog::level::debug;
+      break;
+    case Logger::TRC:
+      spdLogLevel = spdlog::level::trace;
+      break;
+    default:
+      throw std::invalid_argument("CECS - logMsg() Failed:: Invalid log level");
+  }
+
+  try {
+    logger->log(spdLogLevel, log_);
+  } catch (std::exception &e) {
+    string errMsg{
+        "CECS - logMsg() Failed:: Logger has not initialized. Use setECSConfiguration() ..."
+    };
+    errMsg += e.what();
+    throw std::runtime_error(errMsg);
+  }
+}
+
 void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
     false
 ) {
@@ -174,3 +222,5 @@ void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
     throw std::invalid_argument(errorMsg);
   }
 }
+
+// -------------------------------------------------------------------------------------------------
