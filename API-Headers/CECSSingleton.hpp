@@ -1,0 +1,73 @@
+#pragma once
+// NOLINTBEGIN
+#include <memory>
+#include <string>
+#include <utility>
+#include <cstdint>
+#include <mutex>
+#include <memory>
+#include <string>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+#include <fstream>
+#include <sstream>
+#include <cctype>
+#include <cassert>
+#include <ostream>
+#include <spdlog/common.h>
+#include <spdlog/logger.h>
+#include <spdlog/sinks/rotating_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+
+#ifndef __FNAME__
+#define __FNAMEBSL__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
+#define __FNAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FNAMEBSL__)
+#endif
+// NOLINTEND
+
+namespace Logger {
+  enum L { TRC = 0, DBG = 1, INFO = 2, WARN = 3, ERR = 4, CRIT = 5, NONE = 6 };
+};
+
+// -------------------------------------------------------------------------------------------------
+
+class CECSSingleton {
+public:
+  enum State { NOT_INIT, INIT, INTERNAL_ERROR } state{NOT_INIT};
+
+  struct Configuration {
+    std::string loggerName{"IL"};
+    uint8_t     screenLogLevel{Logger::L::TRC};
+    uint8_t     fileLogLevel{Logger::L::NONE};
+    std::string logFileName{"CECSLog.log"};
+    uint32_t    logFileMaxSizeBytes{10000};
+    uint8_t     logFileNumOfRotatingFiles{3};
+    bool        useLogCustomFormat{true};
+    std::string logCustomFormat{"(%m/%d %H:%M:%S) [%^%L%$] [t:%t] %v"};
+
+    std::string str() const;
+  } configuration;
+
+  CECSSingleton()                                 = delete;
+  CECSSingleton(const CECSSingleton &)            = delete; // Prevent copy
+  CECSSingleton &operator=(const CECSSingleton &) = delete; // Prevent assignment
+  ~CECSSingleton()                                = default;
+
+  static CECSSingleton &getInstance() noexcept(false);
+  void                  Shutdown();
+
+  std::string getProjectName() const noexcept;
+  void        setProjectName(const std::string &projectName_) noexcept;
+  void        setConfiguration(const Configuration &config) noexcept(false);
+  void        reconfigure() noexcept(false);
+  void        logMsg(Logger::L level_, const std::string &log_) const noexcept(false);
+
+private:
+  explicit CECSSingleton(std::string ecsNameStr_);
+  static CECSSingleton                   instance;
+  std::string                            projectName;
+  static std::shared_ptr<spdlog::logger> logger;
+  static void                            verifyEnumsHaveNotChange() noexcept(false);
+};

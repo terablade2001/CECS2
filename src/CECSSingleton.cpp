@@ -1,5 +1,4 @@
-#include <CECS.hpp>
-
+#include <CECSSingleton.hpp>
 
 using namespace std;
 
