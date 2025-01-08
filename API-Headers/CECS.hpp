@@ -41,9 +41,8 @@ struct CECSConfiguration {
   std::string logFileName{"CECSLog.log"};
   uint32_t    logFileMaxSizeBytes{10000};
   uint8_t     logFileNumOfRotatingFiles{3};
-  bool        useLogCustomFormat{false};
-  // TODO:: Update teh default Custom Format to something more desired
-  std::string logCustomFormat{"[%H:%M:%S] [%^%L%$] [%t] %v"};
+  bool        useLogCustomFormat{true};
+  std::string logCustomFormat{"(%m/%d %H:%M:%S) [%^%L%$] [t:%t] %v"};
 
   std::string str() const;
 };

@@ -137,6 +137,9 @@ void CECSSingleton::setCECSConfiguration(
 
     logger = std::make_shared<spdlog::logger>(config.loggerName, sinks.begin(), sinks.end());
     logger->set_level(spdlog::level::trace);
+    if (config.useLogCustomFormat) {
+      logger->set_pattern(config.logCustomFormat);
+    }
 
   } catch (std::exception &) {
     state = State::INTERNAL_ERROR;
