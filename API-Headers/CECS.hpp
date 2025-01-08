@@ -32,7 +32,7 @@
 struct CECSConfiguration {
   std::string loggerName{"IL"};
   uint8_t     screenLogLevel{5};
-  uint8_t     fileLogLevel{0};
+  uint8_t     fileLogLevel{1};
   std::string logFileName{"CECSLog.log"};
   uint32_t    logFileMaxSizeBytes{10000};
   uint8_t     logFileNumOfRotatingFiles{3};
@@ -57,7 +57,7 @@ public:
   CECSSingleton()                                 = delete;
   CECSSingleton(const CECSSingleton &)            = delete; // Prevent copy
   CECSSingleton &operator=(const CECSSingleton &) = delete; // Prevent assignment
-  ~CECSSingleton();
+  ~CECSSingleton()                                = default;
 
   explicit CECSSingleton(std::string ecsNameStr_);
   void Shutdown();

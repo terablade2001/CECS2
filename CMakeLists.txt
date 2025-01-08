@@ -1,6 +1,15 @@
 cmake_minimum_required(VERSION 3.30)
 project(CECS)
 
+#set(CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
+#if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+#  message(STATUS "*** ENABLING COVERAGE ***")
+#  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g --coverage -ftest-coverage -fprofile-arcs")
+#  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g --coverage -ftest-coverage -fprofile-arcs")
+#  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage -ftest-coverage -fprofile-arcs")
+#  set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} --coverage -ftest-coverage -fprofile-arcs")
+#endif()
+
 set(CMAKE_CXX_STANDARD 11)
 
 include(FetchContent)

@@ -30,8 +30,6 @@ void CECSSingleton::Shutdown() {
   state  = NOT_INIT;
 }
 
-CECSSingleton::~CECSSingleton() { }
-
 CECSSingleton &CECSSingleton::getInstance() { return instance; }
 
 std::string CECSSingleton::getECSName() const noexcept { return ecsName; }
@@ -54,9 +52,9 @@ void CECSSingleton::setECSConfiguration(
     state = State::INTERNAL_ERROR;
     throw std::invalid_argument("Logger name can not be empty!");
   }
+
   try {
     std::vector<spdlog::sink_ptr> sinks;
-
 
     // Setup console sink --------------------------------------------------------------------------
     const auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
