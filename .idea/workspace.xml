@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BackendCodeEditorMiscSettings">
+    <option name="/Default/RiderDebugger/RiderRestoreDecompile/RestoreDecompileSetting/@EntryValue" value="false" type="bool" />
+    <option name="/Default/Housekeeping/GlobalSettingsUpgraded/IsUpgraded/@EntryValue" value="true" type="bool" />
+    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
+    <option name="/Default/Environment/Hierarchy/GeneratedFilesCacheKey/Timestamp/@EntryValue" value="8" type="long" />
+    <option name="/Default/Housekeeping/OptionsDialog/SelectedPageId/@EntryValue" value="RiderCppLiveTemplatesSettings" type="string" />
+    <option name="/Default/Environment/UserInterface/HierarchyView/ViewStyle/@EntryValue" value="SuperTypes" type="string" />
+    <option name="/Default/CodeEditing/CppDocumentationComment/AddBriefTag/@EntryValue" value="true" type="bool" />
+    <option name="/Default/PatternsAndTemplates/LiveTemplates/Template/=C9FF77DADED1ED479ED88A7387B13006/Scope/=B00B630CDFF6594A940959346BAC420E/@KeyIndexDefined" value="true" type="bool" />
+    <option name="/Default/PatternsAndTemplates/LiveTemplates/Template/=C9FF77DADED1ED479ED88A7387B13006/Scope/=B00B630CDFF6594A940959346BAC420E/Type/@EntryValue" value="InPlaceApplicableForClassDeclaration" type="string" />
+    <option name="/Default/PatternsAndTemplates/LiveTemplates/Template/=C9FF77DADED1ED479ED88A7387B13006/Description/@EntryValue" value="Struct declaration" type="string" />
+    <option name="/Default/PatternsAndTemplates/LiveTemplates/Template/=C9FF77DADED1ED479ED88A7387B13006/Applicability/=Live/@EntryIndexedValue" value="true" type="bool" />
+    <option name="/Default/PatternsAndTemplates/LiveTemplates/Template/=C9FF77DADED1ED479ED88A7387B13006/Shortcut/@EntryValue" value="struct" type="string" />
+    <option name="/Default/PatternsAndTemplates/LiveTemplates/Template/=C9FF77DADED1ED479ED88A7387B13006/Scope/=2BA3EB57D316654FB23BF757F7C2AC89/@KeyIndexDefined" value="true" type="bool" />
+    <option name="/Default/PatternsAndTemplates/LiveTemplates/Template/=C9FF77DADED1ED479ED88A7387B13006/Field/=NAME/@KeyIndexDefined" value="true" type="bool" />
+    <option name="/Default/PatternsAndTemplates/LiveTemplates/Template/=C9FF77DADED1ED479ED88A7387B13006/ShortenQualifiedReferences/@EntryValue" value="true" type="bool" />
+    <option name="/Default/PatternsAndTemplates/LiveTemplates/Template/=C9FF77DADED1ED479ED88A7387B13006/Scope/=2BA3EB57D316654FB23BF757F7C2AC89/Type/@EntryValue" value="InCppClass" type="string" />
+    <option name="/Default/PatternsAndTemplates/LiveTemplates/Template/=C9FF77DADED1ED479ED88A7387B13006/Text/@EntryValue" value="class $NAME$ {public:$END$};" type="string" />
+    <option name="/Default/PatternsAndTemplates/LiveTemplates/Template/=C9FF77DADED1ED479ED88A7387B13006/Reformat/@EntryValue" value="true" type="bool" />
+    <option name="/Default/PatternsAndTemplates/LiveTemplates/Template/=C9FF77DADED1ED479ED88A7387B13006/Field/=NAME/Expression/@EntryValue" value="constant(&quot;my_class&quot;)" type="string" />
+    <option name="/Default/PatternsAndTemplates/LiveTemplates/Template/=C9FF77DADED1ED479ED88A7387B13006/Field/=NAME/Order/@EntryValue" value="0" type="long" />
+    <option name="/Default/CodeEditing/CppCodeGeneration/EmptyCtorsAndDtorsBodyKind/@EntryValue" value="Empty" type="string" />
+    <option name="/Default/Housekeeping/RefactoringsMru/RenameRefactoring/DoSearchForTextInStrings/@EntryValue" value="true" type="bool" />
+  </component>
+  <component name="BookmarksViewState">
+    <option name="autoscrollToSource" value="true" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeProjectFlavorService">
+    <option name="flavorId" value="CMakePlainProjectFlavor" />
+  </component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="CECS" targetName="CECS" />
+      <config projectName="CECS" targetName="CECS_Tests" />
+      <config projectName="CECS" targetName="spdlog" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Release-TDM-MinGW-64" ENABLED="true" CONFIG_NAME="Release" TOOLCHAIN_NAME="TDM-MinGW-64" GENERATION_OPTIONS="-G &quot;MinGW Makefiles&quot;" />
+      <configuration PROFILE_NAME="Debug-Coverage" ENABLED="true" CONFIG_NAME="Debug" TOOLCHAIN_NAME="TDM-MinGW-64" GENERATION_OPTIONS="-G &quot;MinGW Makefiles&quot; -DCMAKE_CXX_OUTPUT_EXTENSION_REPLACE=1 -DCMAKE_CXX_FLAGS=&quot;-g --coverage -ftest-coverage -fprofile-arcs&quot; -DCMAKE_C_FLAGS=&quot;-g --coverage -ftest-coverage -fprofile-arcs&quot; -DCMAKE_EXE_LINKER_FLAGS=&quot;-g --coverage -ftest-coverage -fprofile-arcs&quot; -DCMAKE_SHARED_LINKER_FLAGS=&quot;-g --coverage -ftest-coverage -fprofile-arcs&quot;" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="96ff6be1-98c0-4672-9605-394c8eedfe23" name="Changes" comment="(0.10)[I#2]:">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Release-TDM-MinGW-64" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/API-Headers/CECS.hpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/CECS.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/unitTests/TestsDescriptionLogger.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/unitTests/include/TestsDescriptionLogger.hpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/unitTests/testCECSSingleton.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/unitTests/testSPDLOG.cpp" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2024" />
+    <option name="minorVersion" value="3.1.1" />
+    <option name="productBranch" value="Classic" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2qd5PYC4BJi31uxUY7vhvsQ7CrF" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Doctest.All in Basic Math Operations.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.All in CECS.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.All in CECS_Tests.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.CECS_Tests.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.Configure CECS Singleton with no name should throw.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.Configure CECS Singleton.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.Confirm CECS Singleton generates custom log file after reConfigured.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.Renaming the CECS Singleton.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.Test CECS Singleton.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.Test if CECS Singleton Generates or Not the default file based on default config.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.west.config.association.type.startup.service&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;cf.advertisement.text.overridden&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;1-work__on__basic__design&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/vasil/CLionProjects/CECS2&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CMakeSettings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;C++&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\vasil\CLionProjects\CECS2" />
+      <recent name="C:\Users\vasil\CLionProjects\CECS2\unitTests" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\vasil\CLionProjects\CECS2\unitTests\include" />
+      <recent name="C:\Users\vasil\CLionProjects\CECS2" />
+      <recent name="C:\Users\vasil\CLionProjects\CECS2\CECS2\src" />
+      <recent name="C:\Users\vasil\CLionProjects\CECS2\CECS2\API-Headers" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Doctest.All in CECS_Tests">
+    <configuration name="All in CECS_Tests" type="CMakeDoctestTestRunConfigurationType" factoryName="doctest Test" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CECS" TARGET_NAME="CECS_Tests" CONFIG_NAME="Release-TDM-MinGW-64" RUN_TARGET_PROJECT_NAME="CECS" RUN_TARGET_NAME="CECS_Tests" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test if CECS Singleton Generates or Not the default file based on default config" type="CMakeDoctestTestRunConfigurationType" factoryName="doctest Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CECS" TARGET_NAME="CECS_Tests" CONFIG_NAME="Release-TDM-MinGW-64" RUN_TARGET_PROJECT_NAME="CECS" RUN_TARGET_NAME="CECS_Tests" TEST_CLASS="Basic Operations" TEST_METHOD="Test if CECS Singleton Generates or Not the default file based on default config" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CECS" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CECS" TARGET_NAME="CECS" CONFIG_NAME="Release-TDM-MinGW-64">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CECS_Tests" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CECS" TARGET_NAME="CECS_Tests" CONFIG_NAME="Release-TDM-MinGW-64" RUN_TARGET_PROJECT_NAME="CECS" RUN_TARGET_NAME="CECS_Tests">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="spdlog" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CECS" TARGET_NAME="spdlog" CONFIG_NAME="Release-TDM-MinGW-64">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Doctest.All in CECS_Tests" />
+      <item itemvalue="Doctest.Test if CECS Singleton Generates or Not the default file based on default config" />
+      <item itemvalue="CMake Application.CECS_Tests" />
+      <item itemvalue="CMake Application.CECS" />
+      <item itemvalue="CMake Application.spdlog" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Doctest.Test if CECS Singleton Generates or Not the default file based on default config" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="96ff6be1-98c0-4672-9605-394c8eedfe23" name="Changes" comment="" />
+      <created>1734979587560</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1734979587560</updated>
+      <workItem from="1734979588929" duration="5555000" />
+      <workItem from="1734985411495" duration="8325000" />
+      <workItem from="1735072717596" duration="23000" />
+      <workItem from="1736254830553" duration="7401000" />
+      <workItem from="1736325109856" duration="2498000" />
+      <workItem from="1736327628126" duration="41000" />
+      <workItem from="1736327708425" duration="10216000" />
+      <workItem from="1736340306419" duration="916000" />
+      <workItem from="1736341236858" duration="1000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticReloadCMake value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="(0.09)[I#2]: On Configuration we expect to throw if something is wrong." />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/API-Headers/CECS.hpp</url>
+          <line>2</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="../../../../CLionProjects/CECS2/cmake-build-debug-coverage" NAME="All in CECS_Tests Coverage Results" MODIFIED="1736338020646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="gcov/llvm" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="../../../../CLionProjects/CECS2/cmake-build-release" NAME="All in CECS_Tests Coverage Results" MODIFIED="1736336942133" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="gcov/llvm" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>
