@@ -41,7 +41,7 @@ class CECSSingleton {
 public:
   enum State { NOT_INIT, INIT, INTERNAL_ERROR } state{NOT_INIT};
 
-  struct CECSConfiguration {
+  struct Configuration {
     std::string loggerName{"IL"};
     uint8_t     screenLogLevel{Logger::L::TRC};
     uint8_t     fileLogLevel{Logger::L::NONE};
@@ -52,7 +52,7 @@ public:
     std::string logCustomFormat{"(%m/%d %H:%M:%S) [%^%L%$] [t:%t] %v"};
 
     std::string str() const;
-  } defaultConfiguration;
+  } configuration;
 
   CECSSingleton()                                 = delete;
   CECSSingleton(const CECSSingleton &)            = delete; // Prevent copy
@@ -64,7 +64,7 @@ public:
 
   std::string getCECSName() const noexcept;
   void        setCECSName(const std::string &ecsName_) noexcept;
-  void        setCECSConfiguration(const CECSConfiguration &config) noexcept(false);
+  void        setCECSConfiguration(const Configuration &config) noexcept(false);
   void        reloadCECSConfiguration() noexcept(false);
   void        logMsg(Logger::L level_, const std::string &log_) const noexcept(false);
 

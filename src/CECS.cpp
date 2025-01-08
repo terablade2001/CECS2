@@ -6,9 +6,9 @@ using namespace std;
 CECSSingleton              CECSSingleton::instance{"CECS-Default"};
 shared_ptr<spdlog::logger> CECSSingleton::logger{nullptr};
 
-std::string CECSSingleton::CECSConfiguration::str() const {
+std::string CECSSingleton::Configuration::str() const {
   std::ostringstream os;
-  os << "CECSConfiguration:\n"
+  os << "Configuration:\n"
      << " loggerName: " << loggerName << "\n screenLogLevel: " << static_cast<int>(screenLogLevel)
      << "\n fileLogLevel: " << static_cast<int>(fileLogLevel) << "\n logFileName: " << logFileName
      << "\n logFileMaxSizeBytes: " << logFileMaxSizeBytes
@@ -21,7 +21,7 @@ std::string CECSSingleton::CECSConfiguration::str() const {
 CECSSingleton::CECSSingleton(
     std::string ecsNameStr_
 ) : ecsName(std::move(ecsNameStr_)) {
-  setCECSConfiguration(defaultConfiguration);
+  setCECSConfiguration(configuration);
 }
 
 void CECSSingleton::Shutdown() {
@@ -46,7 +46,7 @@ void CECSSingleton::setCECSName(
 }
 
 void CECSSingleton::setCECSConfiguration(
-    const CECSConfiguration &config
+    const Configuration &config
 ) noexcept(false) {
   if (state == INTERNAL_ERROR) {
     throw std::invalid_argument("State is in INTERNAL_ERROR. Can not proceed.");
@@ -153,7 +153,7 @@ void CECSSingleton::reloadCECSConfiguration() noexcept(
     false
 ) {
   Shutdown();
-  setCECSConfiguration(defaultConfiguration);
+  setCECSConfiguration(configuration);
 }
 
 void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) const noexcept(false) {

@@ -61,12 +61,12 @@ namespace docTests {
       // Shutdown()
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
-        CECSSingleton::CECSConfiguration defaultConfig;
+        CECSSingleton::Configuration defaultConfig;
         CECS.setCECSConfiguration(defaultConfig);
         CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       }
 
-      CECSSingleton::CECSConfiguration invalidConfig;
+      CECSSingleton::Configuration invalidConfig;
       invalidConfig.loggerName = "";
       CHECK_THROWS_AS(CECS.setCECSConfiguration(invalidConfig), std::invalid_argument);
       CECS.Shutdown();
@@ -85,12 +85,12 @@ namespace docTests {
       // Shutdown()
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
-        CECSSingleton::CECSConfiguration defaultConfig;
+        CECSSingleton::Configuration defaultConfig;
         CECS.setCECSConfiguration(defaultConfig);
         CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       }
 
-      CECSSingleton::CECSConfiguration invalidConfig;
+      CECSSingleton::Configuration invalidConfig;
       invalidConfig.loggerName   = "SomeName";
       invalidConfig.logFileName  = "TestConfigCECSSingleton.log";
       invalidConfig.fileLogLevel = 3;
@@ -113,13 +113,13 @@ namespace docTests {
       // Shutdown()
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
-        CECSSingleton::CECSConfiguration defaultConfig;
+        CECSSingleton::Configuration defaultConfig;
         CECS.setCECSConfiguration(defaultConfig);
         CECS.state = CECSSingleton::State::INIT;
       }
 
       // Modify the default config to test different cases.
-      auto &defaultConfig = CECS.defaultConfiguration;
+      auto &defaultConfig = CECS.configuration;
       if (defaultConfig.fileLogLevel == 0) {
         CHECK_EQ(false, isFileExist(defaultConfig.logFileName));
       } else if (defaultConfig.fileLogLevel < static_cast<uint8_t>(Logger::L::NONE)) {
@@ -136,12 +136,12 @@ namespace docTests {
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
-        CECSSingleton::CECSConfiguration defaultConfig;
+        CECSSingleton::Configuration defaultConfig;
         CECS.setCECSConfiguration(defaultConfig);
         CECS.state = CECSSingleton::State::INIT;
       }
 
-      CECS.defaultConfiguration.fileLogLevel = Logger::L::TRC;
+      CECS.configuration.fileLogLevel = Logger::L::TRC;
       CHECK_NOTHROW(CECS.reloadCECSConfiguration());
       CHECK_NOTHROW(CECS.logMsg(Logger::L::TRC, "... Trace Message ... "));
       CHECK_NOTHROW(CECS.logMsg(Logger::L::DBG, "... Debug Message ... "));
