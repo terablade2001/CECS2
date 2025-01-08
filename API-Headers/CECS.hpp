@@ -13,7 +13,7 @@ static_assert(1, "_ERRT macro is already defined...");
 // ================================================================================================
 
 
-#include <CECSSingleton.hpp>
+#include <CECSModule.hpp>
 
 
 #ifndef __FNAME__
