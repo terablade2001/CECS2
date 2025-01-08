@@ -3,6 +3,7 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <cstdint>
 #include <mutex>
 #include <memory>
 #include <string>
@@ -15,20 +16,26 @@
 #include <cctype>
 #include <cassert>
 #include <ostream>
+#include <spdlog/common.h>
+#include <spdlog/logger.h>
+#include <spdlog/sinks/rotating_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 #ifndef __FNAME__
 #define __FNAMEBSL__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
 #define __FNAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FNAMEBSL__)
 #endif
 // NOLINTEND
+// -------------------------------------------------------------------------------------------------
+
 
 struct CECSConfiguration {
   std::string loggerName{"IL"};
-  int         screenLogLevel{5};
-  int         fileLogLevel{3};
+  uint8_t     screenLogLevel{5};
+  uint8_t     fileLogLevel{0};
   std::string logFileName{"CECSLog.log"};
-  int         logFileMaxSizeBytes{10000};
-  int         logFileNumOfRotatingFiles{3};
+  uint32_t    logFileMaxSizeBytes{10000};
+  uint8_t     logFileNumOfRotatingFiles{3};
   bool        useLogCustomFormat{false};
   // TODO:: Update teh default Custom Format to something more desired
   std::string logCustomFormat{"[%H:%M:%S] [%^%L%$] [%t] %v"};
@@ -36,9 +43,16 @@ struct CECSConfiguration {
   std::string str() const;
 };
 
+// -------------------------------------------------------------------------------------------------
+
+
+
+
 class CECSSingleton {
 public:
-  enum State { INIT, INTERNAL_ERROR } state{INIT};
+  enum State { NOT_INIT, INIT, INTERNAL_ERROR } state{NOT_INIT};
+
+  CECSConfiguration defaultConfiguration;
 
   CECSSingleton()                                 = delete;
   CECSSingleton(const CECSSingleton &)            = delete; // Prevent copy
@@ -46,6 +60,7 @@ public:
   ~CECSSingleton();
 
   explicit CECSSingleton(std::string ecsNameStr_);
+  void Shutdown();
 
   static CECSSingleton &getInstance();
   std::string           getECSName() const noexcept;
@@ -53,7 +68,7 @@ public:
   void                  setECSConfiguration(const CECSConfiguration &config) noexcept(false);
 
 private:
-  static CECSSingleton instance;
-  std::string          ecsName;
-  CECSConfiguration    defaultConfiguration;
+  static CECSSingleton                   instance;
+  std::string                            ecsName;
+  static std::shared_ptr<spdlog::logger> logger;
 };

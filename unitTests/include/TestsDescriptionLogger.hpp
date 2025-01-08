@@ -1,4 +1,5 @@
 #pragma once
+#define DOCTEST_CONFIG_NO_WINDOWS_SEH
 #include <string>
 #include <fstream>
 #include <doctest.h>
