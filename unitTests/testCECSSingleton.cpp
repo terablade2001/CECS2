@@ -45,6 +45,7 @@ namespace docTests {
       //.
       {
         auto &CECS = CECSSingleton::getInstance();
+        CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
         CHECK_EQ(CECS.getECSName(), "CECS-Default");
         SUBCASE("Changing the CECSSingleton name") {
           CECS.setECSName("Test");
@@ -59,6 +60,14 @@ namespace docTests {
       std::lock_guard<std::mutex> lock(testMutex);
       LOG_TEST_CASE("Basic Operations", "Configure CECS Singleton with no name should throw") {
         auto &CECS = CECSSingleton::getInstance();
+        // CECS in persistent among all texts, thus we have to manually change it's state after
+        // Shutdown()
+        CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
+        if (CECS.state == CECSSingleton::State::NOT_INIT) {
+          CECSConfiguration defaultConfig;
+          CECS.setECSConfiguration(defaultConfig);
+          CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
+        }
 
         CECSConfiguration invalidConfig;
         invalidConfig.loggerName = "";
@@ -76,7 +85,16 @@ namespace docTests {
       //.
       remove("TestConfigCECSSingleton.log");
       {
-        auto             &CECS = CECSSingleton::getInstance();
+        auto &CECS = CECSSingleton::getInstance();
+        // CECS in persistent among all texts, thus we have to manually change it's state after
+        // Shutdown()
+        CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
+        if (CECS.state == CECSSingleton::State::NOT_INIT) {
+          CECSConfiguration defaultConfig;
+          CECS.setECSConfiguration(defaultConfig);
+          CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
+        }
+
         CECSConfiguration invalidConfig;
         invalidConfig.loggerName   = "SomeName";
         invalidConfig.logFileName  = "TestConfigCECSSingleton.log";
@@ -95,9 +113,17 @@ namespace docTests {
       LOG_TEST_CASE(
           "Basic Operations",
           "Test if CECS Singleton Generates or Not the default file based on default config"
-      )
-      {
+      ) {
         auto &CECS = CECSSingleton::getInstance();
+        // CECS in persistent among all texts, thus we have to manually change it's state after
+        // Shutdown()
+        CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
+        if (CECS.state == CECSSingleton::State::NOT_INIT) {
+          CECSConfiguration defaultConfig;
+          CECS.setECSConfiguration(defaultConfig);
+          CECS.state = CECSSingleton::State::INIT;
+        }
+
         // Modify the default config to test different cases.
         auto &defaultConfig = CECS.defaultConfiguration;
         if (defaultConfig.fileLogLevel == 0) {
