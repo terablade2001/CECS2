@@ -20,8 +20,8 @@ std::string CECSSingleton::Configuration::str() const {
 
 CECSSingleton::CECSSingleton(
     std::string ecsNameStr_
-) : ecsName(std::move(ecsNameStr_)) {
-  setCECSConfiguration(configuration);
+) : projectName(std::move(ecsNameStr_)) {
+  setConfiguration(configuration);
 }
 
 void CECSSingleton::Shutdown() {
@@ -35,17 +35,17 @@ CECSSingleton &CECSSingleton::getInstance() noexcept(
   return instance;
 }
 
-std::string CECSSingleton::getCECSName() const noexcept { return ecsName; }
+std::string CECSSingleton::getProjectName() const noexcept { return projectName; }
 
-void CECSSingleton::setCECSName(
-    const std::string &ecsName_
+void CECSSingleton::setProjectName(
+    const std::string &projectName_
 ) noexcept {
   static std::mutex           instanceMutex;
   std::lock_guard<std::mutex> lock(instanceMutex);
-  ecsName = ecsName_;
+  projectName = projectName_;
 }
 
-void CECSSingleton::setCECSConfiguration(
+void CECSSingleton::setConfiguration(
     const Configuration &config
 ) noexcept(false) {
   if (state == INTERNAL_ERROR) {
@@ -149,17 +149,17 @@ void CECSSingleton::setCECSConfiguration(
   state = INIT;
 }
 
-void CECSSingleton::reloadCECSConfiguration() noexcept(
+void CECSSingleton::reconfigure() noexcept(
     false
 ) {
   Shutdown();
-  setCECSConfiguration(configuration);
+  setConfiguration(configuration);
 }
 
 void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) const noexcept(false) {
   if (logger == nullptr) {
     throw std::runtime_error(
-        "CECS - logMsg() Failed:: Logger has not initialized. Use setCECSConfiguration() ..."
+        "CECS - logMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
     );
   }
   if (state != INIT) {
@@ -196,7 +196,7 @@ void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) cons
     logger->log(spdLogLevel, log_);
   } catch (std::exception &e) {
     string errMsg{
-        "CECS - logMsg() Failed:: Logger has not initialized. Use setCECSConfiguration() ..."
+        "CECS - logMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
     };
     errMsg += e.what();
     throw std::runtime_error(errMsg);

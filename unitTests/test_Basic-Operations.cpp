@@ -44,10 +44,10 @@ namespace docTests {
       LOG_TEST_CASE("Basic Operations", "Testing that the CECS singleton can be renamed")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-      CHECK_EQ(CECS.getCECSName(), "CECS-Default");
+      CHECK_EQ(CECS.getProjectName(), "CECS-Default");
       SUBCASE("Changing the CECSSingleton name") {
-        CECS.setCECSName("Test");
-        CHECK_EQ(CECS.getCECSName(), "Test");
+        CECS.setProjectName("Test");
+        CHECK_EQ(CECS.getProjectName(), "Test");
       }
       CECS.Shutdown();
       std::remove("CECSLog.log");
@@ -62,13 +62,13 @@ namespace docTests {
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
         CECSSingleton::Configuration defaultConfig;
-        CECS.setCECSConfiguration(defaultConfig);
+        CECS.setConfiguration(defaultConfig);
         CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       }
 
       CECSSingleton::Configuration invalidConfig;
       invalidConfig.loggerName = "";
-      CHECK_THROWS_AS(CECS.setCECSConfiguration(invalidConfig), std::invalid_argument);
+      CHECK_THROWS_AS(CECS.setConfiguration(invalidConfig), std::invalid_argument);
       CECS.Shutdown();
       std::remove("CECSLog.log");
     }
@@ -86,7 +86,7 @@ namespace docTests {
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
         CECSSingleton::Configuration defaultConfig;
-        CECS.setCECSConfiguration(defaultConfig);
+        CECS.setConfiguration(defaultConfig);
         CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       }
 
@@ -94,7 +94,7 @@ namespace docTests {
       invalidConfig.loggerName   = "SomeName";
       invalidConfig.logFileName  = "TestConfigCECSSingleton.log";
       invalidConfig.fileLogLevel = 3;
-      CHECK_NOTHROW(CECS.setCECSConfiguration(invalidConfig));
+      CHECK_NOTHROW(CECS.setConfiguration(invalidConfig));
       CHECK_EQ(true, isFileExist(invalidConfig.logFileName));
       CECS.Shutdown();
       int err = remove("TestConfigCECSSingleton.log");
@@ -114,7 +114,7 @@ namespace docTests {
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
         CECSSingleton::Configuration defaultConfig;
-        CECS.setCECSConfiguration(defaultConfig);
+        CECS.setConfiguration(defaultConfig);
         CECS.state = CECSSingleton::State::INIT;
       }
 
@@ -137,12 +137,12 @@ namespace docTests {
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
         CECSSingleton::Configuration defaultConfig;
-        CECS.setCECSConfiguration(defaultConfig);
+        CECS.setConfiguration(defaultConfig);
         CECS.state = CECSSingleton::State::INIT;
       }
 
       CECS.configuration.fileLogLevel = Logger::L::TRC;
-      CHECK_NOTHROW(CECS.reloadCECSConfiguration());
+      CHECK_NOTHROW(CECS.reconfigure());
       CHECK_NOTHROW(CECS.logMsg(Logger::L::TRC, "... Trace Message ... "));
       CHECK_NOTHROW(CECS.logMsg(Logger::L::DBG, "... Debug Message ... "));
       CHECK_NOTHROW(CECS.logMsg(Logger::L::INFO, "... Info Message ... "));

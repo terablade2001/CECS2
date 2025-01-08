@@ -62,16 +62,16 @@ public:
   static CECSSingleton &getInstance() noexcept(false);
   void                  Shutdown();
 
-  std::string getCECSName() const noexcept;
-  void        setCECSName(const std::string &ecsName_) noexcept;
-  void        setCECSConfiguration(const Configuration &config) noexcept(false);
-  void        reloadCECSConfiguration() noexcept(false);
+  std::string getProjectName() const noexcept;
+  void        setProjectName(const std::string &projectName_) noexcept;
+  void        setConfiguration(const Configuration &config) noexcept(false);
+  void        reconfigure() noexcept(false);
   void        logMsg(Logger::L level_, const std::string &log_) const noexcept(false);
 
 private:
   explicit CECSSingleton(std::string ecsNameStr_);
   static CECSSingleton                   instance;
-  std::string                            ecsName;
+  std::string                            projectName;
   static std::shared_ptr<spdlog::logger> logger;
   static void                            verifyEnumsHaveNotChange() noexcept(false);
 };
