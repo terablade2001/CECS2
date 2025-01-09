@@ -195,6 +195,10 @@ void CECSSingleton::setErrorMode(
   errorMode = mode_;
 }
 
+CECSSingleton::ErrorMode CECSSingleton::getErrorMode() noexcept {
+  return errorMode;
+}
+
 void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
     false
 ) {

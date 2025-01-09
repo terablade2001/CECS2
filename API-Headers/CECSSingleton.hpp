@@ -72,6 +72,7 @@ public:
   resetNumberOfErrors(uint32_t reduceValue = std::numeric_limits<uint32_t>::max()) noexcept;
   static int  getDefaultErrorReturnValue() noexcept;
   static void setErrorMode(ErrorMode mode_) noexcept;
+  static ErrorMode getErrorMode() noexcept;
 
 private:
   std::string                            projectName;
