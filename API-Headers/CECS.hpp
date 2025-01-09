@@ -104,13 +104,14 @@ static_assert(1, "_ERRT macro is already defined...");
 //     __UserReturn__                                                                                 \
 //   }
 
-/*
-#define _ERRO_ORG(Obj, ExpR, __UserReturn__, args...)                                              \
+#define _ERRSTR(ExpR, __UserSS__)                                                                  \
   if ((ExpR)) {                                                                                    \
-    (Obj).RecError(_CECS_DEFAULT_ERRID, _CECS_ERRTYPE_ERROR, __FNAME__, __LINE__, args);           \
-    __UserReturn__                                                                                 \
+    std::ostringstream ss;                                                                         \
+    __UserSS__;                                                                                    \
+    __ECSOBJ__.RecError(__FNAME__, __LINE__, "", ss.str());                                        \
   }
 
+/*
 #define _ERRSTR(Obj, ExpR, __UserSS__)                                                             \
   if ((ExpR)) {                                                                                    \
     std::stringstream _CECS_SS_;                                                                   \

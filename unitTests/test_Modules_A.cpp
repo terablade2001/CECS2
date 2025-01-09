@@ -74,6 +74,29 @@ namespace docTests {
     return str;
   }
 
+  std::string retFunctionS2(
+    const int min, const int max
+) {
+    std::string str{"Hello World"};
+    _ERRSTR(min < max,{
+      ss << "This is a note that min is less than max!";
+      ss << "\n - min: " << min;
+      ss << "\n - max: " << max;
+    })
+    _ERRO(min < max, { return string{"Min<Max"}; }, "Min[=%i] < Max[=%i]", min, max)
+    _ERRSTR(min > max,{
+      ss << "This is a note that min is greater than max!";
+      ss << "\n - min: " << min;
+      ss << "\n - max: " << max;
+    })
+    _ERRO(min > max, { return string{"Min>Max"}; }, "Min[=%i] > Max[=%i]", min, max)
+    _ERRSTR(min == max,{
+      ss << "This is a note that min is equal to max!";
+      ss << "\n - min: " << min;
+      ss << "\n - max: " << max;
+    })
+    return str;
+  }
   DOCTEST_TEST_SUITE(
       "Test Modules"
   ) {
@@ -160,6 +183,20 @@ namespace docTests {
       s = retFunctionS(1, 2);
       CHECK_EQ("Min<Max", s);
       s = retFunctionS(2, 1);
+      CHECK_EQ("Min>Max", s);
+    }
+
+    TEST_CASE("Checking the _ERRSTR Macro that properly records") {
+      LOG_TEST_CASE("Test Modules", "Checking the _ERRSTR Macro that properly records")
+      auto &CECS = CECSSingleton::getInstance();
+      CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
+
+      std::string s;
+      s = retFunctionS2(1, 1);
+      CHECK_EQ("Hello World", s);
+      s = retFunctionS2(1, 2);
+      CHECK_EQ("Min<Max", s);
+      s = retFunctionS2(2, 1);
       CHECK_EQ("Min>Max", s);
     }
   }
