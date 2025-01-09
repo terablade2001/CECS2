@@ -3,6 +3,7 @@
 using namespace std;
 
 CECSSingleton              CECSSingleton::instance{"CECS-Default"};
+std::recursive_mutex       CECSSingleton::cecsMtx;
 atomic<uint32_t>           CECSSingleton::numberOfRecordedErrors{0};
 shared_ptr<spdlog::logger> CECSSingleton::logger{nullptr};
 
@@ -34,6 +35,7 @@ CECSSingleton::CECSSingleton(
 }
 
 void CECSSingleton::Shutdown() {
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   logger = nullptr;
   state  = NOT_INIT;
 }
@@ -49,14 +51,14 @@ std::string CECSSingleton::getProjectName() const noexcept { return projectName;
 void CECSSingleton::setProjectName(
     const std::string &projectName_
 ) noexcept {
-  static std::mutex           instanceMutex;
-  std::lock_guard<std::mutex> lock(instanceMutex);
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   projectName = projectName_;
 }
 
 void CECSSingleton::setConfiguration(
     const Configuration &config
 ) noexcept(false) {
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (state == INTERNAL_ERROR) {
     throw std::invalid_argument("State is in INTERNAL_ERROR. Can not proceed.");
   }
@@ -102,11 +104,13 @@ void CECSSingleton::setConfiguration(
 void CECSSingleton::reconfigure() noexcept(
     false
 ) {
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   Shutdown();
   setConfiguration(configuration);
 }
 
 void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) const noexcept(false) {
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (logger == nullptr) {
     throw std::runtime_error(
         "CECS - logMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
@@ -136,6 +140,7 @@ void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) cons
 }
 
 void CECSSingleton::critMsg(const std::string &log_, const std::string &errId) const noexcept(false) {
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (logger == nullptr) {
     throw std::runtime_error(
         "CECS - critMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
@@ -163,13 +168,15 @@ void CECSSingleton::critMsg(const std::string &log_, const std::string &errId) c
   }
 }
 
-uint32_t CECSSingleton::getNumberOfErrors() noexcept { return numberOfRecordedErrors; }
+uint32_t CECSSingleton::getNumberOfErrors() noexcept {
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
+  return numberOfRecordedErrors;
+}
 
 void CECSSingleton::resetNumberOfErrors(
     const uint32_t reduceValue
 ) noexcept {
-  static std::mutex           instanceMutex;
-  std::lock_guard<std::mutex> lock(instanceMutex);
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (reduceValue >= numberOfRecordedErrors) {
     numberOfRecordedErrors = 0;
     return;
@@ -180,6 +187,7 @@ void CECSSingleton::resetNumberOfErrors(
 void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
     false
 ) {
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   // NOLINTBEGIN
   bool   isEnumsMatches = true;
   string errorMsg;

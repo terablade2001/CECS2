@@ -51,6 +51,6 @@ void CECSModule::RecError(
   std::lock_guard<std::mutex> lock(mtx);
   if (fileName_ == nullptr) throw std::invalid_argument("CECS::RecError():: fileName_ is nullptr!");
   ostringstream oss;
-  oss << "(" << fileName_ << "), L-" << line_ << ": " << msg_;
+  oss << "(" << fileName_ << ", L-" << line_ << "): " << msg_;
   CECS.critMsg(oss.str(), errId);
 }

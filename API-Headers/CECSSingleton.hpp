@@ -21,6 +21,7 @@
 #include <spdlog/logger.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
+
 // NOLINTEND
 
 namespace Logger {
@@ -31,7 +32,7 @@ namespace Logger {
 
 class CECSSingleton {
 public:
-  enum State { NOT_INIT=0, INIT=1, INTERNAL_ERROR=2 } state{NOT_INIT};
+  enum State { NOT_INIT = 0, INIT = 1, INTERNAL_ERROR = 2 } state{NOT_INIT};
 
   struct Configuration {
     std::string loggerName{"IL"};
@@ -70,6 +71,7 @@ private:
   explicit CECSSingleton(std::string ecsNameStr_);
   static CECSSingleton                   instance;
   std::string                            projectName;
+  static std::recursive_mutex            cecsMtx;
   static std::atomic<uint32_t>           numberOfRecordedErrors;
   static std::shared_ptr<spdlog::logger> logger;
   static void                            verifyEnumsHaveNotChange() noexcept(false);
