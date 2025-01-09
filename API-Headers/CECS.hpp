@@ -99,7 +99,7 @@ static_assert(1, "C++ compiler (at least C++11) is required...");
   if ((ExpR)) {                                                                                    \
     std::ostringstream ss;                                                                         \
     __UserSS__;                                                                                    \
-    __ECSOBJ__.RecError(__FNAME__, __LINE__, "", ss.str());                                        \
+    __ECSOBJ__.RecError(__FNAME__, __LINE__, "__ERRSTR_CALL__", ss.str());                         \
   }
 
 #define _CERRT_ _ERRT(0 != _NERR_, "_CERRT_: (%u) Error(/s) in CECS deteted.", _NERR_)

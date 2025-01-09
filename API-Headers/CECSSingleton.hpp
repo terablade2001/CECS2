@@ -61,7 +61,7 @@ public:
   void        setConfiguration(const Configuration &config) noexcept(false);
   void        reconfigure() noexcept(false);
   void        logMsg(Logger::L level_, const std::string &log_) const noexcept(false);
-  void        critMsg(const std::string &log_, const std::string &errId = "") const noexcept(false);
+  void        critMsg(const std::string &log_, const std::string &errId = "") noexcept(false);
 
   static uint32_t getNumberOfErrors() noexcept;
   static void
@@ -70,11 +70,12 @@ public:
   static int getDefaultErrorReturnValue() noexcept;
 
 private:
-  explicit CECSSingleton(std::string ecsNameStr_);
   static CECSSingleton                   instance;
   std::string                            projectName;
   static std::recursive_mutex            cecsMtx;
   static std::atomic<uint32_t>           numberOfRecordedErrors;
   static std::shared_ptr<spdlog::logger> logger;
-  static void                            verifyEnumsHaveNotChange() noexcept(false);
+  explicit CECSSingleton(std::string ecsNameStr_);
+  static void verifyEnumsHaveNotChange() noexcept(false);
+  void        handleErrId(const std::string &errId) noexcept(false);
 };

@@ -38,9 +38,9 @@ CECSSingleton::CECSSingleton(
 
 void CECSSingleton::Shutdown() {
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
-  logger = nullptr;
+  logger                 = nullptr;
   numberOfRecordedErrors = 0;
-  state  = NOT_INIT;
+  state                  = NOT_INIT;
 }
 
 CECSSingleton &CECSSingleton::getInstance() noexcept(
@@ -142,7 +142,7 @@ void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) cons
   }
 }
 
-void CECSSingleton::critMsg(const std::string &log_, const std::string &errId) const noexcept(false) {
+void CECSSingleton::critMsg(const std::string &log_, const std::string &errId)  noexcept(false) {
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (logger == nullptr) {
     throw std::runtime_error(
@@ -157,9 +157,7 @@ void CECSSingleton::critMsg(const std::string &log_, const std::string &errId) c
 
   ++numberOfRecordedErrors;
 
-  if (!errId.empty()) {
-    // TODO : Handle the errId via proper mechanism.
-  }
+  handleErrId(errId);
 
   try {
     logger->log(spdlog::level::critical, log_);
@@ -187,9 +185,7 @@ void CECSSingleton::resetNumberOfErrors(
   numberOfRecordedErrors -= reduceValue;
 }
 
-int CECSSingleton::getDefaultErrorReturnValue() noexcept {
-  return CECS_DEFAULT_ERROR_RETURN_VALUE;
-}
+int CECSSingleton::getDefaultErrorReturnValue() noexcept { return CECS_DEFAULT_ERROR_RETURN_VALUE; }
 
 void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
     false
@@ -221,6 +217,16 @@ void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
 
   if (!isEnumsMatches) { throw std::invalid_argument(errorMsg); }
   // NOLINTEND
+}
+
+// NOLINTNEXTLINE
+void CECSSingleton::handleErrId(const std::string &errId)  noexcept(false) {
+  if (errId.empty()) return;
+  if (errId == "__ERRSTR_CALL__") {
+    --numberOfRecordedErrors;
+    return;
+  }
+  // TODO : Handle the errId via proper mechanism.
 }
 
 // -------------------------------------------------------------------------------------------------
