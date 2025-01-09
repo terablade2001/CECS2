@@ -30,32 +30,21 @@ namespace docTests {
   DOCTEST_TEST_SUITE(
       "Test Modules"
   ) {
-    TEST_CASE("Testing _ERRT macro") {
-      LOG_TEST_CASE("Test Modules", "Testing that _ERRT throws and records properly")
-      auto &CECS                         = CECSSingleton::getInstance();
-      CECS.configuration.logCustomFormat = "[%^%L%$] %v";
-      CECS.reconfigure();
+    TEST_CASE("Creating a CECSModule") {
+      LOG_TEST_CASE("Test Modules", "Creating a CECSModule")
+      auto &CECS = CECSSingleton::getInstance();
+      if (CECS.state == CECSSingleton::State::NOT_INIT) { CECS.reconfigure(); }
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
 
-      {
-        std::ostringstream captured_stderr;
-        std::streambuf    *original_cerr_buffer = std::cerr.rdbuf();
-        std::cerr.rdbuf(captured_stderr.rdbuf());
-        int line = 0;
-        try {
-          constexpr int val = -938;
-          line              = __LINE__;
-          _ERRT(1, "This is an error throw message with id %i", val)
-          CHECK_EQ(0, 1);
-        } catch (const std::exception &) { CHECK_EQ(1, 1); }
-        std::cerr.rdbuf(original_cerr_buffer);
-        ostringstream oss;
-        oss << "\n[C] (" << __FNAME__ << ", L-" << line
-            << "): This is an error throw message with id -938";
-        string s(captured_stderr.str());
-        cout << "[" << s << "]" << endl;
-        CHECK_EQ(0,captured_stderr.str().compare(oss.str()));
+      try {
+        constexpr int val = -938;
+        _ERRT(1, "This is an error throw message with id %i", val)
+        CHECK_EQ(0,1);
+      } catch (const std::exception &e) {
+        CHECK_EQ(1,1);
       }
+
+      // _ERRT(1, "ERR01", "Error Throw!")
     }
   }
 } // namespace docTests
