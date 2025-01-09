@@ -38,11 +38,11 @@ void addTestCase(
 }
 
 int main(
-    int argc, char **argv
+    const int argc, char **argv
 ) {
   doctest::Context context;
   context.applyCommandLine(argc, argv);
-  int res = context.run();
+  const int res = context.run();
   exportTestCasesToLog("test_cases_log.txt");
   if (context.shouldExit()) { return res; }
   return res;

@@ -20,7 +20,7 @@ FetchContent_Declare(
   GIT_TAG v1.15.0
 )
 FetchContent_MakeAvailable(spdlog)
-set(EXTLIBS ${EXTLIBS} spdlog::spdlog)
+set(EXTERNAL_LIBS ${EXTERNAL_LIBS} spdlog::spdlog)
 
 set(LIB_HEADERS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/API-Headers)
 
@@ -39,7 +39,7 @@ file(GLOB LIB_HEADER_FILES
 
 add_library(${PROJECT_NAME} SHARED ${LIB_SOURCE_FILES})
 target_include_directories(${PROJECT_NAME} PUBLIC ${LIB_HEADERS_DIR})
-target_link_libraries(${PROJECT_NAME} PUBLIC ${EXTLIBS})
+target_link_libraries(${PROJECT_NAME} PUBLIC ${EXTERNAL_LIBS})
 target_sources(${PROJECT_NAME} PUBLIC ${LIB_HEADER_FILES}) # CLion
 
 
@@ -63,5 +63,5 @@ file(GLOB_RECURSE TEST_HEADER_FILES
 
 add_executable(${TARGET_TEST_NAME} ${TEST_SOURCE_FILES})
 target_include_directories(${TARGET_TEST_NAME} PUBLIC ${TEST_HEADERS_DIR} ${LIB_HEADERS_DIR})
-target_link_libraries(${TARGET_TEST_NAME} PUBLIC ${PROJECT_NAME} ${EXTLIBS})
+target_link_libraries(${TARGET_TEST_NAME} PUBLIC ${PROJECT_NAME} ${EXTERNAL_LIBS})
 target_sources(${TARGET_TEST_NAME} PUBLIC ${TEST_HEADER_FILES}) # CLion

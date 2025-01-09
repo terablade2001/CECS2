@@ -59,7 +59,7 @@ namespace docTests {
         constexpr int val = -938;
         _ERRT(1, "This is an error throw message with id %i", val)
         CHECK_EQ(0, 1);
-      } catch (const std::exception &e) { CHECK_EQ(1, 1); }
+      } catch (const std::exception &) { CHECK_EQ(1, 1); }
     }
 
 
