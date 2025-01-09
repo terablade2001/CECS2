@@ -111,6 +111,14 @@ static_assert(1, "C++ compiler (at least C++11) is required...");
 #define _CERRO_(__UserReturn__)                                                                    \
   _ERRO(0 != _NERR_, __UserReturn__, "_CERRO_: (%u) Error(/s) in CECS deteted.", _NERR_)
 
+// Compatibility with CECS v1
+#define _CHECKRT_ _CERRT_
+#define _CHECKRI_ _CERRI_
+#define _CHECKR_ _CERR_
+#define _CHECKRN_ _CERRN_
+#define _CHECKRB_ _CERRB_
+#define _CHECKRO_ _CERRO_(__UserReturn__)
+
 #define _CERRT(args...) {_ERRT(0 != _NERR_, args)}
 #define _CERR(args...) {_ERR(0 != _NERR_, args)}
 #define _CERRI(args...) {_ERRI(0 != _NERR_, args)}
