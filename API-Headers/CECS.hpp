@@ -93,6 +93,17 @@ static_assert(1, "_ERRT macro is already defined...");
 //     return false;                                                                                  \
 //   }
 
+#define _ERRO(ExpR, __UserReturn__, args...)                                                       \
+  if ((ExpR)) {                                                                                    \
+    __ECSOBJ__.RecError(__FNAME__, __LINE__, "", args);                                            \
+    __UserReturn__                                                                                 \
+  }
+// #define _ERROU(ExpR, __UserReturn__, UserErrID, args...)                                           \
+//   if ((ExpR)) {                                                                                    \
+//     __ECSOBJ__.RecError(__FNAME__, __LINE__, UserErrID, args);                                     \
+//     __UserReturn__                                                                                 \
+//   }
+
 /*
 #define _ERRO_ORG(Obj, ExpR, __UserReturn__, args...)                                              \
   if ((ExpR)) {                                                                                    \
