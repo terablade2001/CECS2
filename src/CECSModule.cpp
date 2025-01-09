@@ -10,7 +10,12 @@ using namespace std;
 
 CECSModule::CECSModule(
     const std::string &moduleName_ // NOLINT
-) : moduleName(moduleName_), CECS(CECSSingleton::getInstance()) {}
+) : moduleName(moduleName_), CECS(CECSSingleton::getInstance()) {
+  // NOLINTBEGIN
+  // cout << "CECSModule::CECSModule(const std::string &moduleName_):: " << moduleName_ << endl;
+  // cout << CECS.state << endl;
+  // NOLINTEND
+}
 
 CECSModule::CECSModule(
     const std::string &moduleName_, const std::string &projectName_ // NOLINT

@@ -14,6 +14,7 @@ std::string CECSSingleton::Configuration::str() const {
      << "\n logFileMaxSizeBytes: " << logFileMaxSizeBytes
      << "\n logFileNumOfRotatingFiles: " << static_cast<int>(logFileNumOfRotatingFiles)
      << "\n useLogCustomFormat: " << useLogCustomFormat << "\n logCustomFormat: " << logCustomFormat
+     << "\n flushLevel: " << static_cast<int>(flushLevel)
      << std::endl;
   return os.str();
 }
@@ -21,7 +22,16 @@ std::string CECSSingleton::Configuration::str() const {
 CECSSingleton::CECSSingleton(
     std::string ecsNameStr_
 ) : projectName(std::move(ecsNameStr_)) {
+  // NOLINTBEGIN
+  // cout << "CECSSingleton : Setting configuration ..." << state << endl;
   setConfiguration(configuration);
+  // cout << "CECSSingleton : Setting configuration DONE ..." << state << endl;
+  // if (logger == nullptr) {
+  //   cout << "*** CECSSingleton : Logger is nullptr! *** " << endl;
+  // } else {
+  //   cout << "CECSSingleton : Logger initialized! " << endl;
+  // }
+  // NOLINTEND
 }
 
 void CECSSingleton::Shutdown() {
@@ -138,6 +148,7 @@ void CECSSingleton::setConfiguration(
     logger = std::make_shared<spdlog::logger>(config.loggerName, sinks.begin(), sinks.end());
     logger->set_level(spdlog::level::trace);
     if (config.useLogCustomFormat) { logger->set_pattern(config.logCustomFormat); }
+    spdlog::flush_on(static_cast<spdlog::level::level_enum>(config.flushLevel));
 
   } catch (std::exception &) {
     state = INTERNAL_ERROR;
@@ -221,7 +232,9 @@ void CECSSingleton::critMsg(const std::string &log_, const std::string &errId) c
   }
 
   try {
+    std::cout << "-------------------------------[" << log_ << "]" << endl;
     logger->log(spdlog::level::critical, log_);
+    std::cout << "-------------------------------" << endl;
   } catch (std::exception &e) {
     string errMsg{"CECS - critMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
     };

@@ -150,7 +150,7 @@ namespace docTests {
       CHECK_NOTHROW(CECS.logMsg(Logger::L::WARN, "... Warning Message ... "));
 
       CECS.Shutdown();
-      // std::remove("CECSLog.log");
+      std::remove("CECSLog.log");
     }
   }
 } // namespace docTests

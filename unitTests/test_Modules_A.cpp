@@ -32,9 +32,21 @@ namespace docTests {
   ) {
     TEST_CASE("Creating a CECSModule") {
       LOG_TEST_CASE("Test Modules", "Creating a CECSModule")
-      _ERRT(1, "Error Throw!")
-      _ERRT(1, "ERR01", "Error Throw!")
+      auto &CECS = CECSSingleton::getInstance();
+      if (CECS.state == CECSSingleton::State::NOT_INIT) { CECS.reconfigure(); }
+      CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
 
+      try {
+        cout << CECS.configuration.str() << endl;
+        CECS.logMsg(Logger::L::TRC, "Hello!");
+        _ERRT(1, "Error Throw!")
+        CHECK_EQ(0,1);
+      } catch (const std::exception &e) {
+        std::cout << e.what() << std::endl;
+        CHECK_EQ(1,1);
+      }
+
+      // _ERRT(1, "ERR01", "Error Throw!")
     }
   }
 } // namespace docTests

@@ -17,10 +17,10 @@
 #include <cassert>
 #include <ostream>
 #include <spdlog/common.h>
+#include <spdlog/spdlog.h>
 #include <spdlog/logger.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
-
 // NOLINTEND
 
 namespace Logger {
@@ -31,7 +31,7 @@ namespace Logger {
 
 class CECSSingleton {
 public:
-  enum State { NOT_INIT, INIT, INTERNAL_ERROR } state{NOT_INIT};
+  enum State { NOT_INIT=0, INIT=1, INTERNAL_ERROR=2 } state{NOT_INIT};
 
   struct Configuration {
     std::string loggerName{"IL"};
@@ -42,6 +42,7 @@ public:
     uint8_t     logFileNumOfRotatingFiles{3};
     bool        useLogCustomFormat{true};
     std::string logCustomFormat{"(%m/%d %H:%M:%S) [%^%L%$] [t:%t] %v"};
+    uint8_t     flushLevel{Logger::L::INFO};
 
     std::string str() const;
   } configuration;
