@@ -5,16 +5,7 @@
 static_assert(1, "C++ compiler (at least C++11) is required...");
 #endif
 
-// ================================================================================================
-// TODO:: Confirm at this section that no MACRO is already used (Example with _ERRT)
-#ifdef _ERRT
-static_assert(1, "_ERRT macro is already defined...");
-#endif
-// ================================================================================================
-
-
 #include <CECSModule.hpp>
-
 
 #ifndef __FNAME__
 #define __FNAMEBSL__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
@@ -111,57 +102,21 @@ static_assert(1, "_ERRT macro is already defined...");
     __ECSOBJ__.RecError(__FNAME__, __LINE__, "", ss.str());                                        \
   }
 
-/*
-#define _ERRSTR(Obj, ExpR, __UserSS__)                                                             \
-  if ((ExpR)) {                                                                                    \
-    std::stringstream _CECS_SS_;                                                                   \
-    __UserSS__;                                                                                    \
-    (Obj).RecError_NoList(                                                                         \
-        _CECS_DEFAULT_WARNID, _CECS_ERRTYPE_ERRSTR, __FNAME__, __LINE__, _CECS_SS_.str().c_str(),  \
-        _CECS_SS_.str().size()                                                                     \
-    );                                                                                             \
-  }
+#define _CERRT_ _ERRT(0 != _NERR_, "_CERRT_: (%u) Error(/s) in CECS deteted.", _NERR_)
+#define _CERRI_ _ERRI(0 != _NERR_, "_CERRI_: (%u) Error(/s) in CECS deteted.", _NERR_)
+#define _CERR_ _ERR(0 != _NERR_, "_CERR_: (%u) Error(/s) in CECS deteted.", _NERR_)
+#define _CERRN_ _ERRN(0 != _NERR_, "_CERRN_: (%u) Error(/s) in CECS deteted.", _NERR_)
+#define _CERRB_ _ERRB(0 != _NERR_, "_CERRB_: (%u) Error(/s) in CECS deteted.", _NERR_)
+#define _CERRO_(__UserReturn__)                                                                    \
+  _ERRO(0 != _NERR_, __UserReturn__, "_CERRO_: (%u) Error(/s) in CECS deteted.", _NERR_)
 
-#define _CHECKRT_ORG_(Obj)                                                                         \
-  _ERRT(                                                                                           \
-      (Obj), (Obj).GetNumberOfErrors() != 0,                                                       \
-      "CECS_CHECKERROR captured: Function 'throw' executed."                                       \
-  )
-#define _CHECKR_ORG_(Obj)                                                                          \
-  CECS_ERR(                                                                                        \
-      (Obj), (Obj).GetNumberOfErrors() != 0,                                                       \
-      "CECS_CHECKERROR captured: Function 'return' executed."                                      \
-  )
-#define _CHECKRI_ORG_(Obj)                                                                         \
-  CECS_ERRI(                                                                                       \
-      (Obj), (Obj).GetNumberOfErrors() != 0,                                                       \
-      "CECS_CHECKERROR captured: Function 'return  _CECS_DEFAULT_ERRID(=%i)' executed.",           \
-      _CECS_DEFAULT_ERRID                                                                          \
-  )
-#define _CHECKRN_ORG_(Obj)                                                                         \
-  CECS_ERRN(                                                                                       \
-      (Obj), (Obj).GetNumberOfErrors() != 0,                                                       \
-      "CECS_CHECKERROR captured: Function 'return NULL' executed."                                 \
-  )
-#define _CHECKRB_ORG_(Obj)                                                                         \
-  CECS_ERRB(                                                                                       \
-      (Obj), (Obj).GetNumberOfErrors() != 0,                                                       \
-      "CECS_CHECKERROR captured: Function 'return false' executed."                                \
-  )
-#define _CHECKRO_ORG_(Obj, __UserReturn__)                                                         \
-  CECS_ERRO(                                                                                       \
-      (Obj), (Obj).GetNumberOfErrors() != 0, __UserReturn__,                                       \
-      "CECS_CHECKERROR captured: __UserReturn__ code executed!."                                   \
-  )
+#define _CERRT(args...) {_ERRT(0 != _NERR_, args)}
+#define _CERR(args...) {_ERR(0 != _NERR_, args)}
+#define _CERRI(args...) {_ERRI(0 != _NERR_, args)}
+#define _CERRN(args...) {_ERRN(0 != _NERR_, args)}
+#define _CERRB(args...) {_ERRB(0 != _NERR_, args)}
+#define _CERRO(__UserReturn__, args...) {_ERRO(0 != _NERR_, __UserReturn__, args)}
 
-
-#define _CERRT_ORG(args...) {_ERRT(0 != _NERR_, args)}
-#define _CERR_ORG(args...) {_ERR(0 != _NERR_, args)}
-#define _CERRI_ORG(args...) {_ERRI(0 != _NERR_, args)}
-#define _CERRN_ORG(args...) {_ERRN(0 != _NERR_, args)}
-#define _CERRB_ORG(args...) {_ERRB(0 != _NERR_, args)}
-#define _CERRO_ORG(__UserReturn__, args...) {_ERRO(0 != _NERR_, __UserReturn__, args)}
-*/
 #else
 static_assert(1, "MSC compiler is not supported yet...");
 #endif
