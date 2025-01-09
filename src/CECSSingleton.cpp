@@ -39,6 +39,7 @@ CECSSingleton::CECSSingleton(
 void CECSSingleton::Shutdown() {
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   logger = nullptr;
+  numberOfRecordedErrors = 0;
   state  = NOT_INIT;
 }
 

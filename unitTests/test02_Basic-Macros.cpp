@@ -75,28 +75,29 @@ namespace docTests {
   }
 
   std::string retFunctionS2(
-    const int min, const int max
-) {
+      const int min, const int max
+  ) {
     std::string str{"Hello World"};
-    _ERRSTR(min < max,{
+    _ERRSTR(min < max, {
       ss << "This is a note that min is less than max!";
       ss << "\n - min: " << min;
       ss << "\n - max: " << max;
     })
     _ERRO(min < max, { return string{"Min<Max"}; }, "Min[=%i] < Max[=%i]", min, max)
-    _ERRSTR(min > max,{
+    _ERRSTR(min > max, {
       ss << "This is a note that min is greater than max!";
       ss << "\n - min: " << min;
       ss << "\n - max: " << max;
     })
     _ERRO(min > max, { return string{"Min>Max"}; }, "Min[=%i] > Max[=%i]", min, max)
-    _ERRSTR(min == max,{
+    _ERRSTR(min == max, {
       ss << "This is a note that min is equal to max!";
       ss << "\n - min: " << min;
       ss << "\n - max: " << max;
     })
     return str;
   }
+
   DOCTEST_TEST_SUITE(
       "02 Test Basic Macros"
   ) {
@@ -107,12 +108,13 @@ namespace docTests {
       CECS.configuration.logCustomFormat    = "[%^%L%$] %v";
       CECS.reconfigure();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-
+      CECSSingleton::resetNumberOfErrors();
       try {
         constexpr int val = -938;
         _ERRT(1, "This is an error throw message with id %i", val)
         CHECK_EQ(0, 1);
       } catch (const std::exception &) { CHECK_EQ(1, 1); }
+      CHECK_EQ(1, CECSSingleton::getNumberOfErrors());
     }
 
 
@@ -120,21 +122,22 @@ namespace docTests {
       LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRT Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-
-      int err = 0;
-      err     = retFunction(1, 2);
+      CECSSingleton::resetNumberOfErrors();
+      int err;
+      err = retFunction(1, 2);
       CHECK_EQ(0, err);
       err = retFunction(2, 2);
       CHECK_EQ(0, err);
       err = retFunction(3, 2);
       CHECK_NE(0, err);
+      CHECK_EQ(1, CECSSingleton::getNumberOfErrors());
     }
 
     TEST_CASE("Checking the _ERR Macro that properly records") {
       LOG_TEST_CASE("Test Basic Macros", "Checking the _ERR Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-
+      CECSSingleton::resetNumberOfErrors();
       int res = 0;
       retFunctionR(1, 2, res);
       CHECK_EQ(1, res);
@@ -142,13 +145,14 @@ namespace docTests {
       CHECK_EQ(2, res);
       retFunctionR(2, 2, res);
       CHECK_EQ(3, res);
+      CHECK_EQ(2, CECSSingleton::getNumberOfErrors());
     }
 
     TEST_CASE("Checking the _ERRN Macro that properly records") {
       LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRN Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-
+      CECSSingleton::resetNumberOfErrors();
       int res = 0;
       retFunctionR(1, 2, res);
       CHECK_EQ(1, res);
@@ -156,13 +160,14 @@ namespace docTests {
       CHECK_EQ(2, res);
       retFunctionR(2, 2, res);
       CHECK_EQ(3, res);
+      CHECK_EQ(2, CECSSingleton::getNumberOfErrors());
     }
 
     TEST_CASE("Checking the _ERRB Macro that properly records") {
       LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRB Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-
+      CECSSingleton::resetNumberOfErrors();
       bool res{false};
       res = retFunctionB(1, 2);
       CHECK_EQ(true, res);
@@ -170,13 +175,14 @@ namespace docTests {
       CHECK_EQ(true, res);
       res = retFunctionB(3, 2);
       CHECK_EQ(false, res);
+      CHECK_EQ(1, CECSSingleton::getNumberOfErrors());
     }
 
     TEST_CASE("Checking the _ERRO Macro that properly records") {
       LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRO Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-
+      CECSSingleton::resetNumberOfErrors();
       std::string s;
       s = retFunctionS(1, 1);
       CHECK_EQ("Hello World", s);
@@ -184,13 +190,14 @@ namespace docTests {
       CHECK_EQ("Min<Max", s);
       s = retFunctionS(2, 1);
       CHECK_EQ("Min>Max", s);
+      CHECK_EQ(2, CECSSingleton::getNumberOfErrors());
     }
 
     TEST_CASE("Checking the _ERRSTR Macro that properly records") {
       LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRSTR Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-
+      CECSSingleton::resetNumberOfErrors();
       std::string s;
       s = retFunctionS2(1, 1);
       CHECK_EQ("Hello World", s);
@@ -198,6 +205,7 @@ namespace docTests {
       CHECK_EQ("Min<Max", s);
       s = retFunctionS2(2, 1);
       CHECK_EQ("Min>Max", s);
+      CHECK_EQ(2, CECSSingleton::getNumberOfErrors());
     }
   }
 } // namespace docTests
