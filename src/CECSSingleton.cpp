@@ -3,7 +3,7 @@
 using namespace std;
 
 CECSSingleton              CECSSingleton::instance{"CECS-Default"};
-uint32_t                   CECSSingleton::numberOfRecordedErrors{0};
+atomic<uint32_t>           CECSSingleton::numberOfRecordedErrors{0};
 shared_ptr<spdlog::logger> CECSSingleton::logger{nullptr};
 
 std::string CECSSingleton::Configuration::str() const {
@@ -52,7 +52,7 @@ void CECSSingleton::setConfiguration(
     throw std::invalid_argument("State is in INTERNAL_ERROR. Can not proceed.");
   }
   if (config.loggerName.empty()) {
-    state = State::INTERNAL_ERROR;
+    state = INTERNAL_ERROR;
     throw std::invalid_argument("Logger name can not be empty!");
   }
 
@@ -140,7 +140,7 @@ void CECSSingleton::setConfiguration(
     if (config.useLogCustomFormat) { logger->set_pattern(config.logCustomFormat); }
 
   } catch (std::exception &) {
-    state = State::INTERNAL_ERROR;
+    state = INTERNAL_ERROR;
     throw;
   }
 
@@ -202,7 +202,7 @@ void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) cons
   }
 }
 
-void CECSSingleton::critMsg(const std::string &log_, const std::string &errId)  noexcept(false){
+void CECSSingleton::critMsg(const std::string &log_, const std::string &errId) const noexcept(false) {
   if (logger == nullptr) {
     throw std::runtime_error(
         "CECS - critMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
@@ -214,7 +214,7 @@ void CECSSingleton::critMsg(const std::string &log_, const std::string &errId)  
     );
   }
 
-  numberOfRecordedErrors++;
+  ++numberOfRecordedErrors;
 
   if (!errId.empty()) {
     // TODO : Handle the errId via proper mechanism.
