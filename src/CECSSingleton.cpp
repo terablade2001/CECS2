@@ -1,4 +1,5 @@
 #include <CECSSingleton.hpp>
+#include <atomic>
 
 using namespace std;
 
@@ -134,8 +135,7 @@ void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) cons
     try {
       logger->log(static_cast<spdlog::level::level_enum>(level_), log_);
     } catch (std::exception &e) {
-      string errMsg{
-          "CECS - logMsg() Failed:: Logger is not initialized. Use setConfiguration() ..."
+      string errMsg{"CECS - logMsg() Failed:: Logger is not initialized. Use setConfiguration() ..."
       };
       errMsg += e.what();
       throw std::runtime_error(errMsg);
@@ -185,6 +185,16 @@ void CECSSingleton::resetNumberOfErrors(
     return;
   }
   numberOfRecordedErrors -= reduceValue;
+}
+
+void CECSSingleton::resetNumberOfErrorsWithErrorModeCheck(uint32_t reduceValue) noexcept(false){
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
+  if (errorMode.load() == ErrorMode::CRITICAL) {
+    throw std::runtime_error(
+        "CECS: Modifying Number of Errors in CRITICAL mode is prohibited! Use ERROR mode instead."
+    );
+  }
+  resetNumberOfErrors(reduceValue);
 }
 
 int CECSSingleton::getDefaultErrorReturnValue() noexcept { return CECS_DEFAULT_ERROR_RETURN_VALUE; }

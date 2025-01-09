@@ -18,6 +18,7 @@ FetchContent_Declare(
   spdlog
   GIT_REPOSITORY https://github.com/gabime/spdlog
   GIT_TAG v1.15.0
+  GIT_SHALLOW ON
 )
 FetchContent_MakeAvailable(spdlog)
 set(EXTERNAL_LIBS ${EXTERNAL_LIBS} spdlog::spdlog)

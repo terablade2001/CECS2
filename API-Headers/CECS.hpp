@@ -22,9 +22,9 @@ static_assert(1, "C++ compiler (at least C++11) is required...");
 #define _CECS_MODE_ERR_ CECSSingleton::setErrorMode(CECSSingleton::ErrorMode::ERROR);
 
 #define _ECSCLS_                                                                                   \
-  { CECSSingleton::resetNumberOfErrors(); }
+  { CECSSingleton::resetNumberOfErrorsWithErrorModeCheck(); }
 #define _ECSCLS(numberOfLatestRecords)                                                             \
-  { CECSSingleton::resetNumberOfErrors(numberOfLatestRecords); }
+  { CECSSingleton::resetNumberOfErrorsWithErrorModeCheck(numberOfLatestRecords); }
 
 #define _NERR_ (CECSSingleton::getNumberOfErrors())
 
