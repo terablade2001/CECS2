@@ -37,29 +37,16 @@ static_assert(1, "_ERRT macro is already defined...");
 
 #ifndef _MSC_VER
 
-#define CECS_MACRO_DISPATCHER_NARGS_IMPL(_1, _2, _3, _4, N, ...) N
-#define CECS_MACRO_DISPATCHER_NARGS(...) CECS_MACRO_DISPATCHER_NARGS_IMPL(__VA_ARGS__, 4, 3, 2, 1)
-#define CECS_MACRO_DISPATCHER_EXPAND(name, count) name##count
-#define CECS_MACRO_DISPATCHER_CHOOSER(name, count) CECS_MACRO_DISPATCHER_EXPAND(name, count)
-#define CECS_MACRO_DISPATCHER(name, ...)                                                           \
-  CECS_MACRO_DISPATCHER_CHOOSER(name, CECS_MACRO_DISPATCHER_NARGS(__VA_ARGS__))(__VA_ARGS__)
-
-#define _ERRT1(ExpR) _ERRT_ORG(ExpR)
-#define _ERRT2(ExpR, Msg) _ERRT_ORG(ExpR, Msg)
-#define _ERRT3(ExpR, ErrId, Msg) _ERRT_EXT(ExpR, ErrId, Msg)
-#define _ERRT_ORG(ExpR, args...)                                                                      \
+#define _ERRT(ExpR, args...)                                                                       \
   if ((ExpR)) {                                                                                    \
     __ECSOBJ__.RecError(__FNAME__, __LINE__, "", args);                                            \
     throw runtime_error("_ERRT occurred");                                                         \
   }
-#define _ERRT_EXT(ExpR, ErrId, args...)                                                               \
+#define _ERRTU(ExpR, UserErrID, args...)                                                           \
   if ((ExpR)) {                                                                                    \
-    __ECSOBJ__.RecError(__FNAME__, __LINE__, ErrId, args);                                         \
+    __ECSOBJ__.RecError(__FNAME__, __LINE__, UserErrID, args);                                     \
     throw runtime_error("_ERRT occurred");                                                         \
   }
-#define _ERRT(...) CECS_MACRO_DISPATCHER(_ERRT, __VA_ARGS__)
-
-
 
 
 
