@@ -37,13 +37,25 @@ namespace docTests {
   }
 
   void retFunctionR(
-     const int min, const int max, int& res
- ) {
+      const int min, const int max, int &res
+  ) {
     res = 1;
-    _ERR(min < max,"Min[=%i] < Max[=%i]", min, max)
+    _ERR(min < max, "Min[=%i] < Max[=%i]", min, max)
     res = 2;
-    _ERR(min > max,"Min[=%i] > Max[=%i]", min, max)
+    _ERR(min > max, "Min[=%i] > Max[=%i]", min, max)
     res = 3;
+  }
+
+  // NOLINTNEXTLINE
+  void *retFunctionN(
+      const int min, const int max, int &res
+  ) {
+    res = 1;
+    _ERRN(min < max, "_ERRN: Min[=%i] < Max[=%i]", min, max)
+    res = 2;
+    _ERRN(min > max, "_ERRN: Min[=%i] > Max[=%i]", min, max)
+    res = 3;
+    return nullptr;
   }
 
   DOCTEST_TEST_SUITE(
@@ -52,7 +64,9 @@ namespace docTests {
     TEST_CASE("Checking the _ERRT Macro that properly records and throw") {
       LOG_TEST_CASE("Test Modules", "Checking the _ERRT Macro that properly records and throw")
       auto &CECS = CECSSingleton::getInstance();
-      if (CECS.state == CECSSingleton::State::NOT_INIT) { CECS.reconfigure(); }
+      CECS.configuration.useLogCustomFormat = true;
+      CECS.configuration.logCustomFormat = "[%^%L%$] %v";
+      CECS.reconfigure();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
 
       try {
@@ -66,7 +80,6 @@ namespace docTests {
     TEST_CASE("Checking the _ERRI Macro that properly records") {
       LOG_TEST_CASE("Test Modules", "Checking the _ERRT Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
-      if (CECS.state == CECSSingleton::State::NOT_INIT) { CECS.reconfigure(); }
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
 
       int err = 0;
@@ -81,7 +94,20 @@ namespace docTests {
     TEST_CASE("Checking the _ERR Macro that properly records") {
       LOG_TEST_CASE("Test Modules", "Checking the _ERR Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
-      if (CECS.state == CECSSingleton::State::NOT_INIT) { CECS.reconfigure(); }
+      CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
+
+      int res = 0;
+      retFunctionR(1, 2, res);
+      CHECK_EQ(1, res);
+      retFunctionR(3, 2, res);
+      CHECK_EQ(2, res);
+      retFunctionR(2, 2, res);
+      CHECK_EQ(3, res);
+    }
+
+    TEST_CASE("Checking the _ERRN Macro that properly records") {
+      LOG_TEST_CASE("Test Modules", "Checking the _ERRN Macro that properly records")
+      auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
 
       int res = 0;
