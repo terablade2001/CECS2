@@ -31,7 +31,6 @@
     <option name="/Default/PatternsAndTemplates/LiveTemplates/Template/=C9FF77DADED1ED479ED88A7387B13006/Field/=NAME/Order/@EntryValue" value="0" type="long" />
     <option name="/Default/CodeEditing/CppCodeGeneration/EmptyCtorsAndDtorsBodyKind/@EntryValue" value="Empty" type="string" />
     <option name="/Default/Housekeeping/RefactoringsMru/RenameRefactoring/DoSearchForTextInStrings/@EntryValue" value="true" type="bool" />
-    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexRemoved" />
   </component>
   <component name="BookmarksViewState">
     <option name="autoscrollToSource" value="true" />
@@ -61,6 +60,8 @@
   <component name="ChangeListManager">
     <list default="true" id="96ff6be1-98c0-4672-9605-394c8eedfe23" name="Changes" comment="(0.19)[I#2]: Enabling CustomFormat.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API-Headers/CECSSingleton.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/API-Headers/CECSSingleton.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CECSSingleton.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/CECSSingleton.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,11 +79,9 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/API-Headers/CECS.hpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/unitTests/TestsDescriptionLogger.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/unitTests/include/TestsDescriptionLogger.hpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/unitTests/testSPDLOG.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="NamedScopeManager">
     <scope name="BasicCode" pattern="!file[CECS2]:cmake-build-debug-coverage//*&amp;&amp;!file[CECS2]:cmake-build-release-tdm-mingw-64//*&amp;&amp;!file[CECS2]:.idea//*&amp;&amp;!ext:*/&amp;&amp;!file:unitTests/include/doctest.h" />
@@ -108,49 +107,49 @@
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Doctest.All in Basic Math Operations.executor": "Run",
-    "Doctest.All in CECS.executor": "Run",
-    "Doctest.All in CECS_Tests.executor": "Run",
-    "Doctest.CECS_Tests.executor": "Run",
-    "Doctest.Configure CECS Singleton with no name should throw.executor": "Run",
-    "Doctest.Configure CECS Singleton.executor": "Run",
-    "Doctest.Confirm CECS Singleton generates custom log file after reConfigured.executor": "Run",
-    "Doctest.Creating a CECSModule.executor": "Run",
-    "Doctest.Renaming the CECS Singleton.executor": "Run",
-    "Doctest.Test CECS Singleton.executor": "Run",
-    "Doctest.Test Modules.executor": "Run",
-    "Doctest.Test if CECS Singleton Generates or Not the default file based on default config.executor": "Run",
-    "RunOnceActivity.RadMigrateCodeStyle": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "RunOnceActivity.west.config.association.type.startup.service": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "cf.advertisement.text.overridden": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "deletionFromPopupRequiresConfirmation": "false",
-    "git-widget-placeholder": "1-work__on__basic__design",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/vasil/CLionProjects/CECS2/unitTests",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "settings.qodana",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Doctest.All in Basic Math Operations.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.All in CECS.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.All in CECS_Tests.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.CECS_Tests.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.Configure CECS Singleton with no name should throw.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.Configure CECS Singleton.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.Confirm CECS Singleton generates custom log file after reConfigured.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.Creating a CECSModule.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.Renaming the CECS Singleton.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.Test CECS Singleton.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.Test Modules.executor&quot;: &quot;Run&quot;,
+    &quot;Doctest.Test if CECS Singleton Generates or Not the default file based on default config.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.west.config.association.type.startup.service&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;cf.advertisement.text.overridden&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;1-work__on__basic__design&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/vasil/CLionProjects/CECS2/unitTests&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.qodana&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "C++"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;C++&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\vasil\CLionProjects\CECS2\unitTests" />
@@ -235,6 +234,7 @@
       <workItem from="1736429058626" duration="5339000" />
       <workItem from="1736434767035" duration="506000" />
       <workItem from="1736435303014" duration="1973000" />
+      <workItem from="1736444453364" duration="725000" />
     </task>
     <task id="LOCAL-00001" summary="(0.18)[I#2]: Enabling CustomFormat.">
       <option name="closed" value="true" />

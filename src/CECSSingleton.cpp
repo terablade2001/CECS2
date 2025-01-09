@@ -160,7 +160,8 @@ void CECSSingleton::critMsg(const std::string &log_, const std::string &errId)  
   handleErrId(errId);
 
   try {
-    logger->log(spdlog::level::critical, log_);
+    const int _errorMode = static_cast<int>(errorMode);
+    logger->log(static_cast<spdlog::level::level_enum>(_errorMode), log_);
   } catch (std::exception &e) {
     string errMsg{"CECS - critMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
     };

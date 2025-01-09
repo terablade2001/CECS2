@@ -32,7 +32,10 @@ namespace Logger {
 
 class CECSSingleton {
 public:
-  enum State { NOT_INIT = 0, INIT = 1, INTERNAL_ERROR = 2 } state{NOT_INIT};
+  enum State { NOT_INIT = 0, INIT = 1, INTERNAL_ERROR = 2 };
+  enum ErrorMode { CRITICAL = 5, ERROR = 4 };
+  std::atomic<State> state{State::NOT_INIT};
+  std::atomic<ErrorMode> errorMode{ErrorMode::CRITICAL};
 
   struct Configuration {
     std::string loggerName{"IL"};
