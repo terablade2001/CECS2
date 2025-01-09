@@ -18,12 +18,13 @@ static_assert(1, "C++ compiler (at least C++11) is required...");
 
 #define CECS_MODULE(moduleName) static CECSModule __ECSOBJ__(moduleName);
 #define CECS_MAIN_MODULE(moduleName, projetName) static CECS __ECSOBJ__(moduleName, projectName);
-
+#define _CECS_MODE_CRIT_ CECSSingleton::setErrorMode(CECSSingleton::ErrorMode::CRITICAL);
+#define _CECS_MODE_ERR_ CECSSingleton::setErrorMode(CECSSingleton::ErrorMode::ERROR);
 
 #define _ECSCLS_                                                                                   \
-  { CECSSingleton::resetNumberOfErrors(); }
+  { CECSSingleton::resetNumberOfErrorsWithErrorModeCheck(); }
 #define _ECSCLS(numberOfLatestRecords)                                                             \
-  { CECSSingleton::resetNumberOfErrors(numberOfLatestRecords); }
+  { CECSSingleton::resetNumberOfErrorsWithErrorModeCheck(numberOfLatestRecords); }
 
 #define _NERR_ (CECSSingleton::getNumberOfErrors())
 
@@ -109,6 +110,14 @@ static_assert(1, "C++ compiler (at least C++11) is required...");
 #define _CERRB_ _ERRB(0 != _NERR_, "_CERRB_: (%u) Error(/s) in CECS deteted.", _NERR_)
 #define _CERRO_(__UserReturn__)                                                                    \
   _ERRO(0 != _NERR_, __UserReturn__, "_CERRO_: (%u) Error(/s) in CECS deteted.", _NERR_)
+
+// Compatibility with CECS v1
+#define _CHECKRT_ _CERRT_
+#define _CHECKRI_ _CERRI_
+#define _CHECKR_ _CERR_
+#define _CHECKRN_ _CERRN_
+#define _CHECKRB_ _CERRB_
+#define _CHECKRO_ _CERRO_(__UserReturn__)
 
 #define _CERRT(args...) {_ERRT(0 != _NERR_, args)}
 #define _CERR(args...) {_ERR(0 != _NERR_, args)}

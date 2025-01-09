@@ -98,6 +98,29 @@ namespace docTests {
     return str;
   }
 
+  bool test02ErrFunc03(
+      const int x
+  ) {
+    _ERRB(x < 0, "test02ErrFunc03(): x[=%i] < 0", x)
+    return true;
+  }
+
+  // NOLINTNEXTLINE
+  void *test02ErrFunc02(
+      const int x
+  ) {
+    _ERRN(!test02ErrFunc03(x), "test02ErrFunc03() Failed")
+    return nullptr;
+  }
+
+  int test02ErrFunc01(
+      const int x
+  ) {
+    test02ErrFunc02(x);
+    _CERRI_
+    return 0;
+  }
+
   DOCTEST_TEST_SUITE(
       "02 Test Basic Macros"
   ) {
@@ -206,6 +229,62 @@ namespace docTests {
       s = retFunctionS2(2, 1);
       CHECK_EQ("Min>Max", s);
       CHECK_EQ(2, CECSSingleton::getNumberOfErrors());
+    }
+
+    TEST_CASE("Checking nested functions errors in CRITICAL mode") {
+      LOG_TEST_CASE("Test Basic Macros", "Checking nested functions errors in CRITICAL mode")
+      auto &CECS = CECSSingleton::getInstance();
+      CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
+      CECSSingleton::resetNumberOfErrors();
+      int err;
+      err = test02ErrFunc01(1);
+      CHECK_EQ(0, err);
+      err = test02ErrFunc01(-1);
+      CHECK_NE(0, err);
+      cout << "CECSSingleton::getNumberOfErrors() = " << CECSSingleton::getNumberOfErrors() << endl;
+      SUBCASE("Try to clean the errors while in CRITICAL mode ... It should throw.") {
+        try {
+          _ECSCLS_
+          CHECK_EQ(0, 1);
+        } catch (const std::exception &e) {
+          cout << e.what() << endl;
+          CHECK_EQ(1, 1);
+        }
+      }
+    }
+
+    /**
+     * @test ErrorMode ERROR which is set using _CECS_MODE_ERR_ can be used to test if some code
+     * passes and in the case it does not passes, to be able to clear the errors and commit other
+     * actions, like for instance initiate a debug code (exporting data etc.).
+     * In this case all captured errors are logged as ERROR, instead of CRITICAL.
+     * While in this mode the `_ECSCLS_` and `_ECSCLS(n)` macros are working.
+     * In CRITICAL mode (default mode) the use of these functions will throw.
+     */
+    TEST_CASE("Checking nested functions errors in ERROR Mode") {
+      LOG_TEST_CASE("Test Basic Macros", "Checking nested functions errors in ERROR Mode")
+      auto &CECS = CECSSingleton::getInstance();
+      CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
+      CECSSingleton::resetNumberOfErrors();
+      _CECS_MODE_ERR_
+      int err;
+      err = test02ErrFunc01(1);
+      CHECK_EQ(0, err);
+      err = test02ErrFunc01(-1);
+      CHECK_NE(0, err);
+      cout << "CECSSingleton::getNumberOfErrors() = " << CECSSingleton::getNumberOfErrors() << endl;
+      SUBCASE("Try to clean the errors while in CRITICAL mode ... It should throw.") {
+        try {
+          _ECSCLS_
+          CHECK_EQ(1, 1);
+          cout << "CECSSingleton::getNumberOfErrors() after _ECSCLS_ = "
+               << CECSSingleton::getNumberOfErrors() << endl;
+        } catch (const std::exception &e) {
+          cout << e.what() << endl;
+          CHECK_EQ(0, 1);
+        }
+      }
+      _CECS_MODE_CRIT_
     }
   }
 } // namespace docTests
