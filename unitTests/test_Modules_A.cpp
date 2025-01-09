@@ -37,10 +37,11 @@ namespace docTests {
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
 
       try {
-        _ERRT(1, "Error Throw!")
+        // const int val = -938;
+        // _ERRT(1, "This is an error throw message with id %i", val)
+        _ERRT(1, "This is an error throw message")
         CHECK_EQ(0,1);
       } catch (const std::exception &e) {
-        std::cout << e.what() << std::endl;
         CHECK_EQ(1,1);
       }
 

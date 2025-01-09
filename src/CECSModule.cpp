@@ -38,7 +38,7 @@ void CECSModule::RecError(
   va_end(vargs);
   if (len <= 0) snprintf(vaStr, CECS__FERRORL, "CECS::RecError():: %i = vsnprintf() >> failed!");
   ostringstream oss;
-  oss << "(" << fileName_ << "), L-" << line_ << ": " << vaStr;
+  oss << "(" << fileName_ << ", L-" << line_ << "): " << vaStr;
   CECS.critMsg(oss.str(), errId);
 }
 
