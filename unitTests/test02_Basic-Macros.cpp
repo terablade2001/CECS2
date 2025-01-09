@@ -98,7 +98,7 @@ namespace docTests {
     return str;
   }
   DOCTEST_TEST_SUITE(
-      "Test Basic Macros"
+      "02 Test Basic Macros"
   ) {
     TEST_CASE("Checking the _ERRT Macro that properly records and throw") {
       LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRT Macro that properly records and throw")

@@ -37,7 +37,7 @@ namespace docTests {
   }
 
   DOCTEST_TEST_SUITE(
-      "Basic Operations"
+      "01 Basic Operations"
   ) {
     TEST_CASE("Renaming the CECS Singleton") {
       std::lock_guard<std::mutex> lock(testMutex);

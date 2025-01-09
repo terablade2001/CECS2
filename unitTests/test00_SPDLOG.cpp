@@ -3,7 +3,7 @@
 
 namespace docTests {
   DOCTEST_TEST_SUITE(
-      "SPDLOG Tests"
+      "00 SPDLOG Tests"
   ) {
     TEST_CASE("Test Basic SPDLOG") {
       LOG_TEST_CASE("SPDLOG Tests", "Test Basic SPDLOG")
