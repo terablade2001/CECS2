@@ -69,40 +69,13 @@ void CECSSingleton::setConfiguration(
   try {
     verifyEnumsHaveNotChange();
     std::vector<spdlog::sink_ptr> sinks;
+    sinks.clear();
 
     // Setup console sink --------------------------------------------------------------------------
-    const auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-    switch (config.screenLogLevel) {
-      case (5): {
-        console_sink->set_level(spdlog::level::trace);
-        break;
-      }
-      case (4): {
-        console_sink->set_level(spdlog::level::debug);
-        break;
-      }
-      case (3): {
-        console_sink->set_level(spdlog::level::info);
-        break;
-      }
-      case (2): {
-        console_sink->set_level(spdlog::level::warn);
-        break;
-      }
-      case (1): {
-        console_sink->set_level(spdlog::level::err);
-        break;
-      }
-      case (0): {
-        console_sink->set_level(spdlog::level::critical);
-        break;
-      }
-      default: {
-        // NOLINTNEXTLINE
-        const std::string err_msg = string("Console Log: Invalid screenlogLevel = ") +
-                                    std::to_string(config.screenLogLevel);
-        throw std::invalid_argument(err_msg);
-      }
+    if (static_cast<uint8_t>(config.screenLogLevel) < static_cast<uint8_t>(Logger::L::NONE)) {
+      const auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+      console_sink->set_level(static_cast<spdlog::level::level_enum>(config.screenLogLevel));
+      sinks.push_back(console_sink);
     }
 
     // Setup File Log sink -------------------------------------------------------------------------
@@ -110,38 +83,7 @@ void CECSSingleton::setConfiguration(
       const auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
           config.logFileName.c_str(), config.logFileMaxSizeBytes, config.logFileNumOfRotatingFiles
       );
-      switch (config.fileLogLevel) {
-        case (static_cast<int>(Logger::L::TRC)): {
-          file_sink->set_level(spdlog::level::trace);
-          break;
-        }
-        case (static_cast<int>(Logger::L::DBG)): {
-          file_sink->set_level(spdlog::level::debug);
-          break;
-        }
-        case (static_cast<int>(Logger::L::INFO)): {
-          file_sink->set_level(spdlog::level::info);
-          break;
-        }
-        case (static_cast<int>(Logger::L::WARN)): {
-          file_sink->set_level(spdlog::level::warn);
-          break;
-        }
-        case (static_cast<int>(Logger::L::ERR)): {
-          file_sink->set_level(spdlog::level::err);
-          break;
-        }
-        case (static_cast<int>(Logger::L::CRIT)): {
-          file_sink->set_level(spdlog::level::critical);
-          break;
-        }
-        default: {
-          // NOLINTNEXTLINE
-          const std::string err_msg =
-              string("Console Log: Invalid fileLogLevel = ") + std::to_string(config.fileLogLevel);
-          throw std::invalid_argument(err_msg);
-        }
-      }
+      file_sink->set_level(static_cast<spdlog::level::level_enum>(config.fileLogLevel));
       sinks.push_back(file_sink);
     }
 
