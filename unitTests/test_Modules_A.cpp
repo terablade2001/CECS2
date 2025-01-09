@@ -98,10 +98,10 @@ namespace docTests {
     return str;
   }
   DOCTEST_TEST_SUITE(
-      "Test Modules"
+      "Test Basic Macros"
   ) {
     TEST_CASE("Checking the _ERRT Macro that properly records and throw") {
-      LOG_TEST_CASE("Test Modules", "Checking the _ERRT Macro that properly records and throw")
+      LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRT Macro that properly records and throw")
       auto &CECS                            = CECSSingleton::getInstance();
       CECS.configuration.useLogCustomFormat = true;
       CECS.configuration.logCustomFormat    = "[%^%L%$] %v";
@@ -117,7 +117,7 @@ namespace docTests {
 
 
     TEST_CASE("Checking the _ERRI Macro that properly records") {
-      LOG_TEST_CASE("Test Modules", "Checking the _ERRT Macro that properly records")
+      LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRT Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
 
@@ -131,7 +131,7 @@ namespace docTests {
     }
 
     TEST_CASE("Checking the _ERR Macro that properly records") {
-      LOG_TEST_CASE("Test Modules", "Checking the _ERR Macro that properly records")
+      LOG_TEST_CASE("Test Basic Macros", "Checking the _ERR Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
 
@@ -145,7 +145,7 @@ namespace docTests {
     }
 
     TEST_CASE("Checking the _ERRN Macro that properly records") {
-      LOG_TEST_CASE("Test Modules", "Checking the _ERRN Macro that properly records")
+      LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRN Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
 
@@ -159,7 +159,7 @@ namespace docTests {
     }
 
     TEST_CASE("Checking the _ERRB Macro that properly records") {
-      LOG_TEST_CASE("Test Modules", "Checking the _ERRB Macro that properly records")
+      LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRB Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
 
@@ -173,7 +173,7 @@ namespace docTests {
     }
 
     TEST_CASE("Checking the _ERRO Macro that properly records") {
-      LOG_TEST_CASE("Test Modules", "Checking the _ERRO Macro that properly records")
+      LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRO Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
 
@@ -187,7 +187,7 @@ namespace docTests {
     }
 
     TEST_CASE("Checking the _ERRSTR Macro that properly records") {
-      LOG_TEST_CASE("Test Modules", "Checking the _ERRSTR Macro that properly records")
+      LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRSTR Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
 
