@@ -28,6 +28,7 @@ static_assert(1, "_ERRT macro is already defined...");
 #define CECS_MODULE(moduleName) static CECSModule __ECSOBJ__(moduleName);
 #define CECS_MAIN_MODULE(moduleName, projetName) static CECS __ECSOBJ__(moduleName, projectName);
 
+
 #define _ECSCLS_                                                                                   \
   { CECSSingleton::resetNumberOfErrors(); }
 #define _ECSCLS(numberOfLatestRecords)                                                             \
@@ -48,7 +49,16 @@ static_assert(1, "_ERRT macro is already defined...");
     throw runtime_error("_ERRT occurred");                                                         \
   }
 
-
+#define _ERRI(ExpR, args...)                                                                       \
+  if ((ExpR)) {                                                                                    \
+    __ECSOBJ__.RecError(__FNAME__, __LINE__, "", args);                                            \
+    return CECSSingleton::getDefaultErrorReturnValue();                                            \
+  }
+#define _ERRIU(ExpR, UserErrID, args...)                                                           \
+  if ((ExpR)) {                                                                                    \
+    __ECSOBJ__.RecError(__FNAME__, __LINE__, UserErrID, args);                                     \
+    return CECSSingleton::getDefaultErrorReturnValue();                                            \
+  }
 
 /*
 #define _ERR_ORG(Obj, ExpR, args...)                                                               \

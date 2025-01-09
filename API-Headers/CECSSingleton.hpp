@@ -67,6 +67,8 @@ public:
   static void
   resetNumberOfErrors(uint32_t reduceValue = std::numeric_limits<uint32_t>::max()) noexcept;
 
+  static int getDefaultErrorReturnValue() noexcept;
+
 private:
   explicit CECSSingleton(std::string ecsNameStr_);
   static CECSSingleton                   instance;

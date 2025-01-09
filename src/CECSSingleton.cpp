@@ -7,6 +7,8 @@ std::recursive_mutex       CECSSingleton::cecsMtx;
 atomic<uint32_t>           CECSSingleton::numberOfRecordedErrors{0};
 shared_ptr<spdlog::logger> CECSSingleton::logger{nullptr};
 
+static constexpr int CECS_DEFAULT_ERROR_RETURN_VALUE = std::numeric_limits<int>::min();
+
 std::string CECSSingleton::Configuration::str() const {
   std::ostringstream os;
   os << "Configuration:\n"
@@ -182,6 +184,10 @@ void CECSSingleton::resetNumberOfErrors(
     return;
   }
   numberOfRecordedErrors -= reduceValue;
+}
+
+int CECSSingleton::getDefaultErrorReturnValue() noexcept {
+  return CECS_DEFAULT_ERROR_RETURN_VALUE;
 }
 
 void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
