@@ -17,6 +17,7 @@
 #include <cassert>
 #include <ostream>
 #include <spdlog/common.h>
+#include <spdlog/spdlog.h>
 #include <spdlog/logger.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
@@ -30,7 +31,7 @@ namespace Logger {
 
 class CECSSingleton {
 public:
-  enum State { NOT_INIT, INIT, INTERNAL_ERROR } state{NOT_INIT};
+  enum State { NOT_INIT=0, INIT=1, INTERNAL_ERROR=2 } state{NOT_INIT};
 
   struct Configuration {
     std::string loggerName{"IL"};
@@ -41,6 +42,7 @@ public:
     uint8_t     logFileNumOfRotatingFiles{3};
     bool        useLogCustomFormat{true};
     std::string logCustomFormat{"(%m/%d %H:%M:%S) [%^%L%$] [t:%t] %v"};
+    uint8_t     flushLevel{Logger::L::INFO};
 
     std::string str() const;
   } configuration;
@@ -58,11 +60,17 @@ public:
   void        setConfiguration(const Configuration &config) noexcept(false);
   void        reconfigure() noexcept(false);
   void        logMsg(Logger::L level_, const std::string &log_) const noexcept(false);
+  void        critMsg(const std::string &log_, const std::string &errId = "") const noexcept(false);
+
+  static uint32_t getNumberOfErrors() noexcept;
+  static void
+  resetNumberOfErrors(uint32_t reduceValue = std::numeric_limits<uint32_t>::max()) noexcept;
 
 private:
   explicit CECSSingleton(std::string ecsNameStr_);
   static CECSSingleton                   instance;
   std::string                            projectName;
+  static std::atomic<uint32_t>           numberOfRecordedErrors;
   static std::shared_ptr<spdlog::logger> logger;
   static void                            verifyEnumsHaveNotChange() noexcept(false);
 };
