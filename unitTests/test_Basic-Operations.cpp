@@ -132,22 +132,34 @@ namespace docTests {
 
     TEST_CASE("Test logging with CECS...") {
       std::lock_guard<std::mutex> lock(testMutex);
-      LOG_TEST_CASE( "Basic Operations", "Basic logging with CECS...")
+      LOG_TEST_CASE("Basic Operations", "Basic logging with CECS...")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
-      if (CECS.state == CECSSingleton::State::NOT_INIT) {
-        CECSSingleton::Configuration defaultConfig;
-        CECS.setConfiguration(defaultConfig);
-        CECS.state = CECSSingleton::State::INIT;
-      }
+      CECS.configuration.logCustomFormat = "[%^%L%$] %v";
+      CECS.reconfigure();
 
       CECS.configuration.fileLogLevel = Logger::L::TRC;
       CHECK_NOTHROW(CECS.reconfigure());
       CHECK_NOTHROW(CECS.logMsg(Logger::L::TRC, "... Trace Message ... "));
       CHECK_NOTHROW(CECS.logMsg(Logger::L::DBG, "... Debug Message ... "));
       CHECK_NOTHROW(CECS.logMsg(Logger::L::INFO, "... Info Message ... "));
-      CHECK_NOTHROW(CECS.logMsg(Logger::L::ERR, "... Error Message ... "));
-      CHECK_NOTHROW(CECS.logMsg(Logger::L::WARN, "... Warning Message ... "));
+      CHECK_NOTHROW(CECS.logMsg(Logger::L::WARN, "... Warning Message ..."));
+      {
+        std::ostringstream captured_stdout;
+        std::streambuf    *original_cout_buffer = std::cout.rdbuf();
+        std::cout.rdbuf(captured_stdout.rdbuf());
+        std::ostringstream captured_stderr;
+        std::streambuf    *original_cerr_buffer = std::cerr.rdbuf();
+        std::cerr.rdbuf(captured_stderr.rdbuf());
+        CHECK_NOTHROW(CECS.logMsg(Logger::L::ERR, "... Error Message ..."));
+        std::cout.rdbuf(original_cout_buffer);
+        //      ostringstream oss;
+        //        oss << "[E] ... Error Message ... \n[W] ... Warning Message ... ";
+        // cout << "[" << oss.str() << "]" << endl;
+        cout << "[" << captured_stdout.str() << "]" << endl;
+        cout << "[" << captured_stderr.str() << "]" << endl;
+        // CHECK_EQ(0, captured_stdout.str().compare(oss.str()));
+      }
 
       CECS.Shutdown();
       std::remove("CECSLog.log");

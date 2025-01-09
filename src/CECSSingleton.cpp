@@ -109,6 +109,11 @@ void CECSSingleton::reconfigure() noexcept(
   setConfiguration(configuration);
 }
 
+void CECSSingleton::resetConfiguration() noexcept {
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
+  configuration = hardCodedConfiguration;
+}
+
 void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) const noexcept(false) {
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (logger == nullptr) {

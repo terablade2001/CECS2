@@ -48,6 +48,8 @@ public:
     std::string str() const;
   } configuration;
 
+  const Configuration hardCodedConfiguration{configuration};
+
   CECSSingleton()                                 = delete;
   CECSSingleton(const CECSSingleton &)            = delete; // Prevent copy
   CECSSingleton &operator=(const CECSSingleton &) = delete; // Prevent assignment
@@ -60,6 +62,7 @@ public:
   void        setProjectName(const std::string &projectName_) noexcept;
   void        setConfiguration(const Configuration &config) noexcept(false);
   void        reconfigure() noexcept(false);
+  void        resetConfiguration() noexcept;
   void        logMsg(Logger::L level_, const std::string &log_) const noexcept(false);
   void        critMsg(const std::string &log_, const std::string &errId = "") const noexcept(false);
 
