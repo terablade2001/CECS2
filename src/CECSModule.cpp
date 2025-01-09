@@ -2,7 +2,8 @@
 #include <cstdarg>
 
 // NOLINTBEGIN
-#define CECS__FERRORL (512)
+constexpr int CECS__FERRORL = 512;
+// #define CECS__FERRORL (512)
 
 // NOLINTEND
 
@@ -27,7 +28,8 @@ int CECSModule::getCompiledCECSMaxLineSize() { return CECS__FERRORL; }
 
 void CECSModule::RecError(
     const char *fileName_, const uint32_t line_, const std::string &errId, const char *msg_, ...
-) const noexcept(false) {
+)  noexcept(false) {
+  std::lock_guard<std::mutex> lock(mtx);
   if (fileName_ == nullptr) throw std::invalid_argument("CECS::RecError():: fileName_ is nullptr!");
   if (msg_ == nullptr) throw std::invalid_argument("CECS::RecError():: msg_ is nullptr!");
   char vaStr[CECS__FERRORL + 1] = {0};
@@ -36,6 +38,7 @@ void CECSModule::RecError(
   va_start(vargs, msg_);
   len = vsnprintf(vaStr, CECS__FERRORL, msg_, vargs);
   va_end(vargs);
+  // NOLINTNEXTLINE
   if (len <= 0) snprintf(vaStr, CECS__FERRORL, "CECS::RecError():: %i = vsnprintf() >> failed!");
   ostringstream oss;
   oss << "(" << fileName_ << ", L-" << line_ << "): " << vaStr;
@@ -44,7 +47,8 @@ void CECSModule::RecError(
 
 void CECSModule::RecError(
     const char *fileName_, const uint32_t line_, const std::string &errId, const std::string &msg_
-) const noexcept(false) {
+)  noexcept(false) {
+  std::lock_guard<std::mutex> lock(mtx);
   if (fileName_ == nullptr) throw std::invalid_argument("CECS::RecError():: fileName_ is nullptr!");
   ostringstream oss;
   oss << "(" << fileName_ << "), L-" << line_ << ": " << msg_;
