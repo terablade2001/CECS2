@@ -2,12 +2,13 @@
 
 using namespace std;
 
-CECSSingleton              CECSSingleton::instance{"CECS-Default"};
-std::recursive_mutex       CECSSingleton::cecsMtx;
-atomic<uint32_t>           CECSSingleton::numberOfRecordedErrors{0};
-shared_ptr<spdlog::logger> CECSSingleton::logger{nullptr};
-
 static constexpr int CECS_DEFAULT_ERROR_RETURN_VALUE = std::numeric_limits<int>::min();
+
+CECSSingleton                    CECSSingleton::instance{"CECS-Default"};
+atomic<CECSSingleton::ErrorMode> CECSSingleton::errorMode{ErrorMode::CRITICAL};
+std::recursive_mutex             CECSSingleton::cecsMtx;
+atomic<uint32_t>                 CECSSingleton::numberOfRecordedErrors{0};
+shared_ptr<spdlog::logger>       CECSSingleton::logger{nullptr};
 
 std::string CECSSingleton::Configuration::str() const {
   std::ostringstream os;
@@ -187,6 +188,12 @@ void CECSSingleton::resetNumberOfErrors(
 }
 
 int CECSSingleton::getDefaultErrorReturnValue() noexcept { return CECS_DEFAULT_ERROR_RETURN_VALUE; }
+
+void CECSSingleton::setErrorMode(
+    ErrorMode mode_
+) noexcept {
+  errorMode = mode_;
+}
 
 void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
     false

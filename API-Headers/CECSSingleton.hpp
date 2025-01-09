@@ -33,9 +33,10 @@ namespace Logger {
 class CECSSingleton {
 public:
   enum State { NOT_INIT = 0, INIT = 1, INTERNAL_ERROR = 2 };
+
   enum ErrorMode { CRITICAL = 5, ERROR = 4 };
+
   std::atomic<State> state{State::NOT_INIT};
-  std::atomic<ErrorMode> errorMode{ErrorMode::CRITICAL};
 
   struct Configuration {
     std::string loggerName{"IL"};
@@ -52,12 +53,11 @@ public:
   } configuration;
 
   CECSSingleton()                                 = delete;
-  CECSSingleton(const CECSSingleton &)            = delete; // Prevent copy
-  CECSSingleton &operator=(const CECSSingleton &) = delete; // Prevent assignment
+  CECSSingleton(const CECSSingleton &)            = delete;
+  CECSSingleton &operator=(const CECSSingleton &) = delete;
   ~CECSSingleton()                                = default;
 
   static CECSSingleton &getInstance() noexcept(false);
-  void                  Shutdown();
 
   std::string getProjectName() const noexcept;
   void        setProjectName(const std::string &projectName_) noexcept;
@@ -65,20 +65,23 @@ public:
   void        reconfigure() noexcept(false);
   void        logMsg(Logger::L level_, const std::string &log_) const noexcept(false);
   void        critMsg(const std::string &log_, const std::string &errId = "") noexcept(false);
+  void        Shutdown();
 
   static uint32_t getNumberOfErrors() noexcept;
   static void
   resetNumberOfErrors(uint32_t reduceValue = std::numeric_limits<uint32_t>::max()) noexcept;
-
-  static int getDefaultErrorReturnValue() noexcept;
+  static int  getDefaultErrorReturnValue() noexcept;
+  static void setErrorMode(ErrorMode mode_) noexcept;
 
 private:
-  static CECSSingleton                   instance;
   std::string                            projectName;
+  static CECSSingleton                   instance;
+  static std::atomic<ErrorMode>          errorMode;
   static std::recursive_mutex            cecsMtx;
   static std::atomic<uint32_t>           numberOfRecordedErrors;
   static std::shared_ptr<spdlog::logger> logger;
+
   explicit CECSSingleton(std::string ecsNameStr_);
-  static void verifyEnumsHaveNotChange() noexcept(false);
   void        handleErrId(const std::string &errId) noexcept(false);
+  static void verifyEnumsHaveNotChange() noexcept(false);
 };

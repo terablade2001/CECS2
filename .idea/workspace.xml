@@ -31,6 +31,7 @@
     <option name="/Default/PatternsAndTemplates/LiveTemplates/Template/=C9FF77DADED1ED479ED88A7387B13006/Field/=NAME/Order/@EntryValue" value="0" type="long" />
     <option name="/Default/CodeEditing/CppCodeGeneration/EmptyCtorsAndDtorsBodyKind/@EntryValue" value="Empty" type="string" />
     <option name="/Default/Housekeeping/RefactoringsMru/RenameRefactoring/DoSearchForTextInStrings/@EntryValue" value="true" type="bool" />
+    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexRemoved" />
   </component>
   <component name="BookmarksViewState">
     <option name="autoscrollToSource" value="true" />
@@ -132,7 +133,7 @@
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;1-work__on__basic__design&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;3-CERR__MODE-Impl&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/vasil/CLionProjects/CECS2/unitTests&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -234,7 +235,8 @@
       <workItem from="1736429058626" duration="5339000" />
       <workItem from="1736434767035" duration="506000" />
       <workItem from="1736435303014" duration="1973000" />
-      <workItem from="1736444453364" duration="725000" />
+      <workItem from="1736444453364" duration="896000" />
+      <workItem from="1736447540566" duration="876000" />
     </task>
     <task id="LOCAL-00001" summary="(0.18)[I#2]: Enabling CustomFormat.">
       <option name="closed" value="true" />
