@@ -82,17 +82,18 @@ static_assert(1, "_ERRT macro is already defined...");
 //     return nullptr;                                                                                \
 //   }
 
+#define _ERRB(ExpR, args...)                                                                       \
+  if ((ExpR)) {                                                                                    \
+    __ECSOBJ__.RecError(__FNAME__, __LINE__, "", args);                                            \
+    return false;                                                                                  \
+  }
+// #define _ERRBU(ExpR, UserErrID, args...)                                                           \
+//   if ((ExpR)) {                                                                                    \
+//     __ECSOBJ__.RecError(__FNAME__, __LINE__, UserErrID, args);                                     \
+//     return false;                                                                                  \
+//   }
+
 /*
-#define _ERRN_ORG(Obj, ExpR, args...)                                                              \
-  if ((ExpR)) {                                                                                    \
-    (Obj).RecError(_CECS_DEFAULT_ERRID, _CECS_ERRTYPE_ERROR, __FNAME__, __LINE__, args);           \
-    __CECS_RETURN_NULL_                                                                            \
-  }
-#define _ERRB_ORG(Obj, ExpR, args...)                                                              \
-  if ((ExpR)) {                                                                                    \
-    (Obj).RecError(_CECS_DEFAULT_ERRID, _CECS_ERRTYPE_ERROR, __FNAME__, __LINE__, args);           \
-    __CECS_RETURN_BOOL_                                                                            \
-  }
 #define _ERRO_ORG(Obj, ExpR, __UserReturn__, args...)                                              \
   if ((ExpR)) {                                                                                    \
     (Obj).RecError(_CECS_DEFAULT_ERRID, _CECS_ERRTYPE_ERROR, __FNAME__, __LINE__, args);           \

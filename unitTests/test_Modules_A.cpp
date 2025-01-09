@@ -58,14 +58,21 @@ namespace docTests {
     return nullptr;
   }
 
+  bool retFunctionB(
+      const int min, const int max
+  ) {
+    _ERRB(min > max, "Min[=%i] > Max[=%i]", min, max)
+    return true;
+  }
+
   DOCTEST_TEST_SUITE(
       "Test Modules"
   ) {
     TEST_CASE("Checking the _ERRT Macro that properly records and throw") {
       LOG_TEST_CASE("Test Modules", "Checking the _ERRT Macro that properly records and throw")
-      auto &CECS = CECSSingleton::getInstance();
+      auto &CECS                            = CECSSingleton::getInstance();
       CECS.configuration.useLogCustomFormat = true;
-      CECS.configuration.logCustomFormat = "[%^%L%$] %v";
+      CECS.configuration.logCustomFormat    = "[%^%L%$] %v";
       CECS.reconfigure();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
 
@@ -117,6 +124,20 @@ namespace docTests {
       CHECK_EQ(2, res);
       retFunctionR(2, 2, res);
       CHECK_EQ(3, res);
+    }
+
+    TEST_CASE("Checking the _ERRB Macro that properly records") {
+      LOG_TEST_CASE("Test Modules", "Checking the _ERRB Macro that properly records")
+      auto &CECS = CECSSingleton::getInstance();
+      CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
+
+      bool res{false};
+      res = retFunctionB(1, 2);
+      CHECK_EQ(true, res);
+      res = retFunctionB(2, 2);
+      CHECK_EQ(true, res);
+      res = retFunctionB(3, 2);
+      CHECK_EQ(false, res);
     }
   }
 } // namespace docTests
