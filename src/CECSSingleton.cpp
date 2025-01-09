@@ -14,8 +14,7 @@ std::string CECSSingleton::Configuration::str() const {
      << "\n logFileMaxSizeBytes: " << logFileMaxSizeBytes
      << "\n logFileNumOfRotatingFiles: " << static_cast<int>(logFileNumOfRotatingFiles)
      << "\n useLogCustomFormat: " << useLogCustomFormat << "\n logCustomFormat: " << logCustomFormat
-     << "\n flushLevel: " << static_cast<int>(flushLevel)
-     << std::endl;
+     << "\n flushLevel: " << static_cast<int>(flushLevel) << std::endl;
   return os.str();
 }
 
@@ -118,40 +117,21 @@ void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) cons
         "CECS - logMsg() Failed:: Logger is in wrong state. Shutdown and reconfigure."
     );
   }
-  spdlog::level::level_enum spdLogLevel;
-  switch (level_) {
-    // The logMsg() does not support CRITICAL Logging. Use critMsg() for such logging.
-    // Critical logs, means the system has to abort, and should be handled by the CECS modules via
-    // the critMsg() method.
-    // case Logger::CRIT:
-    //   spdLogLevel = spdlog::level::critical;
-    //   break;
-    case Logger::ERR:
-      spdLogLevel = spdlog::level::err;
-      break;
-    case Logger::WARN:
-      spdLogLevel = spdlog::level::warn;
-      break;
-    case Logger::INFO:
-      spdLogLevel = spdlog::level::info;
-      break;
-    case Logger::DBG:
-      spdLogLevel = spdlog::level::debug;
-      break;
-    case Logger::TRC:
-      spdLogLevel = spdlog::level::trace;
-      break;
-    default:
-      throw std::invalid_argument("CECS - logMsg() Failed:: Invalid log level");
-  }
-
-  try {
-    logger->log(spdLogLevel, log_);
-  } catch (std::exception &e) {
-    string errMsg{"CECS - logMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
-    };
-    errMsg += e.what();
-    throw std::runtime_error(errMsg);
+  if (static_cast<uint8_t>(level_) < static_cast<uint8_t>(Logger::L::NONE)) {
+    if (level_ == Logger::L::CRIT) {
+      throw std::invalid_argument(
+          "CECS - logMsg() Failed:: Invalid log level. For 'critical' messages use critMsg()."
+      );
+    }
+    try {
+      logger->log(static_cast<spdlog::level::level_enum>(level_), log_);
+    } catch (std::exception &e) {
+      string errMsg{
+          "CECS - logMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
+      };
+      errMsg += e.what();
+      throw std::runtime_error(errMsg);
+    }
   }
 }
 
@@ -174,9 +154,7 @@ void CECSSingleton::critMsg(const std::string &log_, const std::string &errId) c
   }
 
   try {
-    std::cout << "-------------------------------[" << log_ << "]" << endl;
     logger->log(spdlog::level::critical, log_);
-    std::cout << "-------------------------------" << endl;
   } catch (std::exception &e) {
     string errMsg{"CECS - critMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
     };

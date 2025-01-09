@@ -37,8 +37,6 @@ namespace docTests {
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
 
       try {
-        cout << CECS.configuration.str() << endl;
-        CECS.logMsg(Logger::L::TRC, "Hello!");
         _ERRT(1, "Error Throw!")
         CHECK_EQ(0,1);
       } catch (const std::exception &e) {
