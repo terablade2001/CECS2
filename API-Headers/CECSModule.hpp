@@ -4,24 +4,18 @@
 
 class CECSModule {
   std::string    moduleName;
-  CECSSingleton &CECS;
 
 public:
+  CECSSingleton &CECS;
+
   CECSModule()                              = delete;
   CECSModule(const CECSModule &)            = delete;
   CECSModule &operator=(const CECSModule &) = delete;
   ~CECSModule()                             = default;
 
   // NOLINTNEXTLINE
-  CECSModule(
-      std::string moduleName_
-  ) : moduleName(std::move(moduleName_)), CECS(CECSSingleton::getInstance()) {}
-
-  CECSModule(
-      std::string moduleName_, const std::string &projectName_
-  ) : moduleName(std::move(moduleName_)), CECS(CECSSingleton::getInstance()) {
-    CECS.setProjectName(projectName_);
-  }
+  CECSModule(const std::string &moduleName_);
+  CECSModule(const std::string &moduleName_, const std::string &projectName_);
 
   static int getCompiledCECSMaxLineSize();
 

@@ -8,6 +8,16 @@
 
 using namespace std;
 
+CECSModule::CECSModule(
+    const std::string &moduleName_ // NOLINT
+) : moduleName(moduleName_), CECS(CECSSingleton::getInstance()) {}
+
+CECSModule::CECSModule(
+    const std::string &moduleName_, const std::string &projectName_ // NOLINT
+) : moduleName(moduleName_), CECS(CECSSingleton::getInstance()) {
+  CECS.setProjectName(projectName_);
+}
+
 int CECSModule::getCompiledCECSMaxLineSize() { return CECS__FERRORL; }
 
 void CECSModule::RecError(

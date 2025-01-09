@@ -21,30 +21,38 @@ static_assert(1, "_ERRT macro is already defined...");
 #define __FNAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FNAMEBSL__)
 #endif
 
+#ifndef __ECSOBJ__
+#define __ECSOBJ__ CECS_Instance_
+#endif
+
 #define CECS_MODULE(moduleName) static CECSModule __ECSOBJ__(moduleName);
 #define CECS_MAIN_MODULE(moduleName, projetName) static CECS __ECSOBJ__(moduleName, projectName);
 
-#define _ECSCLS_ { CECSSingleton::resetNumberOfErrors(); }
-#define _ECSCLS(numberOfLatestRecords) { CECSSingleton::resetNumberOfErrors(numberOfLatestRecords); }
+#define _ECSCLS_                                                                                   \
+  { CECSSingleton::resetNumberOfErrors(); }
+#define _ECSCLS(numberOfLatestRecords)                                                             \
+  { CECSSingleton::resetNumberOfErrors(numberOfLatestRecords); }
 
 #define _NERR_ (CECSSingleton::getNumberOfErrors())
 
-#define CECS_MACRO_DISPATCHER(_1, _2, _3, _4, CECS_MACRO_DISPATCH_NAME, ...)                       \
-  CECS_MACRO_DISPATCH_NAME
-
 #ifndef _MSC_VER
+
+#define CECS_MACRO_DISPATCHER(_1, _2, CECS_MACRO_DISPATCH_NAME, ...) CECS_MACRO_DISPATCH_NAME
 
 #define _ERRT_ORG(ExpR, args...)                                                                   \
   if ((ExpR)) {                                                                                    \
-    __ECSOBJ__.RecError(__FNAME__, __LINE__, args);                                                \
-    __ECSOBJ__.throwErrors();                                                                      \
+    __ECSOBJ__.RecError(__FNAME__, __LINE__, "", args);                                            \
+    throw runtime_error("_ERRT occurred");                                                         \
   }
 #define _ERRT_EXT(ExpR, ErrId, args...)                                                            \
   if ((ExpR)) {                                                                                    \
     __ECSOBJ__.RecError(__FNAME__, __LINE__, ErrId, args);                                         \
-    __ECSOBJ__.throwErrors();                                                                      \
+    throw runtime_error("_ERRT occurred");                                                         \
   }
 #define _ERRT(...) CECS_MACRO_DISPATCHER(__VA_ARGS__, _ERRT_ORG, _ERRT_EXT)(__VA_ARGS__)
+
+
+
 
 /*
 #define _ERR_ORG(Obj, ExpR, args...)                                                               \
