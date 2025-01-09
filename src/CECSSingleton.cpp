@@ -117,7 +117,7 @@ void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) cons
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (logger == nullptr) {
     throw std::runtime_error(
-        "CECS - logMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
+        "CECS - logMsg() Failed:: Logger is not initialized. Use setConfiguration() ..."
     );
   }
   if (state != INIT) {
@@ -135,7 +135,7 @@ void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) cons
       logger->log(static_cast<spdlog::level::level_enum>(level_), log_);
     } catch (std::exception &e) {
       string errMsg{
-          "CECS - logMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
+          "CECS - logMsg() Failed:: Logger is not initialized. Use setConfiguration() ..."
       };
       errMsg += e.what();
       throw std::runtime_error(errMsg);
@@ -147,7 +147,7 @@ void CECSSingleton::critMsg(const std::string &log_, const std::string &errId)  
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (logger == nullptr) {
     throw std::runtime_error(
-        "CECS - critMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
+        "CECS - critMsg() Failed:: Logger is not initialized. Use setConfiguration() ..."
     );
   }
   if (state != INIT) {
@@ -164,7 +164,7 @@ void CECSSingleton::critMsg(const std::string &log_, const std::string &errId)  
     const int _errorMode = static_cast<int>(errorMode);
     logger->log(static_cast<spdlog::level::level_enum>(_errorMode), log_);
   } catch (std::exception &e) {
-    string errMsg{"CECS - critMsg() Failed:: Logger has not initialized. Use setConfiguration() ..."
+    string errMsg{"CECS - critMsg() Failed:: Logger is not initialized. Use setConfiguration() ..."
     };
     errMsg += e.what();
     throw std::runtime_error(errMsg);
@@ -190,14 +190,25 @@ void CECSSingleton::resetNumberOfErrors(
 int CECSSingleton::getDefaultErrorReturnValue() noexcept { return CECS_DEFAULT_ERROR_RETURN_VALUE; }
 
 void CECSSingleton::setErrorMode(
-    ErrorMode mode_
-) noexcept {
+    const ErrorMode mode_
+) noexcept(false) {
+  lock_guard<recursive_mutex> lock(cecsMtx);
+  if (errorMode == mode_) return;
+  if (logger != nullptr) {
+    string outString{"CECS: *** ErrorMode Set to [ "};
+    if (mode_ == ErrorMode::CRITICAL) {
+      outString += "CRITICAL ] ***";
+    } else {
+      outString += "ERROR ] ***";
+    }
+    logger->log(spdlog::level::debug, outString);
+  } else {
+    throw std::runtime_error("CECS - setErrorMode() Failed:: Logger is not initialized.");
+  }
   errorMode = mode_;
 }
 
-CECSSingleton::ErrorMode CECSSingleton::getErrorMode() noexcept {
-  return errorMode;
-}
+CECSSingleton::ErrorMode CECSSingleton::getErrorMode() noexcept { return errorMode; }
 
 void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
     false
