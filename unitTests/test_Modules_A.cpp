@@ -36,6 +36,16 @@ namespace docTests {
     return 0;
   }
 
+  void retFunctionR(
+     const int min, const int max, int& res
+ ) {
+    res = 1;
+    _ERR(min < max,"Min[=%i] < Max[=%i]", min, max)
+    res = 2;
+    _ERR(min > max,"Min[=%i] > Max[=%i]", min, max)
+    res = 3;
+  }
+
   DOCTEST_TEST_SUITE(
       "Test Modules"
   ) {
@@ -51,20 +61,36 @@ namespace docTests {
         CHECK_EQ(0, 1);
       } catch (const std::exception &e) { CHECK_EQ(1, 1); }
     }
-  }
 
-  TEST_CASE("Checking the _ERRI Macro that properly records") {
-    LOG_TEST_CASE("Test Modules", "Checking the _ERRT Macro that properly records")
-    auto &CECS = CECSSingleton::getInstance();
-    if (CECS.state == CECSSingleton::State::NOT_INIT) { CECS.reconfigure(); }
-    CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
 
-    int err = 0;
-    err = retFunction(1, 2);
-    CHECK_EQ(0, err);
-    err = retFunction(2, 2);
-    CHECK_EQ(0, err);
-    err = retFunction(3, 2);
-    CHECK_NE(0, err);
+    TEST_CASE("Checking the _ERRI Macro that properly records") {
+      LOG_TEST_CASE("Test Modules", "Checking the _ERRT Macro that properly records")
+      auto &CECS = CECSSingleton::getInstance();
+      if (CECS.state == CECSSingleton::State::NOT_INIT) { CECS.reconfigure(); }
+      CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
+
+      int err = 0;
+      err     = retFunction(1, 2);
+      CHECK_EQ(0, err);
+      err = retFunction(2, 2);
+      CHECK_EQ(0, err);
+      err = retFunction(3, 2);
+      CHECK_NE(0, err);
+    }
+
+    TEST_CASE("Checking the _ERR Macro that properly records") {
+      LOG_TEST_CASE("Test Modules", "Checking the _ERR Macro that properly records")
+      auto &CECS = CECSSingleton::getInstance();
+      if (CECS.state == CECSSingleton::State::NOT_INIT) { CECS.reconfigure(); }
+      CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
+
+      int res = 0;
+      retFunctionR(1, 2, res);
+      CHECK_EQ(1, res);
+      retFunctionR(3, 2, res);
+      CHECK_EQ(2, res);
+      retFunctionR(2, 2, res);
+      CHECK_EQ(3, res);
+    }
   }
 } // namespace docTests
