@@ -83,9 +83,12 @@ public:
   // Avoid using this method. Use reConfigure() instead.
   void initializeLogger(const Configuration &config) noexcept(false);
 
+protected:
+  friend class CECSModule;
+  Configuration                          configuration;
+
 private:
   std::string                            projectName;
-  Configuration                          configuration;
   static CECSSingleton                   instance;
   static std::atomic<ErrorMode>          errorMode;
   static std::recursive_mutex            cecsMtx;
