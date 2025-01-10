@@ -4,14 +4,17 @@ CECS_MODULE(
     "CECSErrorCodes"
 )
 
-CECSErrorCodes::CECSErrorCodes() {
+CECSErrorCodes::CECSErrorCodes() : errorCode{0} {
   mapTagsToErrorcodes.emplace("GENERIC", ErrorCodeList{1, "Generic Error."});
 }
 
 void CECSErrorCodes::reset() noexcept {
   mapTagsToErrorcodes.clear();
   mapTagsToErrorcodes.emplace("GENERIC", ErrorCodeList{1, "Generic Error."});
+  errorCode = 0;
 }
+
+void CECSErrorCodes::clearErrorCode() noexcept { errorCode = 0; }
 
 std::string CECSErrorCodes::getErrorCodesListing() const noexcept {
   std::ostringstream oss;
@@ -26,6 +29,21 @@ bool CECSErrorCodes::isTagExistInMap(
     const std::string &tag_
 ) const noexcept {
   return mapTagsToErrorcodes.count(tag_) != 0;
+}
+
+int CECSErrorCodes::handleErrorCode(const std::string &tag_) noexcept(false){
+  if (!isTagExistInMap(tag_)) {
+    throw std::runtime_error(
+        "CECSErrorCodesAtExit::handleErrorCode(): Given tag_ [" + tag_ + "] should exist!"
+    );
+  }
+  // Update the errorCode only the first time an error occurs. This error code is the reason for
+  // failure
+  if (errorCode == 0) {
+    const auto &el = mapTagsToErrorcodes.at(tag_);
+    errorCode      = el.code;
+  }
+  return errorCode;
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -49,7 +67,10 @@ int CECSErrorCodesAtExit::addNewErrorCode(
       tag_.c_str()
   )
   for (const auto &el: mapTagsToErrorcodes) {
-    _ERRI(el.second.code == Code, "CECSErrorCodesAtExit: Id [=%i] of the new error code already exist!",Code)
+    _ERRI(
+        el.second.code == Code,
+        "CECSErrorCodesAtExit: Id [=%i] of the new error code already exist!", Code
+    )
   }
   mapTagsToErrorcodes.emplace(tag_, newErrorCode_);
   return 0;
@@ -69,11 +90,14 @@ int CECSErrorCodesOnIntReturn::addNewErrorCode(
       "CECSErrorCodesOnIntReturn: Provided new error description is empty"
   )
   _ERRI(
-      isTagExistInMap(tag_), "CECSErrorCodesOnIntReturn: Provided new error tag [=%s] already exist!",
-      tag_.c_str()
+      isTagExistInMap(tag_),
+      "CECSErrorCodesOnIntReturn: Provided new error tag [=%s] already exist!", tag_.c_str()
   )
   for (const auto &el: mapTagsToErrorcodes) {
-    _ERRI(el.second.code == Code, "CECSErrorCodesOnIntReturn: Id [=%i] of the new error code already exist!",Code)
+    _ERRI(
+        el.second.code == Code,
+        "CECSErrorCodesOnIntReturn: Id [=%i] of the new error code already exist!", Code
+    )
   }
   mapTagsToErrorcodes.emplace(tag_, newErrorCode_);
   return 0;

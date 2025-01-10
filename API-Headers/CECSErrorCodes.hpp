@@ -4,7 +4,6 @@
 
 class CECSErrorCodes {
 public:
-
   struct ErrorCodeList {
     int         code;
     std::string description;
@@ -14,13 +13,17 @@ public:
     ) : code(code), description(std::move(description)) {}
   };
 
+  int errorCode;
+
   CECSErrorCodes();
 
   virtual ~CECSErrorCodes() = default;
 
-  void reset() noexcept;
+  void        reset() noexcept;
+  void        clearErrorCode() noexcept;
   std::string getErrorCodesListing() const noexcept;
-  bool isTagExistInMap(const std::string &tag_) const noexcept;
+  bool        isTagExistInMap(const std::string &tag_) const noexcept;
+  int         handleErrorCode(const std::string &tag_) noexcept(false);
 
 
   virtual int

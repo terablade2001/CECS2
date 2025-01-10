@@ -1,7 +1,5 @@
 #include "CECSErrorCodes.hpp"
 
-
-#include <CECSErrorCodes.hpp>
 #include <atomic>
 
 using namespace std;
@@ -296,6 +294,7 @@ bool  CECSSingleton::handleErrIdAtExit(const std::string &errId) const noexcept(
   const bool isTagExistAtExit = cecsErrorCodesAtExit->isTagExistInMap(errId);
   if (!isTagExistAtExit) { return false; }
   // TODO :: TagAtExit
+  cout << "handleErrIdAtExit():: DEBUG: TagAtExit --- errId = " << errId << endl;
   return true;
 }
 
@@ -308,6 +307,7 @@ bool CECSSingleton::handleErrIdOnIntReturn(const std::string &errId) const  noex
   const bool isTagExistOnIntReturn = cecsErrorCodesOnIntReturn->isTagExistInMap(errId);
   if (!isTagExistOnIntReturn) { return false; }
   // TODO :: TagOnIntReturn
+  cout << "handleErrIdOnIntReturn():: DEBUG: TagOnIntReturn --- errId = " << errId << endl;
   return true;
 }
 
