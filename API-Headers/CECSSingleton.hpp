@@ -39,7 +39,7 @@ public:
   std::atomic<State> state{State::NOT_INIT};
 
   struct Configuration {
-    std::string loggerName{"IL"};
+    std::string loggerName{"CECS"};
     uint8_t     screenLogLevel{Logger::L::TRC};
     uint8_t     fileLogLevel{Logger::L::NONE};
     std::string logFileName{"CECSLog.log"};
