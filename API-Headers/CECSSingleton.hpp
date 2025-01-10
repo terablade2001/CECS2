@@ -48,7 +48,7 @@ public:
     std::string logCustomFormatForScreen{"[%^-%L-%$] %v"};
     std::string logCustomFormatForFile{"(%Y-%m-%d %H:%M:%S.%e) [%^-%L-%$] [t:%t] %v"};
     uint8_t     flushLevel{Logger::L::DBG};
-
+    bool        isLoggingUsingModuleNameInsteadOfFilename{true};
     std::string str() const;
   };
 
@@ -85,7 +85,7 @@ public:
 
 protected:
   friend class CECSModule;
-  Configuration                          configuration;
+  Configuration configuration;
 
 private:
   std::string                            projectName;

@@ -25,6 +25,7 @@
 
 namespace docTests {
   static std::mutex testMutex;
+  static CECSModule __ECSOBJ__("MODULE:Test01");
   using namespace std;
 
   bool isFileExist(
@@ -153,7 +154,7 @@ namespace docTests {
       CHECK_NOTHROW(CECS.logMsg(Logger::L::INFO, "... Info Message ... "));
       CHECK_NOTHROW(CECS.logMsg(Logger::L::ERR, "... Error Message ... "));
       CHECK_NOTHROW(CECS.logMsg(Logger::L::WARN, "... Warning Message ... "));
-
+      _ERRSTR(1,{ ss << "_ERRSTR: ... Error Message ... "; })
       CECS.Shutdown();
       std::remove("CECSLog.log");
     }

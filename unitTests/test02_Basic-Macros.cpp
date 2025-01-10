@@ -27,7 +27,7 @@
 
 namespace docTests {
   using namespace std;
-  static CECSModule __ECSOBJ__("Module-A");
+  static CECSModule __ECSOBJ__("MODULE:Test02");
 
   int retFunction(
       const int min, const int max

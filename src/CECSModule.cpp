@@ -41,7 +41,11 @@ void CECSModule::RecError(
   // NOLINTNEXTLINE
   if (len <= 0) snprintf(vaStr, CECS__FERRORL, "CECS::RecError():: %i = vsnprintf() >> failed!");
   ostringstream oss;
-  oss << "(" << fileName_ << ", L-" << line_ << "): " << vaStr;
+  if (CECS.configuration.isLoggingUsingModuleNameInsteadOfFilename) {
+    oss << "(" << moduleName << ", L-" << line_ << "): " << vaStr;
+  } else {
+    oss << "(" << fileName_ << ", L-" << line_ << "): " << vaStr;
+  }
   CECS.critMsg(oss.str(), errId);
 }
 
@@ -51,6 +55,10 @@ void CECSModule::RecError(
   std::lock_guard<std::mutex> lock(mtx);
   if (fileName_ == nullptr) throw std::invalid_argument("CECS::RecError():: fileName_ is nullptr!");
   ostringstream oss;
-  oss << "(" << fileName_ << ", L-" << line_ << "): " << msg_;
+  if (CECS.configuration.isLoggingUsingModuleNameInsteadOfFilename) {
+    oss << "(" << moduleName << ", L-" << line_ << "): " << msg_;
+  } else {
+    oss << "(" << fileName_ << ", L-" << line_ << "): " << msg_;
+  }
   CECS.critMsg(oss.str(), errId);
 }
