@@ -1,4 +1,7 @@
-#include <CECSSingleton.hpp>
+#include "CECSErrorCodes.hpp"
+
+
+#include <CECSErrorCodes.hpp>
 #include <atomic>
 
 using namespace std;
@@ -27,16 +30,9 @@ std::string CECSSingleton::Configuration::str() const {
 CECSSingleton::CECSSingleton(
     std::string ecsNameStr_
 ) : projectName(std::move(ecsNameStr_)) {
-  // NOLINTBEGIN
-  // cout << "CECSSingleton : Setting configuration ..." << state << endl;
+  cecsErrorCodesAtExit = make_shared<CECSErrorCodesAtExit>();
+  cecsErrorCodesOnIntReturn = make_shared<CECSErrorCodesOnIntReturn>();
   initializeLogger(configuration);
-  // cout << "CECSSingleton : Setting configuration DONE ..." << state << endl;
-  // if (logger == nullptr) {
-  //   cout << "*** CECSSingleton : Logger is nullptr! *** " << endl;
-  // } else {
-  //   cout << "CECSSingleton : Logger initialized! " << endl;
-  // }
-  // NOLINTEND
 }
 
 void CECSSingleton::Shutdown() {

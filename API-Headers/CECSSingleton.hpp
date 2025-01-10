@@ -15,6 +15,9 @@ namespace Logger {
 
 // -------------------------------------------------------------------------------------------------
 
+class CECSErrorCodesAtExit;
+class CECSErrorCodesOnIntReturn;
+
 class CECSSingleton {
 public:
   enum State { NOT_INIT = 0, INIT = 1, INTERNAL_ERROR = 2 };
@@ -79,6 +82,10 @@ private:
   static std::recursive_mutex            cecsMtx;
   static std::atomic<uint32_t>           numberOfRecordedErrors;
   static std::shared_ptr<spdlog::logger> logger;
+
+
+  std::shared_ptr<CECSErrorCodesAtExit> cecsErrorCodesAtExit;
+  std::shared_ptr<CECSErrorCodesOnIntReturn> cecsErrorCodesOnIntReturn;
 
   explicit CECSSingleton(std::string ecsNameStr_);
   void        handleErrId(const std::string &errId) noexcept(false);
