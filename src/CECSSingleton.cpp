@@ -29,7 +29,7 @@ CECSSingleton::CECSSingleton(
 ) : projectName(std::move(ecsNameStr_)) {
   // NOLINTBEGIN
   // cout << "CECSSingleton : Setting configuration ..." << state << endl;
-  setConfiguration(configuration);
+  initializeLogger(configuration);
   // cout << "CECSSingleton : Setting configuration DONE ..." << state << endl;
   // if (logger == nullptr) {
   //   cout << "*** CECSSingleton : Logger is nullptr! *** " << endl;
@@ -61,7 +61,7 @@ void CECSSingleton::setProjectName(
   projectName = projectName_;
 }
 
-void CECSSingleton::setConfiguration(
+void CECSSingleton::initializeLogger(
     const Configuration &config
 ) noexcept(false) {
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
@@ -117,14 +117,14 @@ void CECSSingleton::reconfigure() noexcept(
 ) {
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   Shutdown();
-  setConfiguration(configuration);
+  initializeLogger(configuration);
 }
 
 void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) const noexcept(false) {
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (logger == nullptr) {
     throw std::runtime_error(
-        "CECS - logMsg() Failed:: Logger is not initialized. Use setConfiguration() ..."
+        "CECS - logMsg() Failed:: Logger is not initialized. Use initializeLogger() ..."
     );
   }
   if (state != INIT) {
@@ -141,7 +141,7 @@ void CECSSingleton::logMsg(const Logger::L level_, const std::string &log_) cons
     try {
       logger->log(static_cast<spdlog::level::level_enum>(level_), log_);
     } catch (std::exception &e) {
-      string errMsg{"CECS - logMsg() Failed:: Logger is not initialized. Use setConfiguration() ..."
+      string errMsg{"CECS - logMsg() Failed:: Logger is not initialized. Use initializeLogger() ..."
       };
       errMsg += e.what();
       throw std::runtime_error(errMsg);
@@ -153,7 +153,7 @@ void CECSSingleton::critMsg(const std::string &log_, const std::string &errId)  
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (logger == nullptr) {
     throw std::runtime_error(
-        "CECS - critMsg() Failed:: Logger is not initialized. Use setConfiguration() ..."
+        "CECS - critMsg() Failed:: Logger is not initialized. Use initializeLogger() ..."
     );
   }
   if (state != INIT) {
@@ -170,7 +170,7 @@ void CECSSingleton::critMsg(const std::string &log_, const std::string &errId)  
     const int _errorMode = static_cast<int>(errorMode);
     logger->log(static_cast<spdlog::level::level_enum>(_errorMode), log_);
   } catch (std::exception &e) {
-    string errMsg{"CECS - critMsg() Failed:: Logger is not initialized. Use setConfiguration() ..."
+    string errMsg{"CECS - critMsg() Failed:: Logger is not initialized. Use initializeLogger() ..."
     };
     errMsg += e.what();
     throw std::runtime_error(errMsg);

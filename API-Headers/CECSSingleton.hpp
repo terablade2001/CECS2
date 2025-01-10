@@ -61,8 +61,7 @@ public:
 
   std::string getProjectName() const noexcept;
   void        setProjectName(const std::string &projectName_) noexcept;
-  void        setConfiguration(const Configuration &config) noexcept(false);
-  // TODO : Make reconfigure static. Anything not used by CECSModule should be static.
+  void        initializeLogger(const Configuration &config) noexcept(false);
   void        reconfigure() noexcept(false);
   void        logMsg(Logger::L level_, const std::string &log_) const noexcept(false);
   void        critMsg(const std::string &log_, const std::string &errId = "") noexcept(false);
@@ -82,8 +81,6 @@ public:
 
 private:
   std::string                            projectName;
-  // TODO : Make it private and static
-  // Configuration                          configuration;
   static CECSSingleton                   instance;
   static std::atomic<ErrorMode>          errorMode;
   static std::recursive_mutex            cecsMtx;

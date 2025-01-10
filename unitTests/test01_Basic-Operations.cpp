@@ -62,13 +62,13 @@ namespace docTests {
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
         CECSSingleton::Configuration defaultConfig;
-        CECS.setConfiguration(defaultConfig);
+        CECS.initializeLogger(defaultConfig);
         CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       }
 
       CECSSingleton::Configuration invalidConfig;
       invalidConfig.loggerName = "";
-      CHECK_THROWS_AS(CECS.setConfiguration(invalidConfig), std::invalid_argument);
+      CHECK_THROWS_AS(CECS.initializeLogger(invalidConfig), std::invalid_argument);
       CECS.Shutdown();
       std::remove("CECSLog.log");
     }
@@ -86,7 +86,7 @@ namespace docTests {
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
         CECSSingleton::Configuration defaultConfig;
-        CECS.setConfiguration(defaultConfig);
+        CECS.initializeLogger(defaultConfig);
         CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       }
 
@@ -94,7 +94,7 @@ namespace docTests {
       invalidConfig.loggerName   = "SomeName";
       invalidConfig.logFileName  = "TestConfigCECSSingleton.log";
       invalidConfig.fileLogLevel = 3;
-      CHECK_NOTHROW(CECS.setConfiguration(invalidConfig));
+      CHECK_NOTHROW(CECS.initializeLogger(invalidConfig));
       CHECK_EQ(true, isFileExist(invalidConfig.logFileName));
       CECS.Shutdown();
       int err = remove("TestConfigCECSSingleton.log");
@@ -114,7 +114,7 @@ namespace docTests {
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
         CECSSingleton::Configuration defaultConfig;
-        CECS.setConfiguration(defaultConfig);
+        CECS.initializeLogger(defaultConfig);
         CECS.state = CECSSingleton::State::INIT;
       }
 
@@ -137,7 +137,7 @@ namespace docTests {
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
         CECSSingleton::Configuration defaultConfig;
-        CECS.setConfiguration(defaultConfig);
+        CECS.initializeLogger(defaultConfig);
         CECS.state = CECSSingleton::State::INIT;
       }
 
