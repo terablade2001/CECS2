@@ -12,7 +12,7 @@ static_assert(1, "C++ compiler (at least C++11) is required...");
 #endif
 
 #define CECS_MODULE(moduleName) static CECSModule __ECSOBJ__(moduleName);
-#define CECS_MAIN_MODULE(moduleName, projetName) static CECS __ECSOBJ__(moduleName, projectName);
+#define CECS_MAIN_MODULE(moduleName, projectName) static CECSModule __ECSOBJ__(moduleName, projectName);
 #define _CECS_MODE_CRIT_ CECSSingleton::setErrorMode(CECSSingleton::ErrorMode::CRITICAL);
 #define _CECS_MODE_ERR_ CECSSingleton::setErrorMode(CECSSingleton::ErrorMode::ERROR);
 

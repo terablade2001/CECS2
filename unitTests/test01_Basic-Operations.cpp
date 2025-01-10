@@ -26,7 +26,7 @@
 namespace docTests {
   using namespace std;
   static std::mutex testMutex;
-  CECS_MODULE("MODULE:Test01")
+  CECS_MAIN_MODULE("MODULE:Test01","UnitTesting")
 
   bool isFileExist(
       const std::string &filepath_
@@ -45,7 +45,8 @@ namespace docTests {
       LOG_TEST_CASE("01 Basic Operations", "Renaming the CECS Singleton")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-      CHECK_EQ(CECS.getProjectName(), "CECS-Default");
+      CHECK_NE(CECS.getProjectName(), "CECS-Default"); // We have used (CECS_MAIN_MODULE)
+      cout << "--- PROJECT :: " << CECS.getProjectName() << " ---" << endl;
       SUBCASE("Changing the CECSSingleton name") {
         CECS.setProjectName("Test");
         CHECK_EQ(CECS.getProjectName(), "Test");
