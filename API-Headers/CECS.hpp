@@ -25,6 +25,10 @@ static_assert(1, "C++ compiler (at least C++11) is required...");
 
 #ifndef _MSC_VER
 
+#define ILog_(level, args...) __ECSOBJ__.RecLog(__FNAME__, __LINE__, level, args);
+#define HLog_(level, args...) __ECSOBJ__.RecLog(level, args);
+#define ILogs_(level, string) __ECSOBJ__.RecLog(level, string);
+
 #define _ERRT(ExpR, args...)                                                                       \
   if ((ExpR)) {                                                                                    \
     __ECSOBJ__.RecError(__FNAME__, __LINE__, "", args);                                            \

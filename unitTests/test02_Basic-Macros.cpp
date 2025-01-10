@@ -125,7 +125,7 @@ namespace docTests {
       "02 Test Basic Macros"
   ) {
     TEST_CASE("Checking the _ERRT Macro that properly records and throw") {
-      LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRT Macro that properly records and throw")
+      LOG_TEST_CASE("02 Test Basic Macros", "Checking the _ERRT Macro that properly records and throw")
       auto &CECS                             = CECSSingleton::getInstance();
       auto  configuration                    = CECS.getConfiguration();
       configuration.logCustomFormatForScreen = "[%^-%L-%$] %v";
@@ -143,7 +143,7 @@ namespace docTests {
 
 
     TEST_CASE("Checking the _ERRI Macro that properly records") {
-      LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRT Macro that properly records")
+      LOG_TEST_CASE("02 Test Basic Macros", "Checking the _ERRT Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       CECSSingleton::resetNumberOfErrors();
@@ -158,7 +158,7 @@ namespace docTests {
     }
 
     TEST_CASE("Checking the _ERR Macro that properly records") {
-      LOG_TEST_CASE("Test Basic Macros", "Checking the _ERR Macro that properly records")
+      LOG_TEST_CASE("02 Test Basic Macros", "Checking the _ERR Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       CECSSingleton::resetNumberOfErrors();
@@ -173,7 +173,7 @@ namespace docTests {
     }
 
     TEST_CASE("Checking the _ERRN Macro that properly records") {
-      LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRN Macro that properly records")
+      LOG_TEST_CASE("02 Test Basic Macros", "Checking the _ERRN Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       CECSSingleton::resetNumberOfErrors();
@@ -188,7 +188,7 @@ namespace docTests {
     }
 
     TEST_CASE("Checking the _ERRB Macro that properly records") {
-      LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRB Macro that properly records")
+      LOG_TEST_CASE("02 Test Basic Macros", "Checking the _ERRB Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       CECSSingleton::resetNumberOfErrors();
@@ -203,7 +203,7 @@ namespace docTests {
     }
 
     TEST_CASE("Checking the _ERRO Macro that properly records") {
-      LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRO Macro that properly records")
+      LOG_TEST_CASE("02 Test Basic Macros", "Checking the _ERRO Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       CECSSingleton::resetNumberOfErrors();
@@ -218,7 +218,7 @@ namespace docTests {
     }
 
     TEST_CASE("Checking the _ERRSTR Macro that properly records") {
-      LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRSTR Macro that properly records")
+      LOG_TEST_CASE("02 Test Basic Macros", "Checking the _ERRSTR Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       CECSSingleton::resetNumberOfErrors();
@@ -233,7 +233,7 @@ namespace docTests {
     }
 
     TEST_CASE("Checking nested functions errors in CRITICAL mode") {
-      LOG_TEST_CASE("Test Basic Macros", "Checking nested functions errors in CRITICAL mode")
+      LOG_TEST_CASE("02 Test Basic Macros", "Checking nested functions errors in CRITICAL mode")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       CECSSingleton::resetNumberOfErrors();
@@ -263,7 +263,7 @@ namespace docTests {
      * In CRITICAL mode (default mode) the use of these functions will throw.
      */
     TEST_CASE("Checking nested functions errors in ERROR Mode") {
-      LOG_TEST_CASE("Test Basic Macros", "Checking nested functions errors in ERROR Mode")
+      LOG_TEST_CASE("02 Test Basic Macros", "Checking nested functions errors in ERROR Mode")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       CECSSingleton::resetNumberOfErrors();
