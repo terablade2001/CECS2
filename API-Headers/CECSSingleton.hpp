@@ -43,7 +43,7 @@ public:
     uint8_t     screenLogLevel{Logger::L::TRC};
     uint8_t     fileLogLevel{Logger::L::NONE};
     std::string logFileName{"CECSLog.log"};
-    uint32_t    logFileMaxSizeBytes{10000};
+    uint32_t    logFileMaxSizeBytes{100000};
     uint8_t     logFileNumOfRotatingFiles{3};
     std::string logCustomFormatForScreen{"[%^-%L-%$] %v"};
     std::string logCustomFormatForFile{"(%Y-%m-%d %H:%M:%S.%e) [%^-%L-%$] [t:%t] %v"};
