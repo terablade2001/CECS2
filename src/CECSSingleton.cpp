@@ -304,7 +304,6 @@ bool  CECSSingleton::handleErrIdAtExit(const std::string &errId) const noexcept(
   const bool isTagExistAtExit = cecsErrorCodesAtExit->isTagExistInMap(errId);
   if (!isTagExistAtExit) { return false; }
   cecsErrorCodesAtExit->handleErrorCode(errId);
-  cout << "handleErrIdAtExit():: DEBUG: TagAtExit --- errId = " << errId << endl;
   return true;
 }
 
@@ -317,7 +316,6 @@ bool CECSSingleton::handleErrIdOnIntReturn(const std::string &errId) const  noex
   const bool isTagExistOnIntReturn = cecsErrorCodesOnIntReturn->isTagExistInMap(errId);
   if (!isTagExistOnIntReturn) { return false; }
   cecsErrorCodesAtExit->handleErrorCode(errId);
-  cout << "handleErrIdOnIntReturn():: DEBUG: TagOnIntReturn --- errId = " << errId << endl;
   return true;
 }
 

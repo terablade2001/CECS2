@@ -51,6 +51,13 @@ namespace docTests {
       } catch (const std::exception &) {
         CHECK_EQ(1, CECS.getErrorIntegerAtExit());
       }
+      // try {
+      //   _ERRTU(1,"UNDEFINED","Testing an Undefined Error.")
+      //   CHECK_EQ(2, 1);
+      // } catch (const std::exception &e) {
+      //   cout << e.what() << endl;
+      //   CHECK_EQ(0, CECS.getErrorIntegerAtExit());
+      // }
     }
   }
 } // namespace docTests
