@@ -28,7 +28,7 @@
 namespace docTests {
   using namespace std;
   using namespace Logger;
-  static CECSModule __ECSOBJ__("MODULE:Test03");
+  CECS_MODULE("MODULE:Test03")
 
   DOCTEST_TEST_SUITE(
       "03 Test Message logging Macros"

@@ -24,9 +24,9 @@
 // NOLINTEND
 
 namespace docTests {
-  static std::mutex testMutex;
-  static CECSModule __ECSOBJ__("MODULE:Test01");
   using namespace std;
+  static std::mutex testMutex;
+  CECS_MODULE("MODULE:Test01")
 
   bool isFileExist(
       const std::string &filepath_
