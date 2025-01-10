@@ -92,5 +92,42 @@ namespace docTests {
         CHECK_EQ(2, 1);
       } catch (const std::exception &) { CHECK_EQ(1, 1); }
     }
+
+    TEST_CASE("Testing the basic ILog_() macro, which adds module and line number.") {
+      LOG_TEST_CASE(
+          "03 Test Message logging Macros",
+          "Testing the basic ILogs_() macro, which adds module and line number."
+      )
+      auto &CECS                 = CECSSingleton::getInstance();
+      auto  configuration        = CECS.getConfiguration();
+      configuration.fileLogLevel = Logger::L::TRC;
+      configuration.logFileName  = "CECSLog.log";
+      CECS.setConfiguration(configuration);
+      CHECK_NOTHROW(CECS.reconfigure());
+      CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
+      try {
+        ILog_(
+            L::TRC, "This is a trace message with fileLogLevel = %i",
+            static_cast<int>(configuration.fileLogLevel)
+        );
+        ostringstream oss;
+        oss << "This is a debug message with logCustomFormatForFile = "
+            << configuration.logCustomFormatForFile;
+        ILog_(L::DBG, oss.str());
+        ILog_(
+            L::WARN, "This is a warning message with logFileName = %s",
+            configuration.logFileName.c_str()
+        );
+        ILog_(
+            L::ERR, "This is an error message with logCustomFormatForScreen = %s",
+            configuration.logCustomFormatForScreen.c_str()
+        );
+        CHECK_EQ(1, 1);
+      } catch (const std::exception &) { CHECK_EQ(2, 1); }
+      try {
+        ILog_(L::CRIT, "This is a critical message");
+        CHECK_EQ(2, 1);
+      } catch (const std::exception &) { CHECK_EQ(1, 1); }
+    }
   }
 } // namespace docTests

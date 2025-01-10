@@ -44,8 +44,21 @@ void CECSModule::RecLog(
 }
 
 void CECSModule::RecLog(const Logger::L level_, const std::string &msg_)  noexcept(false){
-  std::lock_guard<std::recursive_mutex> lock(mtx);
   RecLog(static_cast<uint32_t>(-1), level_, msg_);
+}
+
+void CECSModule::RecLog(uint32_t line_, const Logger::L level_, const char *msg_, ...) noexcept(false) {
+  std::lock_guard<std::recursive_mutex> lock(mtx);
+  char                                  vaStr[CECS__FLOGL + 1] = {0};
+  int                                   len                    = 0;
+  va_list(vargs);
+  va_start(vargs, msg_);
+  len = vsnprintf(vaStr, CECS__FLOGL, msg_, vargs);
+  va_end(vargs);
+  // NOLINTNEXTLINE
+  if (len <= 0) snprintf(vaStr, CECS__FLOGL, "CECS::RecLog():: %i = vsnprintf() >> failed!");
+  const string str(vaStr);
+  RecLog(line_, level_, str);
 }
 
 void CECSModule::RecLog(const uint32_t line_, const Logger::L level_, const std::string &msg_) noexcept(false) {

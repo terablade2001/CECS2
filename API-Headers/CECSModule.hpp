@@ -21,6 +21,7 @@ public:
 
   void RecLog(Logger::L level_, const char *msg_, ...) noexcept(false);
   void RecLog(Logger::L level_, const std::string &msg_) noexcept(false);
+  void RecLog(uint32_t line_, Logger::L level_, const char *msg_, ...) noexcept(false);
   void RecLog(uint32_t line_, Logger::L level_, const std::string &msg_) noexcept(false);
 
   void RecError(
