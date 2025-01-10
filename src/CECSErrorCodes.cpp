@@ -4,13 +4,18 @@ CECS_MODULE(
     "CECSErrorCodes"
 )
 
-CECSErrorCodes::CECSErrorCodes() : errorCode{0} {
+void CECSErrorCodes::addPreconfiguredErrorCodes() noexcept {
   mapTagsToErrorcodes.emplace("GENERIC", ErrorCodeList{1, "Generic Error."});
+  mapTagsToErrorcodes.emplace("UNLISTED_ERROR", ErrorCodeList{_CECS_MAGIC_THROW_ERRORCODE_, "Reserved error code for unlisted errors."});
+}
+
+CECSErrorCodes::CECSErrorCodes() : errorCode{0} {
+  addPreconfiguredErrorCodes();
 }
 
 void CECSErrorCodes::reset() noexcept {
   mapTagsToErrorcodes.clear();
-  mapTagsToErrorcodes.emplace("GENERIC", ErrorCodeList{1, "Generic Error."});
+  addPreconfiguredErrorCodes();
   errorCode = 0;
 }
 
@@ -32,14 +37,15 @@ bool CECSErrorCodes::isTagExistInMap(
 }
 
 int CECSErrorCodes::handleErrorCode(const std::string &tag_) noexcept(false){
-  if (!isTagExistInMap(tag_)) {
-    throw std::runtime_error(
-        "CECSErrorCodesAtExit::handleErrorCode(): Given tag_ [" + tag_ + "] should exist!"
-    );
-  }
   // Update the errorCode only the first time an error occurs. This error code is the reason for
   // failure
   if (errorCode == 0) {
+    if (!isTagExistInMap(tag_)) {
+      errorCode = _CECS_MAGIC_THROW_ERRORCODE_;
+      throw std::runtime_error(
+          "CECSErrorCodesAtExit::handleErrorCode(): Given tag_ [" + tag_ + "] should exist!"
+      );
+    }
     const auto &el = mapTagsToErrorcodes.at(tag_);
     errorCode      = el.code;
   }

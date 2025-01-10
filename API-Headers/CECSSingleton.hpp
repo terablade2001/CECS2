@@ -55,12 +55,12 @@ public:
   void        Shutdown();
 
   static uint32_t getNumberOfErrors() noexcept;
-  static void
-  resetNumberOfErrors(uint32_t reduceValue = std::numeric_limits<uint32_t>::max()) noexcept;
+  void
+  resetNumberOfErrors(uint32_t reduceValue = std::numeric_limits<uint32_t>::max()) const noexcept;
 
-  static void resetNumberOfErrorsWithErrorModeCheck(
+  void resetNumberOfErrorsWithErrorModeCheck(
       uint32_t reduceValue = std::numeric_limits<uint32_t>::max()
-  ) noexcept(false);
+  ) const noexcept(false);
 
   static int       getDefaultErrorReturnValue() noexcept;
   static void      setErrorMode(ErrorMode mode_) noexcept(false);
