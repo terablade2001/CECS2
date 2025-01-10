@@ -277,24 +277,38 @@ void CECSSingleton::handleErrId(const std::string &errId)  noexcept(false) {
     --numberOfRecordedErrors;
     return;
   }
-  if (cecsErrorCodesAtExit == nullptr) {
-    throw runtime_error("CECS: handleErrId() failed. cecsErrorCodesAtExit is nullptr.");
+
+  bool handled = handleErrIdAtExit(errId);
+  if (!handled) {
+    handled = handleErrIdOnIntReturn(errId);
+    if (!handled) {
+      throw std::runtime_error(
+          "CECS: handleErrId() failed. The Tag_[" + errId + "] doesnt' match any ErrorCode list."
+      );
+    }
   }
-  if (cecsErrorCodesOnIntReturn == nullptr) {
-    throw runtime_error("CECS: handleErrId() failed. cecsErrorCodesOnIntReturn is nullptr.");
+}
+
+bool  CECSSingleton::handleErrIdAtExit(const std::string &errId) const noexcept(false){
+  if (cecsErrorCodesAtExit == nullptr) {
+    throw runtime_error("CECS: handleErrIdAtExit() failed. cecsErrorCodesAtExit is nullptr.");
   }
   const bool isTagExistAtExit = cecsErrorCodesAtExit->isTagExistInMap(errId);
-  if (isTagExistAtExit) {
-    // TODO :: TagAtExit
-    return;
+  if (!isTagExistAtExit) { return false; }
+  // TODO :: TagAtExit
+  return true;
+}
+
+bool CECSSingleton::handleErrIdOnIntReturn(const std::string &errId) const  noexcept(false){
+  if (cecsErrorCodesOnIntReturn == nullptr) {
+    throw runtime_error(
+        "CECS: handleErrIdOnIntReturn() failed. cecsErrorCodesOnIntReturn is nullptr."
+    );
   }
   const bool isTagExistOnIntReturn = cecsErrorCodesOnIntReturn->isTagExistInMap(errId);
-  if (!isTagExistOnIntReturn) {
-    throw runtime_error(
-        "CECS: handleErrId() failed. The Tag_[" + errId + "] doesnt' match any ErrorCode list."
-    );
-    // TODO :: TagAt
-  }
+  if (!isTagExistOnIntReturn) { return false; }
+  // TODO :: TagOnIntReturn
+  return true;
 }
 
 // -------------------------------------------------------------------------------------------------

@@ -88,5 +88,7 @@ private:
 
   explicit CECSSingleton(std::string ecsNameStr_);
   void        handleErrId(const std::string &errId) noexcept(false);
+  bool        handleErrIdAtExit(const std::string &errId) const noexcept(false);
+  bool        handleErrIdOnIntReturn(const std::string &errId) const noexcept(false);
   static void verifyEnumsHaveNotChange() noexcept(false);
 };
