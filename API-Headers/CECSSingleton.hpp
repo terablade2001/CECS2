@@ -56,11 +56,11 @@ public:
 
   static uint32_t getNumberOfErrors() noexcept;
   void
-  resetNumberOfErrors(uint32_t reduceValue = std::numeric_limits<uint32_t>::max()) noexcept;
+  resetNumberOfErrors(uint32_t reduceValue = std::numeric_limits<uint32_t>::max()) const noexcept;
 
   void resetNumberOfErrorsWithErrorModeCheck(
       uint32_t reduceValue = std::numeric_limits<uint32_t>::max()
-  ) noexcept(false);
+  ) const noexcept(false);
 
   static int       getDefaultErrorReturnValue() noexcept;
   static void      setErrorMode(ErrorMode mode_) noexcept(false);

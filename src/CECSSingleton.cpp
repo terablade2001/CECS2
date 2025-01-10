@@ -182,16 +182,17 @@ uint32_t CECSSingleton::getNumberOfErrors() noexcept {
 
 void CECSSingleton::resetNumberOfErrors(
     const uint32_t reduceValue
-) noexcept {
+) const noexcept {
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (reduceValue >= numberOfRecordedErrors) {
     numberOfRecordedErrors = 0;
+    if (cecsErrorCodesAtExit != nullptr) { cecsErrorCodesAtExit->clearErrorCode(); }
     return;
   }
   numberOfRecordedErrors -= reduceValue;
 }
 
-void CECSSingleton::resetNumberOfErrorsWithErrorModeCheck(uint32_t reduceValue) noexcept(false){
+void CECSSingleton::resetNumberOfErrorsWithErrorModeCheck(uint32_t reduceValue) const noexcept(false){
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (errorMode.load() == ErrorMode::CRITICAL) {
     throw std::runtime_error(
