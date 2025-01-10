@@ -24,9 +24,11 @@
 // NOLINTEND
 
 namespace docTests {
-  static std::mutex testMutex;
-  static CECSModule __ECSOBJ__("MODULE:Test01");
   using namespace std;
+  static std::mutex testMutex;
+  CECS_MAIN_MODULE(
+      "MODULE:Test01", "UnitTesting"
+  )
 
   bool isFileExist(
       const std::string &filepath_
@@ -42,10 +44,11 @@ namespace docTests {
   ) {
     TEST_CASE("Renaming the CECS Singleton") {
       std::lock_guard<std::mutex> lock(testMutex);
-      LOG_TEST_CASE("Basic Operations", "Testing that the CECS singleton can be renamed")
+      LOG_TEST_CASE("01 Basic Operations", "Renaming the CECS Singleton")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-      CHECK_EQ(CECS.getProjectName(), "CECS-Default");
+      CHECK_NE(CECS.getProjectName(), "CECS-Default"); // We have used (CECS_MAIN_MODULE)
+      cout << "--- PROJECT :: " << CECS.getProjectName() << " ---" << endl;
       SUBCASE("Changing the CECSSingleton name") {
         CECS.setProjectName("Test");
         CHECK_EQ(CECS.getProjectName(), "Test");
@@ -56,7 +59,7 @@ namespace docTests {
 
     TEST_CASE("Configure CECS Singleton with no name should throw") {
       std::lock_guard<std::mutex> lock(testMutex);
-      LOG_TEST_CASE("Basic Operations", "Configure CECS Singleton with no name should throw")
+      LOG_TEST_CASE("01 Basic Operations", "Configure CECS Singleton with no name should throw")
       auto &CECS = CECSSingleton::getInstance();
       // CECS in persistent among all texts, thus we have to manually reconfigure it.
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
@@ -82,7 +85,8 @@ namespace docTests {
     TEST_CASE("Confirm CECS Singleton generates custom log file after reConfigured") {
       std::lock_guard<std::mutex> lock(testMutex);
       LOG_TEST_CASE(
-          "Basic Operations", "Confirm CECS Singleton generates custom log file after reConfigured"
+          "01 Basic Operations",
+          "Confirm CECS Singleton generates custom log file after reConfigured"
       )
       //.
       remove("TestConfigCECSSingleton.log");
@@ -111,7 +115,7 @@ namespace docTests {
     TEST_CASE("Test if CECS Singleton Generates or Not the default file based on default config") {
       std::lock_guard<std::mutex> lock(testMutex);
       LOG_TEST_CASE(
-          "Basic Operations",
+          "01 Basic Operations",
           "Test if CECS Singleton Generates or Not the default file based on default config"
       )
       auto &CECS = CECSSingleton::getInstance();
@@ -137,7 +141,7 @@ namespace docTests {
 
     TEST_CASE("Test logging with CECS...") {
       std::lock_guard<std::mutex> lock(testMutex);
-      LOG_TEST_CASE("Basic Operations", "Basic logging with CECS...")
+      LOG_TEST_CASE("01 Basic Operations", "Basic logging with CECS...")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
@@ -154,7 +158,7 @@ namespace docTests {
       CHECK_NOTHROW(CECS.logMsg(Logger::L::INFO, "... Info Message ... "));
       CHECK_NOTHROW(CECS.logMsg(Logger::L::ERR, "... Error Message ... "));
       CHECK_NOTHROW(CECS.logMsg(Logger::L::WARN, "... Warning Message ... "));
-      _ERRSTR(1,{ ss << "_ERRSTR: ... Error Message ... "; })
+      _ERRSTR(1, { ss << "_ERRSTR: ... Error Message ... "; })
       CECS.Shutdown();
       std::remove("CECSLog.log");
     }

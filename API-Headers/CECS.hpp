@@ -7,17 +7,13 @@ static_assert(1, "C++ compiler (at least C++11) is required...");
 
 #include <CECSModule.hpp>
 
-#ifndef __FNAME__
-#define __FNAMEBSL__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
-#define __FNAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FNAMEBSL__)
-#endif
-
 #ifndef __ECSOBJ__
 #define __ECSOBJ__ CECS_Instance_
 #endif
 
 #define CECS_MODULE(moduleName) static CECSModule __ECSOBJ__(moduleName);
-#define CECS_MAIN_MODULE(moduleName, projetName) static CECS __ECSOBJ__(moduleName, projectName);
+#define CECS_MAIN_MODULE(moduleName, projectName)                                                  \
+  static CECSModule __ECSOBJ__(moduleName, projectName);
 #define _CECS_MODE_CRIT_ CECSSingleton::setErrorMode(CECSSingleton::ErrorMode::CRITICAL);
 #define _CECS_MODE_ERR_ CECSSingleton::setErrorMode(CECSSingleton::ErrorMode::ERROR);
 
@@ -29,6 +25,10 @@ static_assert(1, "C++ compiler (at least C++11) is required...");
 #define _NERR_ (CECSSingleton::getNumberOfErrors())
 
 #ifndef _MSC_VER
+
+#define ILog_(level, args...) __ECSOBJ__.RecLog(__LINE__, level, args);
+#define HLog_(level, args...) __ECSOBJ__.RecLog(level, args);
+#define ILogs_(level, string) __ECSOBJ__.RecLog(level, string);
 
 #define _ERRT(ExpR, args...)                                                                       \
   if ((ExpR)) {                                                                                    \

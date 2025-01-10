@@ -3,7 +3,7 @@
 
 // NOLINTBEGIN
 constexpr int CECS__FERRORL = 512;
-// #define CECS__FERRORL (512)
+constexpr int CECS__FLOGL   = 512;
 
 // NOLINTEND
 
@@ -26,10 +26,62 @@ CECSModule::CECSModule(
 
 int CECSModule::getCompiledCECSMaxLineSize() { return CECS__FERRORL; }
 
+void CECSModule::RecLog(
+    const Logger::L level_,
+    const char *msg_, ...
+) noexcept(false) {
+  std::lock_guard<std::recursive_mutex> lock(mtx);
+  char                                  vaStr[CECS__FLOGL + 1] = {0};
+  int                                   len                    = 0;
+  va_list(vargs);
+  va_start(vargs, msg_);
+  len = vsnprintf(vaStr, CECS__FLOGL, msg_, vargs);
+  va_end(vargs);
+  // NOLINTNEXTLINE
+  if (len <= 0) snprintf(vaStr, CECS__FLOGL, "CECS::RecLog():: %i = vsnprintf() >> failed!");
+  const string str(vaStr);
+  RecLog(static_cast<uint32_t>(-1), level_, str);
+}
+
+void CECSModule::RecLog(const Logger::L level_, const std::string &msg_)  noexcept(false){
+  RecLog(static_cast<uint32_t>(-1), level_, msg_);
+}
+
+void CECSModule::RecLog(uint32_t line_, const Logger::L level_, const char *msg_, ...) noexcept(false) {
+  std::lock_guard<std::recursive_mutex> lock(mtx);
+  char                                  vaStr[CECS__FLOGL + 1] = {0};
+  int                                   len                    = 0;
+  va_list(vargs);
+  va_start(vargs, msg_);
+  len = vsnprintf(vaStr, CECS__FLOGL, msg_, vargs);
+  va_end(vargs);
+  // NOLINTNEXTLINE
+  if (len <= 0) snprintf(vaStr, CECS__FLOGL, "CECS::RecLog():: %i = vsnprintf() >> failed!");
+  const string str(vaStr);
+  RecLog(line_, level_, str);
+}
+
+void CECSModule::RecLog(const uint32_t line_, const Logger::L level_, const std::string &msg_) noexcept(false) {
+  std::lock_guard<std::recursive_mutex> lock(mtx);
+  try {
+    ostringstream oss;
+    if (line_ != static_cast<uint32_t>(-1)) { oss << "[" << moduleName << ", L-" << line_ << "] "; }
+    oss << msg_;
+    CECS.logMsg(level_, oss.str());
+  } catch (std::exception &e) {
+    if (CECS.configuration.isLoggingUsingModuleNameInsteadOfFilename) {
+      RecError(moduleName.c_str(), __LINE__, "", "CECS::RecLog():: " + string(e.what()));
+    } else {
+      RecError(__FNAME__, __LINE__, "", "CECS::RecLog():: " + string(e.what()));
+    }
+    throw runtime_error("CECS::RecLog() failed.");
+  }
+}
+
 void CECSModule::RecError(
     const char *fileName_, const uint32_t line_, const std::string &errId, const char *msg_, ...
 )  noexcept(false) {
-  std::lock_guard<std::mutex> lock(mtx);
+  std::lock_guard<std::recursive_mutex> lock(mtx);
   if (fileName_ == nullptr) throw std::invalid_argument("CECS::RecError():: fileName_ is nullptr!");
   if (msg_ == nullptr) throw std::invalid_argument("CECS::RecError():: msg_ is nullptr!");
   char vaStr[CECS__FERRORL + 1] = {0};
@@ -52,7 +104,7 @@ void CECSModule::RecError(
 void CECSModule::RecError(
     const char *fileName_, const uint32_t line_, const std::string &errId, const std::string &msg_
 )  noexcept(false) {
-  std::lock_guard<std::mutex> lock(mtx);
+  std::lock_guard<std::recursive_mutex> lock(mtx);
   if (fileName_ == nullptr) throw std::invalid_argument("CECS::RecError():: fileName_ is nullptr!");
   ostringstream oss;
   if (CECS.configuration.isLoggingUsingModuleNameInsteadOfFilename) {
