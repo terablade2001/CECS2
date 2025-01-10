@@ -69,6 +69,16 @@ public:
   void             setConfiguration(Configuration config) noexcept;
   int              getErrorIntegerAtExit() const noexcept(false);
 
+  void setNewErrorAtExit(
+      const std::string &tag_, int errorNum_, const std::string &description_
+  ) const noexcept(false);
+  void setNewErrorOnIntReturn(
+      const std::string &tag_, int errorNum_, const std::string &description_
+  ) const noexcept(false);
+
+  std::string getErrorsMapAtExit() const noexcept(false);
+  std::string getErrorsMapOnIntReturn() const noexcept(false);
+
   // Avoid using this method. Use reConfigure() instead.
   void initializeLogger(const Configuration &config) noexcept(false);
 

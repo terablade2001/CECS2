@@ -80,11 +80,16 @@ namespace docTests {
       auto &CECS                 = CECSSingleton::getInstance();
       CHECK_NOTHROW(CECS.reconfigure());
       CHECK_EQ(0, CECS.getErrorIntegerAtExit());
-      //
-      // try {
-      //   _ERRTU(1, "GENERIC", "Testing Generic Error.")
-      //   CHECK_EQ(2, 1);
-      // } catch (const std::exception &) { CHECK_EQ(1, CECS.getErrorIntegerAtExit()); }
+      CHECK_NOTHROW(CECS.setNewErrorAtExit("TEST-ERROR-11",11,"Testing with a custom error 11"));
+      CHECK_NOTHROW(CECS.setNewErrorOnIntReturn("TEST-ERROR-1001",1011,"Testing with a custom error 1001"));
+      cout << "--- Registered errors AtExit: " << endl;
+      cout << CECS.getErrorsMapAtExit() << endl;
+      cout << "--- Registered errors on integers returns: " << endl;
+      cout << CECS.getErrorsMapOnIntReturn() << endl;
+      try {
+        _ERRTU(1, "TEST-ERROR-11", "Testing with the custom error 11.")
+        CHECK_EQ(2, 1);
+      } catch (const std::exception &) { CHECK_EQ(11, CECS.getErrorIntegerAtExit()); }
       // SUBCASE("Evaluate the AtExit ErrorCode Without _ECSCLS_ call") {
       //   try {
       //     _ERRTU(1, "UNDEFINED", "Testing an Undefined Error.")

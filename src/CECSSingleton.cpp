@@ -35,12 +35,8 @@ CECSSingleton::CECSSingleton(
 
 void CECSSingleton::Shutdown() {
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
-  if (cecsErrorCodesAtExit) {
-    cecsErrorCodesAtExit->reset();
-  }
-  if (cecsErrorCodesOnIntReturn) {
-    cecsErrorCodesOnIntReturn->reset();
-  }
+  if (cecsErrorCodesAtExit) { cecsErrorCodesAtExit->reset(); }
+  if (cecsErrorCodesOnIntReturn) { cecsErrorCodesOnIntReturn->reset(); }
   logger                 = nullptr;
   numberOfRecordedErrors = 0;
   state                  = NOT_INIT;
@@ -251,6 +247,50 @@ int CECSSingleton::getErrorIntegerAtExit() const noexcept(
     throw runtime_error("CECS: getErrorIntegerAtExit() failed. cecsErrorCodesAtExit is nullptr.");
   }
   return cecsErrorCodesAtExit->errorCode;
+}
+
+void CECSSingleton::setNewErrorAtExit(
+    const std::string &tag_, const int errorNum_, const std::string &description_
+) const noexcept(false) {
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
+  if (cecsErrorCodesAtExit == nullptr) {
+    throw runtime_error("CECS: setNewErrorAtExit() failed. cecsErrorCodesAtExit is nullptr.");
+  }
+  const CECSErrorCodes::ErrorCodeList errorCodeList{errorNum_, description_};
+  cecsErrorCodesAtExit->addNewErrorCode(tag_, errorCodeList);
+}
+
+void CECSSingleton::setNewErrorOnIntReturn(
+  const std::string &tag_, int errorNum_, const std::string &description_
+  ) const noexcept(false){
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
+  if (cecsErrorCodesOnIntReturn == nullptr) {
+    throw runtime_error("CECS: setNewErrorOnIntReturn() failed. cecsErrorCodesOnIntReturn is nullptr.");
+  }
+  const CECSErrorCodes::ErrorCodeList errorCodeList{errorNum_, description_};
+  cecsErrorCodesOnIntReturn->addNewErrorCode(tag_, errorCodeList);
+}
+
+std::string CECSSingleton::getErrorsMapAtExit() const noexcept(
+    false
+) {
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
+  if (cecsErrorCodesAtExit == nullptr) {
+    throw runtime_error("CECS: getErrorsMapAtExit() failed. cecsErrorCodesAtExit is nullptr.");
+  }
+  return cecsErrorCodesAtExit->getErrorCodesListing();
+}
+
+std::string CECSSingleton::getErrorsMapOnIntReturn() const noexcept(
+    false
+) {
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
+  if (cecsErrorCodesOnIntReturn == nullptr) {
+    throw runtime_error(
+        "CECS: getErrorsMapOnIntReturn() failed. cecsErrorCodesOnIntReturn is nullptr."
+    );
+  }
+  return cecsErrorCodesOnIntReturn->getErrorCodesListing();
 }
 
 void CECSSingleton::verifyEnumsHaveNotChange() noexcept(

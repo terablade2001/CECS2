@@ -6,26 +6,24 @@ CECS_MODULE(
 
 void CECSErrorCodes::addPreconfiguredErrorCodes() noexcept {
   mapTagsToErrorcodes.emplace("GENERIC", ErrorCodeList{1, "Generic Error."});
-  mapTagsToErrorcodes.emplace("UNLISTED_ERROR", ErrorCodeList{_CECS_MAGIC_THROW_ERRORCODE_, "Reserved error code for unlisted errors."});
+  mapTagsToErrorcodes.emplace(
+      "UNLISTED_ERROR",
+      ErrorCodeList{_CECS_MAGIC_THROW_ERRORCODE_, "Reserved error code for unlisted errors."}
+  );
 }
 
-CECSErrorCodes::CECSErrorCodes() : errorCode{0} {
-  addPreconfiguredErrorCodes();
-}
-
-void CECSErrorCodes::reset() noexcept {
-  mapTagsToErrorcodes.clear();
-  addPreconfiguredErrorCodes();
-  errorCode = 0;
-}
+CECSErrorCodes::CECSErrorCodes() : errorCode{0} {}
 
 void CECSErrorCodes::clearErrorCode() noexcept { errorCode = 0; }
 
 std::string CECSErrorCodes::getErrorCodesListing() const noexcept {
   std::ostringstream oss;
-  for (const auto &el: mapTagsToErrorcodes) {
-    oss << "\n - " << std::setw(4) << std::setfill(' ') << el.second.code << ": [" << el.first
-        << "]" << el.second.description;
+  // for (const auto &el: mapTagsToErrorcodes) {
+  for (auto it = mapTagsToErrorcodes.begin(); it != mapTagsToErrorcodes.end(); ++it) {
+    const auto &el = *it;
+    oss << " - " << std::setw(4) << std::setfill(' ') << el.second.code << ": [" << el.first << "] > "
+        << el.second.description;
+    if (std::next(it) != mapTagsToErrorcodes.end()) { oss << "\n"; }
   }
   return oss.str();
 }
@@ -56,9 +54,10 @@ int CECSErrorCodes::handleErrorCode(const std::string &tag_) noexcept(false){
 
 
 
+CECSErrorCodesAtExit::CECSErrorCodesAtExit() { addPreconfiguredErrorCodes(); }
 
 int CECSErrorCodesAtExit::addNewErrorCode(
-    const std::string &tag_, const ErrorCodeList &&newErrorCode_
+    const std::string &tag_, const ErrorCodeList &newErrorCode_
 ) noexcept {
   const int Code = newErrorCode_.code;
   _ERRI(Code <= 1, "CECSErrorCodesAtExit: Id [=%i] of the new error code <= 1", Code)
@@ -82,8 +81,14 @@ int CECSErrorCodesAtExit::addNewErrorCode(
   return 0;
 }
 
+void CECSErrorCodesAtExit::reset() noexcept {
+  mapTagsToErrorcodes.clear();
+  addPreconfiguredErrorCodes();
+  errorCode = 0;
+}
+
 int CECSErrorCodesOnIntReturn::addNewErrorCode(
-    const std::string &tag_, const ErrorCodeList &&newErrorCode_
+    const std::string &tag_, const ErrorCodeList &newErrorCode_
 ) noexcept {
   const int Code = newErrorCode_.code;
   _ERRI(
@@ -107,4 +112,9 @@ int CECSErrorCodesOnIntReturn::addNewErrorCode(
   }
   mapTagsToErrorcodes.emplace(tag_, newErrorCode_);
   return 0;
+}
+
+void CECSErrorCodesOnIntReturn::reset() noexcept {
+  mapTagsToErrorcodes.clear();
+  errorCode = 0;
 }

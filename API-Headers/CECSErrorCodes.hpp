@@ -19,7 +19,6 @@ public:
 
   virtual ~CECSErrorCodes() = default;
 
-  void        reset() noexcept;
   void        clearErrorCode() noexcept;
   std::string getErrorCodesListing() const noexcept;
   bool        isTagExistInMap(const std::string &tag_) const noexcept;
@@ -27,11 +26,12 @@ public:
 
 
   virtual int
-  addNewErrorCode(const std::string &tag_, const ErrorCodeList &&newErrorCode_) noexcept = 0;
+  addNewErrorCode(const std::string &tag_, const ErrorCodeList &newErrorCode_) noexcept = 0;
+  virtual void reset() noexcept                                                         = 0;
 
 protected:
   std::map<std::string, ErrorCodeList> mapTagsToErrorcodes;
-private:
+
   void addPreconfiguredErrorCodes() noexcept;
 };
 
@@ -42,10 +42,11 @@ private:
 
 class CECSErrorCodesAtExit final : public CECSErrorCodes {
 public:
-  CECSErrorCodesAtExit() = default;
+  CECSErrorCodesAtExit();
 
   int
-  addNewErrorCode(const std::string &tag_, const ErrorCodeList &&newErrorCode_) noexcept override;
+  addNewErrorCode(const std::string &tag_, const ErrorCodeList &newErrorCode_) noexcept override;
+  void reset() noexcept override;
 };
 
 class CECSErrorCodesOnIntReturn final : public CECSErrorCodes {
@@ -53,5 +54,6 @@ public:
   CECSErrorCodesOnIntReturn() = default;
 
   int
-  addNewErrorCode(const std::string &tag_, const ErrorCodeList &&newErrorCode_) noexcept override;
+  addNewErrorCode(const std::string &tag_, const ErrorCodeList &newErrorCode_) noexcept override;
+  void reset() noexcept override;
 };
