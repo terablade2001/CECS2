@@ -1,16 +1,20 @@
 #pragma once
 #include <CECS.hpp>
+#include <utility>
 
 class CECSErrorCodes {
 public:
-  constexpr std::string GenericErrorDescription{"Generic Error."};
 
   struct ErrorCodeList {
-    int         code{0};
-    std::string description{};
-  } errorCodeList;
+    int         code;
+    std::string description;
 
-  CECSErrorCodes() : mapTagsToErrorcodes{{"GENERIC", {1, GenericErrorDescription}}} {}
+    ErrorCodeList(
+        const int code, std::string description
+    ) : code(code), description(std::move(description)) {}
+  };
+
+  CECSErrorCodes();
 
   virtual ~CECSErrorCodes() = default;
 

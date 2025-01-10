@@ -1,10 +1,16 @@
 #include <CECSErrorCodes.hpp>
 
-CECS_MODULE("CECSErrorCodes")
+CECS_MODULE(
+    "CECSErrorCodes"
+)
+
+CECSErrorCodes::CECSErrorCodes() {
+  mapTagsToErrorcodes.emplace("GENERIC", ErrorCodeList{1, "Generic Error."});
+}
 
 void CECSErrorCodes::reset() noexcept {
   mapTagsToErrorcodes.clear();
-  mapTagsToErrorcodes.emplace("GENERIC", ErrorCodeList{1, GenericErrorDescription});
+  mapTagsToErrorcodes.emplace("GENERIC", ErrorCodeList{1, "Generic Error."});
 }
 
 // -------------------------------------------------------------------------------------------------
