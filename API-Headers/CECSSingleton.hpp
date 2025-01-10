@@ -50,7 +50,7 @@ public:
     uint8_t     flushLevel{Logger::L::DBG};
 
     std::string str() const;
-  } configuration;
+  };
 
   CECSSingleton()                                 = delete;
   CECSSingleton(const CECSSingleton &)            = delete;
@@ -81,6 +81,7 @@ public:
 
 private:
   std::string                            projectName;
+  Configuration                          configuration;
   static CECSSingleton                   instance;
   static std::atomic<ErrorMode>          errorMode;
   static std::recursive_mutex            cecsMtx;
