@@ -40,30 +40,21 @@ void CECSModule::RecLog(
   // NOLINTNEXTLINE
   if (len <= 0) snprintf(vaStr, CECS__FLOGL, "CECS::RecLog():: %i = vsnprintf() >> failed!");
   const string str(vaStr);
-  RecLog(level_, str);
+  RecLog(static_cast<uint32_t>(-1), level_, str);
 }
 
 void CECSModule::RecLog(const Logger::L level_, const std::string &msg_)  noexcept(false){
   std::lock_guard<std::recursive_mutex> lock(mtx);
-  try {
-    ostringstream oss;
-    oss << "[" << moduleName << "] " << msg_;
-    CECS.logMsg(level_, oss.str());
-  } catch (std::exception &e) {
-    if (CECS.configuration.isLoggingUsingModuleNameInsteadOfFilename) {
-      RecError(moduleName.c_str(), __LINE__, "", "CECS::RecLog():: " + string(e.what()));
-    } else {
-      RecError(__FNAME__, __LINE__, "", "CECS::RecLog():: " + string(e.what()));
-    }
-    throw runtime_error("CECS::RecLog() failed.");
-  }
+  RecLog(static_cast<uint32_t>(-1), level_, msg_);
 }
 
 void CECSModule::RecLog(const uint32_t line_, const Logger::L level_, const std::string &msg_) noexcept(false) {
   std::lock_guard<std::recursive_mutex> lock(mtx);
   try {
     ostringstream oss;
-    oss << "[" << moduleName << ", L-" << line_ << "] " << msg_;
+    oss << "[" << moduleName;
+    if (line_ != static_cast<uint32_t>(-1)) { oss << ", L-" << line_; }
+    oss << "] " << msg_;
     CECS.logMsg(level_, oss.str());
   } catch (std::exception &e) {
     if (CECS.configuration.isLoggingUsingModuleNameInsteadOfFilename) {
