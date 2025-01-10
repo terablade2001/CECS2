@@ -1,5 +1,5 @@
 #pragma once
-#include <CECSMacros.hpp>
+#include <CECS.hpp>
 
 class CECSErrorCodes {
 public:

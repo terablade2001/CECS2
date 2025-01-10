@@ -1,5 +1,7 @@
 #include <CECSErrorCodes.hpp>
 
+CECS_MODULE("CECSErrorCodes")
+
 void CECSErrorCodes::reset() noexcept {
   mapTagsToErrorcodes.clear();
   mapTagsToErrorcodes.emplace("GENERIC", ErrorCodeList{1, GenericErrorDescription});

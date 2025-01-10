@@ -1,6 +1,6 @@
 #pragma once
 // NOLINTBEGIN
-#include <CECSErrorCodes.hpp>
+#include <CECSMacros.hpp>
 #include <spdlog/common.h>
 #include <spdlog/spdlog.h>
 #include <spdlog/logger.h>
