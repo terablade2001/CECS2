@@ -6,6 +6,7 @@ using namespace std;
 static constexpr int CECS_DEFAULT_ERROR_RETURN_VALUE = std::numeric_limits<int>::min();
 
 CECSSingleton                    CECSSingleton::instance{"CECS-Default"};
+CECSSingleton::Configuration     CECSSingleton::configuration{};
 atomic<CECSSingleton::ErrorMode> CECSSingleton::errorMode{ErrorMode::CRITICAL};
 std::recursive_mutex             CECSSingleton::cecsMtx;
 atomic<uint32_t>                 CECSSingleton::numberOfRecordedErrors{0};
@@ -225,6 +226,18 @@ void CECSSingleton::setErrorMode(
 }
 
 CECSSingleton::ErrorMode CECSSingleton::getErrorMode() noexcept { return errorMode; }
+
+CECSSingleton::Configuration CECSSingleton::getConfiguration() noexcept {
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
+  return configuration;
+}
+
+void CECSSingleton::setConfiguration(
+    Configuration config
+) noexcept {
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
+  configuration = std::move(config);
+}
 
 void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
     false
