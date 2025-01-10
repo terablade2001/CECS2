@@ -67,6 +67,7 @@ public:
   static ErrorMode getErrorMode() noexcept;
   Configuration    getConfiguration() noexcept;
   void             setConfiguration(Configuration config) noexcept;
+  int              getErrorIntegerAtExit() const noexcept(false);
 
   // Avoid using this method. Use reConfigure() instead.
   void initializeLogger(const Configuration &config) noexcept(false);
@@ -83,7 +84,7 @@ private:
   static std::atomic<uint32_t>           numberOfRecordedErrors;
   static std::shared_ptr<spdlog::logger> logger;
 
-  std::shared_ptr<CECSErrorCodesAtExit> cecsErrorCodesAtExit;
+  std::shared_ptr<CECSErrorCodesAtExit>      cecsErrorCodesAtExit;
   std::shared_ptr<CECSErrorCodesOnIntReturn> cecsErrorCodesOnIntReturn;
 
   explicit CECSSingleton(std::string ecsNameStr_);

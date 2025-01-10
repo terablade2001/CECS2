@@ -1,7 +1,5 @@
 #include "CECSErrorCodes.hpp"
 
-
-#include <CECSErrorCodes.hpp>
 #include <atomic>
 
 using namespace std;
@@ -238,6 +236,16 @@ void CECSSingleton::setConfiguration(
   configuration = std::move(config);
 }
 
+int CECSSingleton::getErrorIntegerAtExit() const noexcept(
+    false
+) {
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
+  if (cecsErrorCodesAtExit == nullptr) {
+    throw runtime_error("CECS: getErrorIntegerAtExit() failed. cecsErrorCodesAtExit is nullptr.");
+  }
+  return cecsErrorCodesAtExit->errorCode;
+}
+
 void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
     false
 ) {
@@ -295,7 +303,8 @@ bool  CECSSingleton::handleErrIdAtExit(const std::string &errId) const noexcept(
   }
   const bool isTagExistAtExit = cecsErrorCodesAtExit->isTagExistInMap(errId);
   if (!isTagExistAtExit) { return false; }
-  // TODO :: TagAtExit
+  cecsErrorCodesAtExit->handleErrorCode(errId);
+  cout << "handleErrIdAtExit():: DEBUG: TagAtExit --- errId = " << errId << endl;
   return true;
 }
 
@@ -307,7 +316,8 @@ bool CECSSingleton::handleErrIdOnIntReturn(const std::string &errId) const  noex
   }
   const bool isTagExistOnIntReturn = cecsErrorCodesOnIntReturn->isTagExistInMap(errId);
   if (!isTagExistOnIntReturn) { return false; }
-  // TODO :: TagOnIntReturn
+  cecsErrorCodesAtExit->handleErrorCode(errId);
+  cout << "handleErrIdOnIntReturn():: DEBUG: TagOnIntReturn --- errId = " << errId << endl;
   return true;
 }
 
