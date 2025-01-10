@@ -43,14 +43,14 @@ public:
     uint8_t     screenLogLevel{Logger::L::TRC};
     uint8_t     fileLogLevel{Logger::L::NONE};
     std::string logFileName{"CECSLog.log"};
-    uint32_t    logFileMaxSizeBytes{10000};
+    uint32_t    logFileMaxSizeBytes{100000};
     uint8_t     logFileNumOfRotatingFiles{3};
     std::string logCustomFormatForScreen{"[%^-%L-%$] %v"};
     std::string logCustomFormatForFile{"(%Y-%m-%d %H:%M:%S.%e) [%^-%L-%$] [t:%t] %v"};
     uint8_t     flushLevel{Logger::L::DBG};
-
+    bool        isLoggingUsingModuleNameInsteadOfFilename{true};
     std::string str() const;
-  } configuration;
+  };
 
   CECSSingleton()                                 = delete;
   CECSSingleton(const CECSSingleton &)            = delete;
@@ -61,7 +61,6 @@ public:
 
   std::string getProjectName() const noexcept;
   void        setProjectName(const std::string &projectName_) noexcept;
-  void        setConfiguration(const Configuration &config) noexcept(false);
   void        reconfigure() noexcept(false);
   void        logMsg(Logger::L level_, const std::string &log_) const noexcept(false);
   void        critMsg(const std::string &log_, const std::string &errId = "") noexcept(false);
@@ -78,6 +77,15 @@ public:
   static int       getDefaultErrorReturnValue() noexcept;
   static void      setErrorMode(ErrorMode mode_) noexcept(false);
   static ErrorMode getErrorMode() noexcept;
+  Configuration    getConfiguration() noexcept;
+  void             setConfiguration(Configuration config) noexcept;
+
+  // Avoid using this method. Use reConfigure() instead.
+  void initializeLogger(const Configuration &config) noexcept(false);
+
+protected:
+  friend class CECSModule;
+  Configuration configuration;
 
 private:
   std::string                            projectName;

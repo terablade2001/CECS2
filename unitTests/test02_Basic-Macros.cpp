@@ -27,7 +27,7 @@
 
 namespace docTests {
   using namespace std;
-  static CECSModule __ECSOBJ__("Module-A");
+  static CECSModule __ECSOBJ__("MODULE:Test02");
 
   int retFunction(
       const int min, const int max
@@ -126,9 +126,11 @@ namespace docTests {
   ) {
     TEST_CASE("Checking the _ERRT Macro that properly records and throw") {
       LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRT Macro that properly records and throw")
-      auto &CECS                            = CECSSingleton::getInstance();
-      CECS.configuration.logCustomFormatForScreen    = "[%^-%L-%$] %v";
-      CECS.reconfigure();
+      auto &CECS                             = CECSSingleton::getInstance();
+      auto  configuration                    = CECS.getConfiguration();
+      configuration.logCustomFormatForScreen = "[%^-%L-%$] %v";
+      CECS.setConfiguration(configuration);
+      CHECK_NOTHROW(CECS.reconfigure());
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       CECSSingleton::resetNumberOfErrors();
       try {
