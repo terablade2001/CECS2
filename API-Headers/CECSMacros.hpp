@@ -37,7 +37,7 @@
 #define _ECSCLS_                                                                                   \
   { CECSSingleton::getInstance().resetNumberOfErrorsWithErrorModeCheck(); }
 #define _ECSCLS(numberOfLatestRecords)                                                             \
-  { CECSSingleton::resetNumberOfErrorsWithErrorModeCheck(numberOfLatestRecords); }
+  { CECSSingleton::getInstance().resetNumberOfErrorsWithErrorModeCheck(numberOfLatestRecords); }
 
 #define _NERR_ (CECSSingleton::getNumberOfErrors())
 
