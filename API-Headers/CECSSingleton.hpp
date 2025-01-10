@@ -83,7 +83,6 @@ private:
   static std::atomic<uint32_t>           numberOfRecordedErrors;
   static std::shared_ptr<spdlog::logger> logger;
 
-
   std::shared_ptr<CECSErrorCodesAtExit> cecsErrorCodesAtExit;
   std::shared_ptr<CECSErrorCodesOnIntReturn> cecsErrorCodesOnIntReturn;
 

@@ -20,6 +20,8 @@ public:
 
   void reset() noexcept;
   std::string getErrorCodesListing() const noexcept;
+  bool isTagExistInMap(const std::string &tag_) const noexcept;
+
 
   virtual int
   addNewErrorCode(const std::string &tag_, const ErrorCodeList &&newErrorCode_) noexcept = 0;

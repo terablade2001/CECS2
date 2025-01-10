@@ -30,7 +30,7 @@ std::string CECSSingleton::Configuration::str() const {
 CECSSingleton::CECSSingleton(
     std::string ecsNameStr_
 ) : projectName(std::move(ecsNameStr_)) {
-  cecsErrorCodesAtExit = make_shared<CECSErrorCodesAtExit>();
+  cecsErrorCodesAtExit      = make_shared<CECSErrorCodesAtExit>();
   cecsErrorCodesOnIntReturn = make_shared<CECSErrorCodesOnIntReturn>();
   initializeLogger(configuration);
 }
@@ -277,7 +277,24 @@ void CECSSingleton::handleErrId(const std::string &errId)  noexcept(false) {
     --numberOfRecordedErrors;
     return;
   }
-  // TODO : Handle the errId via proper mechanism.
+  if (cecsErrorCodesAtExit == nullptr) {
+    throw runtime_error("CECS: handleErrId() failed. cecsErrorCodesAtExit is nullptr.");
+  }
+  if (cecsErrorCodesOnIntReturn == nullptr) {
+    throw runtime_error("CECS: handleErrId() failed. cecsErrorCodesOnIntReturn is nullptr.");
+  }
+  const bool isTagExistAtExit = cecsErrorCodesAtExit->isTagExistInMap(errId);
+  if (isTagExistAtExit) {
+    // TODO :: TagAtExit
+    return;
+  }
+  const bool isTagExistOnIntReturn = cecsErrorCodesOnIntReturn->isTagExistInMap(errId);
+  if (!isTagExistOnIntReturn) {
+    throw runtime_error(
+        "CECS: handleErrId() failed. The Tag_[" + errId + "] doesnt' match any ErrorCode list."
+    );
+    // TODO :: TagAt
+  }
 }
 
 // -------------------------------------------------------------------------------------------------
