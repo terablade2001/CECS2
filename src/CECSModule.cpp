@@ -65,9 +65,8 @@ void CECSModule::RecLog(const uint32_t line_, const Logger::L level_, const std:
   std::lock_guard<std::recursive_mutex> lock(mtx);
   try {
     ostringstream oss;
-    oss << "[" << moduleName;
-    if (line_ != static_cast<uint32_t>(-1)) { oss << ", L-" << line_; }
-    oss << "] " << msg_;
+    if (line_ != static_cast<uint32_t>(-1)) { oss << "[" << moduleName << ", L-" << line_ << "] "; }
+    oss << msg_;
     CECS.logMsg(level_, oss.str());
   } catch (std::exception &e) {
     if (CECS.configuration.isLoggingUsingModuleNameInsteadOfFilename) {
