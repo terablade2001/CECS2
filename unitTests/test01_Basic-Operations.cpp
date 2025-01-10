@@ -69,7 +69,7 @@ namespace docTests {
       // User must not use initializeLogger()
       CHECK_THROWS_AS(CECS.initializeLogger(invalidConfig), std::runtime_error);
       invalidConfig.loggerName = "";
-      CECSSingleton::setConfiguration(invalidConfig);
+      CECS.setConfiguration(invalidConfig);
       CHECK_THROWS_AS(CECS.reconfigure(), std::invalid_argument);
       CECS.Shutdown();
       std::remove("CECSLog.log");
@@ -95,7 +95,7 @@ namespace docTests {
       invalidConfig.loggerName   = "SomeName";
       invalidConfig.logFileName  = "TestConfigCECSSingleton.log";
       invalidConfig.fileLogLevel = 3;
-      CECSSingleton::setConfiguration(invalidConfig);
+      CECS.setConfiguration(invalidConfig);
       CHECK_NOTHROW(CECS.reconfigure());
       CHECK_EQ(true, isFileExist(invalidConfig.logFileName));
       CECS.Shutdown();
@@ -120,7 +120,7 @@ namespace docTests {
       }
 
       // Modify the default config to test different cases.
-      auto defaultConfig = CECSSingleton::getConfiguration();
+      auto defaultConfig = CECS.getConfiguration();
       if (defaultConfig.fileLogLevel == 0) {
         CHECK_EQ(false, isFileExist(defaultConfig.logFileName));
       } else if (defaultConfig.fileLogLevel < static_cast<uint8_t>(Logger::L::NONE)) {
@@ -133,7 +133,7 @@ namespace docTests {
 
     TEST_CASE("Test logging with CECS...") {
       std::lock_guard<std::mutex> lock(testMutex);
-      LOG_TEST_CASE( "Basic Operations", "Basic logging with CECS...")
+      LOG_TEST_CASE("Basic Operations", "Basic logging with CECS...")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
@@ -141,9 +141,9 @@ namespace docTests {
         CECS.state = CECSSingleton::State::INIT;
       }
 
-      auto configuration = CECSSingleton::getConfiguration();
+      auto configuration         = CECS.getConfiguration();
       configuration.fileLogLevel = Logger::L::TRC;
-      CECSSingleton::setConfiguration(configuration);
+      CECS.setConfiguration(configuration);
       CHECK_NOTHROW(CECS.reconfigure());
       CHECK_NOTHROW(CECS.logMsg(Logger::L::TRC, "... Trace Message ... "));
       CHECK_NOTHROW(CECS.logMsg(Logger::L::DBG, "... Debug Message ... "));

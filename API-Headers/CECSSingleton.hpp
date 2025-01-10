@@ -74,18 +74,18 @@ public:
       uint32_t reduceValue = std::numeric_limits<uint32_t>::max()
   ) noexcept(false);
 
-  static int           getDefaultErrorReturnValue() noexcept;
-  static void          setErrorMode(ErrorMode mode_) noexcept(false);
-  static ErrorMode     getErrorMode() noexcept;
-  static Configuration getConfiguration() noexcept;
-  static void          setConfiguration(Configuration config) noexcept;
+  static int       getDefaultErrorReturnValue() noexcept;
+  static void      setErrorMode(ErrorMode mode_) noexcept(false);
+  static ErrorMode getErrorMode() noexcept;
+  Configuration    getConfiguration() noexcept;
+  void             setConfiguration(Configuration config) noexcept;
 
   // Avoid using this method. Use reConfigure() instead.
   void initializeLogger(const Configuration &config) noexcept(false);
 
 private:
   std::string                            projectName;
-  static Configuration                   configuration;
+  Configuration                          configuration;
   static CECSSingleton                   instance;
   static std::atomic<ErrorMode>          errorMode;
   static std::recursive_mutex            cecsMtx;

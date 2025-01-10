@@ -6,7 +6,6 @@ using namespace std;
 static constexpr int CECS_DEFAULT_ERROR_RETURN_VALUE = std::numeric_limits<int>::min();
 
 CECSSingleton                    CECSSingleton::instance{"CECS-Default"};
-CECSSingleton::Configuration     CECSSingleton::configuration{};
 atomic<CECSSingleton::ErrorMode> CECSSingleton::errorMode{ErrorMode::CRITICAL};
 std::recursive_mutex             CECSSingleton::cecsMtx;
 atomic<uint32_t>                 CECSSingleton::numberOfRecordedErrors{0};
