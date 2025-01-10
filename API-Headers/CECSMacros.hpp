@@ -28,6 +28,8 @@
 #define __ECSOBJ__ CECS_Instance_
 #endif
 
+#define _CECS_MAGIC_THROW_ERRORCODE_ 127
+
 #define CECS_MODULE(moduleName) static CECSModule __ECSOBJ__(moduleName);
 #define CECS_MAIN_MODULE(moduleName, projectName)                                                  \
   static CECSModule __ECSOBJ__(moduleName, projectName);

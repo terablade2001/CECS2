@@ -46,18 +46,32 @@ namespace docTests {
       CHECK_NOTHROW(CECS.reconfigure());
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       try {
-        _ERRTU(1,"GENERIC","Testing Generic Error.")
+        _ERRTU(1, "GENERIC", "Testing Generic Error.")
         CHECK_EQ(2, 1);
-      } catch (const std::exception &) {
-        CHECK_EQ(1, CECS.getErrorIntegerAtExit());
+      } catch (const std::exception &) { CHECK_EQ(1, CECS.getErrorIntegerAtExit()); }
+      SUBCASE("Evaluate the AtExit ErrorCode Without _ECSCLS_ call") {
+        try {
+          _ERRTU(1, "UNDEFINED", "Testing an Undefined Error.")
+          CHECK_EQ(2, 1);
+        } catch (const std::exception &) {
+          cout << "The AtExit errorCode should not change after this throw." << endl;
+          CHECK_EQ(1, CECS.getErrorIntegerAtExit());
+        }
       }
-      // try {
-      //   _ERRTU(1,"UNDEFINED","Testing an Undefined Error.")
-      //   CHECK_EQ(2, 1);
-      // } catch (const std::exception &e) {
-      //   cout << e.what() << endl;
-      //   CHECK_EQ(0, CECS.getErrorIntegerAtExit());
-      // }
+      SUBCASE("Evaluate the AtExit ErrorCode With _ECSCLS_ call") {
+        _CECS_MODE_ERR_
+        _ECSCLS_
+        _CECS_MODE_CRIT_
+        try {
+          _ERRTU(1, "UNDEFINED", "Testing an Undefined Error.")
+          CHECK_EQ(2, 1);
+        } catch (const std::exception &) {
+          cout << "The AtExit errorCode should provide the MAGIC THROW ERROR CODE because "
+                  "UNDEFINED error has not been defined in the error map at this point."
+               << endl;
+          CHECK_EQ(_CECS_MAGIC_THROW_ERRORCODE_, CECS.getErrorIntegerAtExit());
+        }
+      }
     }
   }
 } // namespace docTests

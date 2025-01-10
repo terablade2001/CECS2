@@ -31,6 +31,8 @@ public:
 
 protected:
   std::map<std::string, ErrorCodeList> mapTagsToErrorcodes;
+private:
+  void addPreconfiguredErrorCodes() noexcept;
 };
 
 // -------------------------------------------------------------------------------------------------

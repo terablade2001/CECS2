@@ -287,14 +287,9 @@ void CECSSingleton::handleErrId(const std::string &errId)  noexcept(false) {
     return;
   }
 
-  bool handled = handleErrIdAtExit(errId);
+  const bool handled = handleErrIdOnIntReturn(errId);
   if (!handled) {
-    handled = handleErrIdOnIntReturn(errId);
-    if (!handled) {
-      throw std::runtime_error(
-          "CECS: handleErrId() failed. The Tag_[" + errId + "] doesnt' match any ErrorCode list."
-      );
-    }
+    handleErrIdAtExit(errId); // NOLINT
   }
 }
 
@@ -302,8 +297,6 @@ bool  CECSSingleton::handleErrIdAtExit(const std::string &errId) const noexcept(
   if (cecsErrorCodesAtExit == nullptr) {
     throw runtime_error("CECS: handleErrIdAtExit() failed. cecsErrorCodesAtExit is nullptr.");
   }
-  const bool isTagExistAtExit = cecsErrorCodesAtExit->isTagExistInMap(errId);
-  if (!isTagExistAtExit) { return false; }
   cecsErrorCodesAtExit->handleErrorCode(errId);
   return true;
 }
