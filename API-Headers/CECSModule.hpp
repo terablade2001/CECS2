@@ -20,7 +20,8 @@ public:
   static int getCompiledCECSMaxLineSize();
 
   void RecLog(Logger::L level_, const char *msg_, ...) noexcept(false);
-  void RecLog(Logger::L level_, const std::string& msg_) noexcept(false);
+  void RecLog(Logger::L level_, const std::string &msg_) noexcept(false);
+  void RecLog(uint32_t line_, Logger::L level_, const std::string &msg_) noexcept(false);
 
   void RecError(
       const char        *fileName_, // __FNAME__ : The filename of the code called
