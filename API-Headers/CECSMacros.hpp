@@ -35,7 +35,7 @@
 #define _CECS_MODE_ERR_ CECSSingleton::setErrorMode(CECSSingleton::ErrorMode::ERROR);
 
 #define _ECSCLS_                                                                                   \
-  { CECSSingleton::resetNumberOfErrorsWithErrorModeCheck(); }
+  { CECSSingleton::getInstance().resetNumberOfErrorsWithErrorModeCheck(); }
 #define _ECSCLS(numberOfLatestRecords)                                                             \
   { CECSSingleton::resetNumberOfErrorsWithErrorModeCheck(numberOfLatestRecords); }
 
