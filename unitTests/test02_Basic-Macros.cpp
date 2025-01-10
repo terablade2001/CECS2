@@ -127,8 +127,7 @@ namespace docTests {
     TEST_CASE("Checking the _ERRT Macro that properly records and throw") {
       LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRT Macro that properly records and throw")
       auto &CECS                            = CECSSingleton::getInstance();
-      CECS.configuration.useLogCustomFormat = true;
-      CECS.configuration.logCustomFormat    = "[%^%L%$] %v";
+      CECS.configuration.logCustomFormatForScreen    = "[%^-%L-%$] %v";
       CECS.reconfigure();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       CECSSingleton::resetNumberOfErrors();
@@ -273,7 +272,7 @@ namespace docTests {
       err = test02ErrFunc01(-1);
       CHECK_NE(0, err);
       cout << "CECSSingleton::getNumberOfErrors() = " << CECSSingleton::getNumberOfErrors() << endl;
-      SUBCASE("Try to clean the errors while in CRITICAL mode ... It should throw.") {
+      SUBCASE("Try to clean the errors while in ERROR mode ... It should not throw.") {
         try {
           _ECSCLS_
           CHECK_EQ(1, 1);

@@ -39,15 +39,15 @@ public:
   std::atomic<State> state{State::NOT_INIT};
 
   struct Configuration {
-    std::string loggerName{"IL"};
+    std::string loggerName{"CECS"};
     uint8_t     screenLogLevel{Logger::L::TRC};
     uint8_t     fileLogLevel{Logger::L::NONE};
     std::string logFileName{"CECSLog.log"};
     uint32_t    logFileMaxSizeBytes{10000};
     uint8_t     logFileNumOfRotatingFiles{3};
-    bool        useLogCustomFormat{true};
-    std::string logCustomFormat{"(%m/%d %H:%M:%S) [%^%L%$] [t:%t] %v"};
-    uint8_t     flushLevel{Logger::L::INFO};
+    std::string logCustomFormatForScreen{"[%^-%L-%$] %v"};
+    std::string logCustomFormatForFile{"(%Y-%m-%d %H:%M:%S.%e) [%^-%L-%$] [t:%t] %v"};
+    uint8_t     flushLevel{Logger::L::DBG};
 
     std::string str() const;
   } configuration;

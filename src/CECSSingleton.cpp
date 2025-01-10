@@ -18,7 +18,8 @@ std::string CECSSingleton::Configuration::str() const {
      << "\n fileLogLevel: " << static_cast<int>(fileLogLevel) << "\n logFileName: " << logFileName
      << "\n logFileMaxSizeBytes: " << logFileMaxSizeBytes
      << "\n logFileNumOfRotatingFiles: " << static_cast<int>(logFileNumOfRotatingFiles)
-     << "\n useLogCustomFormat: " << useLogCustomFormat << "\n logCustomFormat: " << logCustomFormat
+     << "\n logCustomFormatForScreen: " << logCustomFormatForScreen
+     << "\n logCustomFormatForFile: " << logCustomFormatForFile
      << "\n flushLevel: " << static_cast<int>(flushLevel) << std::endl;
   return os.str();
 }
@@ -81,6 +82,9 @@ void CECSSingleton::setConfiguration(
     if (static_cast<uint8_t>(config.screenLogLevel) < static_cast<uint8_t>(Logger::L::NONE)) {
       const auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
       console_sink->set_level(static_cast<spdlog::level::level_enum>(config.screenLogLevel));
+      if (!config.logCustomFormatForScreen.empty()) {
+        console_sink->set_pattern(config.logCustomFormatForScreen);
+      }
       sinks.push_back(console_sink);
     }
 
@@ -90,12 +94,14 @@ void CECSSingleton::setConfiguration(
           config.logFileName.c_str(), config.logFileMaxSizeBytes, config.logFileNumOfRotatingFiles
       );
       file_sink->set_level(static_cast<spdlog::level::level_enum>(config.fileLogLevel));
+      if (!config.logCustomFormatForFile.empty()) {
+        file_sink->set_pattern(config.logCustomFormatForFile);
+      }
       sinks.push_back(file_sink);
     }
 
     logger = std::make_shared<spdlog::logger>(config.loggerName, sinks.begin(), sinks.end());
     logger->set_level(spdlog::level::trace);
-    if (config.useLogCustomFormat) { logger->set_pattern(config.logCustomFormat); }
     spdlog::flush_on(static_cast<spdlog::level::level_enum>(config.flushLevel));
 
   } catch (std::exception &) {
