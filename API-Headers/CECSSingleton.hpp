@@ -1,6 +1,6 @@
 #pragma once
 // NOLINTBEGIN
-#include <CECSErrorCodes.hpp>
+#include <CECSMacros.hpp>
 #include <spdlog/common.h>
 #include <spdlog/spdlog.h>
 #include <spdlog/logger.h>
@@ -14,6 +14,9 @@ namespace Logger {
 }
 
 // -------------------------------------------------------------------------------------------------
+
+class CECSErrorCodesAtExit;
+class CECSErrorCodesOnIntReturn;
 
 class CECSSingleton {
 public:
@@ -80,7 +83,12 @@ private:
   static std::atomic<uint32_t>           numberOfRecordedErrors;
   static std::shared_ptr<spdlog::logger> logger;
 
+  std::shared_ptr<CECSErrorCodesAtExit> cecsErrorCodesAtExit;
+  std::shared_ptr<CECSErrorCodesOnIntReturn> cecsErrorCodesOnIntReturn;
+
   explicit CECSSingleton(std::string ecsNameStr_);
   void        handleErrId(const std::string &errId) noexcept(false);
+  bool        handleErrIdAtExit(const std::string &errId) const noexcept(false);
+  bool        handleErrIdOnIntReturn(const std::string &errId) const noexcept(false);
   static void verifyEnumsHaveNotChange() noexcept(false);
 };

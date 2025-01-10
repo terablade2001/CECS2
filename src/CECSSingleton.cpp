@@ -1,4 +1,7 @@
-#include <CECSSingleton.hpp>
+#include "CECSErrorCodes.hpp"
+
+
+#include <CECSErrorCodes.hpp>
 #include <atomic>
 
 using namespace std;
@@ -27,16 +30,9 @@ std::string CECSSingleton::Configuration::str() const {
 CECSSingleton::CECSSingleton(
     std::string ecsNameStr_
 ) : projectName(std::move(ecsNameStr_)) {
-  // NOLINTBEGIN
-  // cout << "CECSSingleton : Setting configuration ..." << state << endl;
+  cecsErrorCodesAtExit      = make_shared<CECSErrorCodesAtExit>();
+  cecsErrorCodesOnIntReturn = make_shared<CECSErrorCodesOnIntReturn>();
   initializeLogger(configuration);
-  // cout << "CECSSingleton : Setting configuration DONE ..." << state << endl;
-  // if (logger == nullptr) {
-  //   cout << "*** CECSSingleton : Logger is nullptr! *** " << endl;
-  // } else {
-  //   cout << "CECSSingleton : Logger initialized! " << endl;
-  // }
-  // NOLINTEND
 }
 
 void CECSSingleton::Shutdown() {
@@ -281,7 +277,38 @@ void CECSSingleton::handleErrId(const std::string &errId)  noexcept(false) {
     --numberOfRecordedErrors;
     return;
   }
-  // TODO : Handle the errId via proper mechanism.
+
+  bool handled = handleErrIdAtExit(errId);
+  if (!handled) {
+    handled = handleErrIdOnIntReturn(errId);
+    if (!handled) {
+      throw std::runtime_error(
+          "CECS: handleErrId() failed. The Tag_[" + errId + "] doesnt' match any ErrorCode list."
+      );
+    }
+  }
+}
+
+bool  CECSSingleton::handleErrIdAtExit(const std::string &errId) const noexcept(false){
+  if (cecsErrorCodesAtExit == nullptr) {
+    throw runtime_error("CECS: handleErrIdAtExit() failed. cecsErrorCodesAtExit is nullptr.");
+  }
+  const bool isTagExistAtExit = cecsErrorCodesAtExit->isTagExistInMap(errId);
+  if (!isTagExistAtExit) { return false; }
+  // TODO :: TagAtExit
+  return true;
+}
+
+bool CECSSingleton::handleErrIdOnIntReturn(const std::string &errId) const  noexcept(false){
+  if (cecsErrorCodesOnIntReturn == nullptr) {
+    throw runtime_error(
+        "CECS: handleErrIdOnIntReturn() failed. cecsErrorCodesOnIntReturn is nullptr."
+    );
+  }
+  const bool isTagExistOnIntReturn = cecsErrorCodesOnIntReturn->isTagExistInMap(errId);
+  if (!isTagExistOnIntReturn) { return false; }
+  // TODO :: TagOnIntReturn
+  return true;
 }
 
 // -------------------------------------------------------------------------------------------------
