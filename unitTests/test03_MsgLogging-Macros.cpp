@@ -33,10 +33,10 @@ namespace docTests {
   DOCTEST_TEST_SUITE(
       "03 Test Message logging Macros"
   ) {
-    TEST_CASE("Testing the basic HLog_() macro with C-formatted message") {
+    TEST_CASE("Testing the basic HLog_() macro with formatted messages") {
       LOG_TEST_CASE(
           "03 Test Message logging Macros",
-          "Testing the basic HLog_() macro with C-formatted message"
+          "Testing the basic HLog_() macro with formatted messages"
       )
       auto &CECS                 = CECSSingleton::getInstance();
       auto  configuration        = CECS.getConfiguration();
