@@ -52,66 +52,66 @@
     __ECSOBJ__.RecError(__FNAME__, __LINE__, "", args);                                            \
     throw runtime_error("_ERRT occurred");                                                         \
   }
-// #define _ERRTU(ExpR, UserErrID, args...)                                                           \
-//   if ((ExpR)) {                                                                                    \
-//     __ECSOBJ__.RecError(__FNAME__, __LINE__, UserErrID, args);                                     \
-//     throw runtime_error("_ERRT occurred");                                                         \
-//   }
+#define _ERRTU(ExpR, UserErrID, args...)                                                           \
+  if ((ExpR)) {                                                                                    \
+    __ECSOBJ__.RecError(__FNAME__, __LINE__, UserErrID, args);                                     \
+    throw runtime_error("_ERRT occurred");                                                         \
+  }
 
 #define _ERRI(ExpR, args...)                                                                       \
   if ((ExpR)) {                                                                                    \
     __ECSOBJ__.RecError(__FNAME__, __LINE__, "", args);                                            \
     return CECSSingleton::getDefaultErrorReturnValue();                                            \
   }
-// #define _ERRIU(ExpR, UserErrID, args...)                                                           \
-//   if ((ExpR)) {                                                                                    \
-//     __ECSOBJ__.RecError(__FNAME__, __LINE__, UserErrID, args);                                     \
-//     return CECSSingleton::getDefaultErrorReturnValue();                                            \
-//   }
+#define _ERRIU(ExpR, UserErrID, args...)                                                           \
+  if ((ExpR)) {                                                                                    \
+    __ECSOBJ__.RecError(__FNAME__, __LINE__, UserErrID, args);                                     \
+    return CECSSingleton::getDefaultErrorReturnValue();                                            \
+  }
 
 #define _ERR(ExpR, args...)                                                                        \
   if ((ExpR)) {                                                                                    \
     __ECSOBJ__.RecError(__FNAME__, __LINE__, "", args);                                            \
     return;                                                                                        \
   }
-// #define _ERRU(ExpR, UserErrID, args...)                                                            \
-//   if ((ExpR)) {                                                                                    \
-//     __ECSOBJ__.RecError(__FNAME__, __LINE__, UserErrID, args);                                     \
-//     return;                                                                                        \
-//   }
+#define _ERRU(ExpR, UserErrID, args...)                                                            \
+  if ((ExpR)) {                                                                                    \
+    __ECSOBJ__.RecError(__FNAME__, __LINE__, UserErrID, args);                                     \
+    return;                                                                                        \
+  }
 
 #define _ERRN(ExpR, args...)                                                                       \
   if ((ExpR)) {                                                                                    \
     __ECSOBJ__.RecError(__FNAME__, __LINE__, "", args);                                            \
     return nullptr;                                                                                \
   }
-// #define _ERRNU(ExpR, UserErrID, args...)                                                           \
-//   if ((ExpR)) {                                                                                    \
-//     __ECSOBJ__.RecError(__FNAME__, __LINE__, UserErrID, args);                                     \
-//     return nullptr;                                                                                \
-//   }
+#define _ERRNU(ExpR, UserErrID, args...)                                                           \
+  if ((ExpR)) {                                                                                    \
+    __ECSOBJ__.RecError(__FNAME__, __LINE__, UserErrID, args);                                     \
+    return nullptr;                                                                                \
+  }
 
 #define _ERRB(ExpR, args...)                                                                       \
   if ((ExpR)) {                                                                                    \
     __ECSOBJ__.RecError(__FNAME__, __LINE__, "", args);                                            \
     return false;                                                                                  \
   }
-// #define _ERRBU(ExpR, UserErrID, args...)                                                           \
-//   if ((ExpR)) {                                                                                    \
-//     __ECSOBJ__.RecError(__FNAME__, __LINE__, UserErrID, args);                                     \
-//     return false;                                                                                  \
-//   }
+#define _ERRBU(ExpR, UserErrID, args...)                                                           \
+  if ((ExpR)) {                                                                                    \
+    __ECSOBJ__.RecError(__FNAME__, __LINE__, UserErrID, args);                                     \
+    return false;                                                                                  \
+  }
 
 #define _ERRO(ExpR, __UserReturn__, args...)                                                       \
   if ((ExpR)) {                                                                                    \
     __ECSOBJ__.RecError(__FNAME__, __LINE__, "", args);                                            \
     __UserReturn__                                                                                 \
   }
-// #define _ERROU(ExpR, __UserReturn__, UserErrID, args...)                                           \
-//   if ((ExpR)) {                                                                                    \
-//     __ECSOBJ__.RecError(__FNAME__, __LINE__, UserErrID, args);                                     \
-//     __UserReturn__                                                                                 \
-//   }
+#define _ERROU(ExpR, __UserReturn__, UserErrID, args...)                                           \
+  if ((ExpR)) {                                                                                    \
+    __ECSOBJ__.RecError(__FNAME__, __LINE__, UserErrID, args);                                     \
+    __UserReturn__                                                                                 \
+  }
 
 #define _ERRSTR(ExpR, __UserSS__)                                                                  \
   if ((ExpR)) {                                                                                    \
