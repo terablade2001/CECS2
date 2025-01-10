@@ -47,7 +47,7 @@ public:
     uint8_t     logFileNumOfRotatingFiles{3};
     std::string logCustomFormatForScreen{"[%^-%L-%$] %v"};
     std::string logCustomFormatForFile{"(%Y-%m-%d %H:%M:%S.%e) [%^-%L-%$] [t:%t] %v"};
-    uint8_t     flushLevel{Logger::L::INFO};
+    uint8_t     flushLevel{Logger::L::DBG};
 
     std::string str() const;
   } configuration;
