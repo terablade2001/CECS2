@@ -69,11 +69,12 @@ void CECSModule::RecLog(const uint32_t line_, const Logger::L level_, const std:
     oss << msg_;
     CECS.logMsg(level_, oss.str());
   } catch (std::exception &e) {
-    if (CECS.configuration.isLoggingUsingModuleNameInsteadOfFilename) {
+    const std::string keepModuleName = moduleName;
+    try {
+      moduleName = "CECSModule{@"+moduleName+"}";
       RecError(moduleName.c_str(), __LINE__, "", "CECS::RecLog():: " + string(e.what()));
-    } else {
-      RecError(__FNAME__, __LINE__, "", "CECS::RecLog():: " + string(e.what()));
-    }
+    } catch (std::exception &) { }
+    moduleName = keepModuleName;
     throw runtime_error("CECS::RecLog() failed.");
   }
 }
