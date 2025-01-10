@@ -61,7 +61,6 @@ public:
 
   std::string getProjectName() const noexcept;
   void        setProjectName(const std::string &projectName_) noexcept;
-  void        initializeLogger(const Configuration &config) noexcept(false);
   void        reconfigure() noexcept(false);
   void        logMsg(Logger::L level_, const std::string &log_) const noexcept(false);
   void        critMsg(const std::string &log_, const std::string &errId = "") noexcept(false);
@@ -80,6 +79,9 @@ public:
   static ErrorMode     getErrorMode() noexcept;
   static Configuration getConfiguration() noexcept;
   static void          setConfiguration(Configuration config) noexcept;
+
+  // Avoid using this method. Use reConfigure() instead.
+  void initializeLogger(const Configuration &config) noexcept(false);
 
 private:
   std::string                            projectName;

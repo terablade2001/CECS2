@@ -57,18 +57,20 @@ namespace docTests {
       std::lock_guard<std::mutex> lock(testMutex);
       LOG_TEST_CASE("Basic Operations", "Configure CECS Singleton with no name should throw")
       auto &CECS = CECSSingleton::getInstance();
-      // CECS in persistent among all texts, thus we have to manually change it's state after
-      // Shutdown()
+      // CECS in persistent among all texts, thus we have to manually reconfigure it.
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
-        CECSSingleton::Configuration defaultConfig;
-        CECS.initializeLogger(defaultConfig);
+        CECS.reconfigure();
         CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       }
 
+
       CECSSingleton::Configuration invalidConfig;
+      // User must not use initializeLogger()
+      CHECK_THROWS_AS(CECS.initializeLogger(invalidConfig), std::runtime_error);
       invalidConfig.loggerName = "";
-      CHECK_THROWS_AS(CECS.initializeLogger(invalidConfig), std::invalid_argument);
+      CECSSingleton::setConfiguration(invalidConfig);
+      CHECK_THROWS_AS(CECS.reconfigure(), std::invalid_argument);
       CECS.Shutdown();
       std::remove("CECSLog.log");
     }
@@ -85,8 +87,7 @@ namespace docTests {
       // Shutdown()
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
-        CECSSingleton::Configuration defaultConfig;
-        CECS.initializeLogger(defaultConfig);
+        CECS.reconfigure();
         CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       }
 
@@ -94,7 +95,8 @@ namespace docTests {
       invalidConfig.loggerName   = "SomeName";
       invalidConfig.logFileName  = "TestConfigCECSSingleton.log";
       invalidConfig.fileLogLevel = 3;
-      CHECK_NOTHROW(CECS.initializeLogger(invalidConfig));
+      CECSSingleton::setConfiguration(invalidConfig);
+      CHECK_NOTHROW(CECS.reconfigure());
       CHECK_EQ(true, isFileExist(invalidConfig.logFileName));
       CECS.Shutdown();
       int err = remove("TestConfigCECSSingleton.log");
@@ -113,13 +115,12 @@ namespace docTests {
       // Shutdown()
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
-        CECSSingleton::Configuration defaultConfig;
-        CECS.initializeLogger(defaultConfig);
+        CECS.reconfigure();
         CECS.state = CECSSingleton::State::INIT;
       }
 
       // Modify the default config to test different cases.
-      auto &defaultConfig = CECS.configuration;
+      auto defaultConfig = CECSSingleton::getConfiguration();
       if (defaultConfig.fileLogLevel == 0) {
         CHECK_EQ(false, isFileExist(defaultConfig.logFileName));
       } else if (defaultConfig.fileLogLevel < static_cast<uint8_t>(Logger::L::NONE)) {
@@ -136,12 +137,13 @@ namespace docTests {
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
-        CECSSingleton::Configuration defaultConfig;
-        CECS.initializeLogger(defaultConfig);
+        CECS.reconfigure();
         CECS.state = CECSSingleton::State::INIT;
       }
 
-      CECS.configuration.fileLogLevel = Logger::L::TRC;
+      auto configuration = CECSSingleton::getConfiguration();
+      configuration.fileLogLevel = Logger::L::TRC;
+      CECSSingleton::setConfiguration(configuration);
       CHECK_NOTHROW(CECS.reconfigure());
       CHECK_NOTHROW(CECS.logMsg(Logger::L::TRC, "... Trace Message ... "));
       CHECK_NOTHROW(CECS.logMsg(Logger::L::DBG, "... Debug Message ... "));

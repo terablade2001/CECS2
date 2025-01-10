@@ -66,12 +66,16 @@ void CECSSingleton::initializeLogger(
     const Configuration &config
 ) noexcept(false) {
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
-  if (state == INTERNAL_ERROR) {
-    throw std::invalid_argument("State is in INTERNAL_ERROR. Can not proceed.");
+  if (state != NOT_INIT) {
+    throw std::invalid_argument("Unexpected state != NOT_INIT. Can not proceed.");
   }
   if (config.loggerName.empty()) {
     state = INTERNAL_ERROR;
     throw std::invalid_argument("Logger name can not be empty!");
+  }
+  if (logger != nullptr) {
+    state = INTERNAL_ERROR;
+    throw std::runtime_error("Error: initializeLogger() without Shutdown be called first.");
   }
 
   try {
