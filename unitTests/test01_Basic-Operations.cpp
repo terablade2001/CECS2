@@ -26,7 +26,9 @@
 namespace docTests {
   using namespace std;
   static std::mutex testMutex;
-  CECS_MAIN_MODULE("MODULE:Test01","UnitTesting")
+  CECS_MAIN_MODULE(
+      "MODULE:Test01", "UnitTesting"
+  )
 
   bool isFileExist(
       const std::string &filepath_
@@ -83,7 +85,8 @@ namespace docTests {
     TEST_CASE("Confirm CECS Singleton generates custom log file after reConfigured") {
       std::lock_guard<std::mutex> lock(testMutex);
       LOG_TEST_CASE(
-          "01 Basic Operations", "Confirm CECS Singleton generates custom log file after reConfigured"
+          "01 Basic Operations",
+          "Confirm CECS Singleton generates custom log file after reConfigured"
       )
       //.
       remove("TestConfigCECSSingleton.log");
@@ -155,7 +158,7 @@ namespace docTests {
       CHECK_NOTHROW(CECS.logMsg(Logger::L::INFO, "... Info Message ... "));
       CHECK_NOTHROW(CECS.logMsg(Logger::L::ERR, "... Error Message ... "));
       CHECK_NOTHROW(CECS.logMsg(Logger::L::WARN, "... Warning Message ... "));
-      _ERRSTR(1,{ ss << "_ERRSTR: ... Error Message ... "; })
+      _ERRSTR(1, { ss << "_ERRSTR: ... Error Message ... "; })
       CECS.Shutdown();
       std::remove("CECSLog.log");
     }
