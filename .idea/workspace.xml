@@ -60,10 +60,8 @@
   <component name="ChangeListManager">
     <list default="true" id="96ff6be1-98c0-4672-9605-394c8eedfe23" name="Changes" comment="(0.19)[I#2]: Enabling CustomFormat.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API-Headers/CECSSingleton.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/API-Headers/CECSSingleton.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CECSSingleton.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/CECSSingleton.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unitTests/test01_Basic-Operations.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/test01_Basic-Operations.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unitTests/test02_Basic-Macros.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/test02_Basic-Macros.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,6 +212,12 @@
         <option name="BeforeTestRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Confirm CECS Singleton generates custom log file after reConfigured" type="CMakeDoctestTestRunConfigurationType" factoryName="doctest Test" temporary="true" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CECS" TARGET_NAME="CECS_Tests" RUN_TARGET_PROJECT_NAME="CECS" RUN_TARGET_NAME="CECS_Tests" TEST_CLASS="01 Basic Operations" TEST_METHOD="Confirm CECS Singleton generates custom log file after reConfigured" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Test Modules" type="CMakeDoctestTestRunConfigurationType" factoryName="doctest Test" temporary="true" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CECS" TARGET_NAME="CECS_Tests" CONFIG_NAME="Release-TDM-MinGW-64" RUN_TARGET_PROJECT_NAME="CECS" RUN_TARGET_NAME="CECS_Tests" TEST_PATTERN="Test Modules" TEST_MODE="PATTERN">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -240,10 +244,12 @@
       <item itemvalue="CMake Application.CECS" />
       <item itemvalue="CMake Application.spdlog" />
       <item itemvalue="Doctest.All in CECS_Tests" />
+      <item itemvalue="Doctest.Confirm CECS Singleton generates custom log file after reConfigured" />
       <item itemvalue="Doctest.Test Modules" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Doctest.Confirm CECS Singleton generates custom log file after reConfigured" />
         <item itemvalue="Doctest.Test Modules" />
       </list>
     </recent_temporary>

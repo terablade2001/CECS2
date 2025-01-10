@@ -66,7 +66,7 @@ void CECSSingleton::initializeLogger(
 ) noexcept(false) {
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (state != NOT_INIT) {
-    throw std::invalid_argument("Unexpected state != NOT_INIT. Can not proceed.");
+    throw std::runtime_error("Unexpected state != NOT_INIT. Can not proceed.");
   }
   if (config.loggerName.empty()) {
     state = INTERNAL_ERROR;

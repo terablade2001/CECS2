@@ -71,6 +71,9 @@ namespace docTests {
       invalidConfig.loggerName = "";
       CECS.setConfiguration(invalidConfig);
       CHECK_THROWS_AS(CECS.reconfigure(), std::invalid_argument);
+      invalidConfig.loggerName = "CECS";
+      CECS.setConfiguration(invalidConfig);
+      CHECK_NOTHROW(CECS.reconfigure());
       CECS.Shutdown();
       std::remove("CECSLog.log");
     }
@@ -87,7 +90,7 @@ namespace docTests {
       // Shutdown()
       CHECK_EQ(CECS.state, CECSSingleton::State::NOT_INIT);
       if (CECS.state == CECSSingleton::State::NOT_INIT) {
-        CECS.reconfigure();
+        CHECK_NOTHROW(CECS.reconfigure());
         CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       }
 
