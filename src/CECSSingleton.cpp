@@ -236,6 +236,16 @@ void CECSSingleton::setConfiguration(
   configuration = std::move(config);
 }
 
+int CECSSingleton::getErrorIntegerAtExit() const noexcept(
+    false
+) {
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
+  if (cecsErrorCodesAtExit == nullptr) {
+    throw runtime_error("CECS: getErrorIntegerAtExit() failed. cecsErrorCodesAtExit is nullptr.");
+  }
+  return cecsErrorCodesAtExit->errorCode;
+}
+
 void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
     false
 ) {

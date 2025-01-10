@@ -49,7 +49,7 @@ namespace docTests {
         _ERRTU(1,"GENERIC","Testing Generic Error.")
         CHECK_EQ(2, 1);
       } catch (const std::exception &) {
-        CHECK_EQ(1, 1);
+        CHECK_EQ(1, CECS.getErrorIntegerAtExit());
       }
     }
   }
