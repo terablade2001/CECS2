@@ -28,7 +28,9 @@
 namespace docTests {
   using namespace std;
   using namespace Logger;
-  CECS_MODULE("MODULE:Test03")
+  CECS_MODULE(
+      "MODULE:Test03"
+  )
 
   DOCTEST_TEST_SUITE(
       "03 Test Message logging Macros"
@@ -46,15 +48,47 @@ namespace docTests {
       CHECK_NOTHROW(CECS.reconfigure());
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       try {
-        HLog_(L::TRC, "This is a trace message with fileLogLevel = %i", static_cast<int>(configuration.fileLogLevel));
-        ostringstream oss; oss << "This is a debug message with logCustomFormatForFile = " <<configuration.logCustomFormatForFile;
+        HLog_(
+            L::TRC, "This is a trace message with fileLogLevel = %i",
+            static_cast<int>(configuration.fileLogLevel)
+        );
+        ostringstream oss;
+        oss << "This is a debug message with logCustomFormatForFile = "
+            << configuration.logCustomFormatForFile;
         HLog_(L::DBG, oss.str());
-        HLog_(L::WARN, "This is a warning message with logFileName = %s", configuration.logFileName.c_str());
-        HLog_(L::ERR, "This is an error message with logCustomFormatForScreen = %s", configuration.logCustomFormatForScreen.c_str());
+        HLog_(
+            L::WARN, "This is a warning message with logFileName = %s",
+            configuration.logFileName.c_str()
+        );
+        HLog_(
+            L::ERR, "This is an error message with logCustomFormatForScreen = %s",
+            configuration.logCustomFormatForScreen.c_str()
+        );
         CHECK_EQ(1, 1);
       } catch (const std::exception &) { CHECK_EQ(2, 1); }
       try {
         HLog_(L::CRIT, "This is a critical message");
+        CHECK_EQ(2, 1);
+      } catch (const std::exception &) { CHECK_EQ(1, 1); }
+    }
+
+    TEST_CASE("Testing the basic ILogs_() macro (deprecated: compatibility only)") {
+      LOG_TEST_CASE(
+          "03 Test Message logging Macros",
+          "Testing the basic ILogs_() macro (deprecated: compatibility only)"
+      )
+      auto &CECS          = CECSSingleton::getInstance();
+      auto  configuration = CECS.getConfiguration();
+      CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
+      ostringstream oss;
+      oss << "ILogs_() Test: This is a message with logCustomFormatForFile = "
+          << configuration.logCustomFormatForFile;
+      try {
+        ILogs_(L::DBG, oss.str());
+        CHECK_EQ(1, 1);
+      } catch (const std::exception &) { CHECK_EQ(2, 1); }
+      try {
+        ILogs_(L::CRIT, oss.str());
         CHECK_EQ(2, 1);
       } catch (const std::exception &) { CHECK_EQ(1, 1); }
     }
