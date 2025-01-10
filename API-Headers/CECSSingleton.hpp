@@ -45,8 +45,8 @@ public:
     std::string logFileName{"CECSLog.log"};
     uint32_t    logFileMaxSizeBytes{10000};
     uint8_t     logFileNumOfRotatingFiles{3};
-    bool        useLogCustomFormat{true};
-    std::string logCustomFormat{"(%m/%d %H:%M:%S) [%^%L%$] [t:%t] %v"};
+    std::string logCustomFormatForScreen{"[%^-%L-%$] %v"};
+    std::string logCustomFormatForFile{"(%Y-%m-%d %H:%M:%S.%e) [%^-%L-%$] [t:%t] %v"};
     uint8_t     flushLevel{Logger::L::INFO};
 
     std::string str() const;

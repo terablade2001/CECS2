@@ -127,8 +127,7 @@ namespace docTests {
     TEST_CASE("Checking the _ERRT Macro that properly records and throw") {
       LOG_TEST_CASE("Test Basic Macros", "Checking the _ERRT Macro that properly records and throw")
       auto &CECS                            = CECSSingleton::getInstance();
-      CECS.configuration.useLogCustomFormat = true;
-      CECS.configuration.logCustomFormat    = "[%^%L%$] %v";
+      CECS.configuration.logCustomFormatForScreen    = "[%^%L%$] %v";
       CECS.reconfigure();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       CECSSingleton::resetNumberOfErrors();

@@ -35,7 +35,6 @@ namespace docTests {
 //    TEST_CASE("Log with different pattern in screen and file") {
 //      LOG_TEST_CASE("03 Different Sink Patterns", "Log with different pattern in screen and file")
 //      auto &CECS                            = CECSSingleton::getInstance();
-//      CECS.configuration.useLogCustomFormat = true;
 //      CECS.configuration.logCustomFormat    = "[%^%L%$] %v";
 //      CECS.reconfigure();
 //      CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
