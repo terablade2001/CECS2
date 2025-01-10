@@ -1,28 +1,10 @@
 #pragma once
-// NOLINTBEGIN
-#include <memory>
-#include <string>
-#include <utility>
-#include <cstdint>
-#include <mutex>
-#include <memory>
-#include <string>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <iterator>
-#include <fstream>
-#include <sstream>
-#include <cctype>
-#include <cassert>
-#include <map>
-#include <ostream>
 #include <CECSMacros.hpp>
-
-//  NOLINTEND
 
 class CECSErrorCodes {
 public:
+  constexpr std::string GenericErrorDescription{"Generic Error."};
+
   struct ErrorCodeList {
     int         code{0};
     std::string description{};
@@ -35,9 +17,23 @@ public:
   void reset() noexcept;
 
   virtual int
-  addNewErrorCode(const std::string &tag_, const ErrorCodeList &&newErrorCode_) noexcept;
+  addNewErrorCode(const std::string &tag_, const ErrorCodeList &&newErrorCode_) noexcept = 0;
+  virtual std::string getErrorCodesListing() const noexcept                              = 0;
 
-private:
-  constexpr std::string GenericErrorDescription{"Generic Error."};
+protected:
   std::map<std::string, ErrorCodeList> mapTagsToErrorcodes;
+};
+
+// -------------------------------------------------------------------------------------------------
+
+
+
+
+class CECSErrorCodesAtExit final : public CECSErrorCodes {
+public:
+  CECSErrorCodesAtExit() = default;
+
+  int
+  addNewErrorCode(const std::string &tag_, const ErrorCodeList &&newErrorCode_) noexcept override;
+  std::string getErrorCodesListing() const noexcept override;
 };

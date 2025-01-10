@@ -1,4 +1,28 @@
 #pragma once
+// NOLINTBEGIN
+#include <memory>
+#include <string>
+#include <utility>
+#include <cstdint>
+#include <mutex>
+#include <memory>
+#include <string>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+#include <fstream>
+#include <sstream>
+#include <cctype>
+#include <cassert>
+#include <map>
+#include <ostream>
+#include <iomanip>
+
+#ifndef __FNAME__
+#define __FNAMEBSL__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
+#define __FNAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FNAMEBSL__)
+#endif
 
 #ifndef __ECSOBJ__
 #define __ECSOBJ__ CECS_Instance_
@@ -122,3 +146,5 @@
 #else
 static_assert(1, "MSC compiler is not supported yet...");
 #endif
+
+// NOLINTEND
