@@ -19,10 +19,10 @@ public:
   virtual ~CECSErrorCodes() = default;
 
   void reset() noexcept;
+  std::string getErrorCodesListing() const noexcept;
 
   virtual int
   addNewErrorCode(const std::string &tag_, const ErrorCodeList &&newErrorCode_) noexcept = 0;
-  virtual std::string getErrorCodesListing() const noexcept                              = 0;
 
 protected:
   std::map<std::string, ErrorCodeList> mapTagsToErrorcodes;
@@ -39,5 +39,12 @@ public:
 
   int
   addNewErrorCode(const std::string &tag_, const ErrorCodeList &&newErrorCode_) noexcept override;
-  std::string getErrorCodesListing() const noexcept override;
+};
+
+class CECSErrorCodesOnIntReturn final : public CECSErrorCodes {
+public:
+  CECSErrorCodesOnIntReturn() = default;
+
+  int
+  addNewErrorCode(const std::string &tag_, const ErrorCodeList &&newErrorCode_) noexcept override;
 };
