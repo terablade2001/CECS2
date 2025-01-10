@@ -7,11 +7,6 @@ static_assert(1, "C++ compiler (at least C++11) is required...");
 
 #include <CECSModule.hpp>
 
-#ifndef __FNAME__
-#define __FNAMEBSL__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
-#define __FNAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FNAMEBSL__)
-#endif
-
 #ifndef __ECSOBJ__
 #define __ECSOBJ__ CECS_Instance_
 #endif
