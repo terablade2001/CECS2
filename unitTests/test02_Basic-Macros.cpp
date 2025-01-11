@@ -288,7 +288,6 @@ namespace docTests {
       }
       _CECS_MODE_CRIT_
     }
-
     TEST_CASE("Checking _ECSCLS(n) macro") {
       LOG_TEST_CASE("02 Test Basic Macros", "Checking _ECSCLS(n) macro")
       auto &CECS = CECSSingleton::getInstance();
@@ -299,6 +298,7 @@ namespace docTests {
       err = test02ErrFunc01(1);
       CHECK_EQ(0, err);
       cout << "_CECS_CODE_ATEXIT_: " << _CECS_CODE_ATEXIT_ << endl; // NOLINT
+      CHECK_EQ(0, _CECS_CODE_ATEXIT_);
       err = test02ErrFunc01(-1);
       CHECK_NE(0, err);
       cout << "CECSSingleton::getNumberOfErrors() = " << CECSSingleton::getNumberOfErrors() << endl;
@@ -307,22 +307,33 @@ namespace docTests {
       ) {
         try {
           _ECSCLS(1)
-          CHECK_EQ(1, 1);
           cout << "CECSSingleton::getNumberOfErrors() after _ECSCLS_ = "
                << CECSSingleton::getNumberOfErrors() << endl;
+          CHECK_EQ(1, _CECS_CODE_ATEXIT_);
+          // NOLINTNEXTLINE
+          cout << "_CECS_CODE_ATEXIT_ == 1, because we have at least 1 error at this point" << endl;
+
           _ECSCLS(1)
-          CHECK_EQ(1, 1);
           cout << "CECSSingleton::getNumberOfErrors() after _ECSCLS_ = "
                << CECSSingleton::getNumberOfErrors() << endl;
+          // NOLINTNEXTLINE
+          cout << "_CECS_CODE_ATEXIT_ == 1, because we have at least 1 error at this point" << endl;
+          CHECK_EQ(1, _CECS_CODE_ATEXIT_);
+
           _ECSCLS(1)
-          CHECK_EQ(1, 1);
           cout << "CECSSingleton::getNumberOfErrors() after _ECSCLS_ = "
                << CECSSingleton::getNumberOfErrors() << endl;
+          // NOLINTNEXTLINE
+          cout << "_CECS_CODE_ATEXIT_ == 0, because we have no more errors now!" << endl;
+          CHECK_EQ(0, _CECS_CODE_ATEXIT_);
         } catch (const std::exception &e) { CHECK_EQ(0, 1); }
       }
       SUBCASE("On error we must have _CECS_CODE_ATEXIT_ = 1 (GENERIC error)") {
-        cout << "_CECS_CODE_ATEXIT_: " << _CECS_CODE_ATEXIT_ << endl; // NOLINT
+        cout << "_CECS_CODE_ATEXIT_ = 1 " << endl; // NOLINT
         CHECK_EQ(1, _CECS_CODE_ATEXIT_);
+        _ECSCLS_
+        cout << "_CECS_CODE_ATEXIT_ = 0 because _ECSCLS_ used" << endl; // NOLINT
+        CHECK_EQ(0, _CECS_CODE_ATEXIT_);
       }
       _CECS_MODE_CRIT_
     }
