@@ -165,7 +165,11 @@ void CECSSingleton::critMsg(const std::string &log_, const std::string &errId)  
 
   ++numberOfRecordedErrors;
 
-  handleErrId(errId);
+  if (errId.empty()) {
+    handleErrId("GENERIC");
+  } else {
+    handleErrId(errId);
+  }
 
   try {
     const int _errorMode = static_cast<int>(errorMode);
@@ -351,7 +355,9 @@ void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
 
 // NOLINTNEXTLINE
 void CECSSingleton::handleErrId(const std::string &errId)  noexcept(false) {
-  if (errId.empty()) return;
+  if (errId.empty()) {
+    throw std::invalid_argument("CECS: handleErrId() failed. errId is empty.");
+  }
   if (errId == "__ERRSTR_CALL__") {
     --numberOfRecordedErrors;
     return;

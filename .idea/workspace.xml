@@ -76,8 +76,7 @@
   <component name="ChangeListManager">
     <list default="true" id="96ff6be1-98c0-4672-9605-394c8eedfe23" name="Changes" comment="(0.02)[I#16]: Add version tracking and testing support.&#10;&#10;Introduced version definition through `version.h` with integration into CMake. Updated `CECSSingleton` to provide version access methods and added a related test case. Adjusted `.gitignore` for `version.h` and revised project configuration files.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unitTests/test02_Basic-Macros.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/test02_Basic-Macros.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unitTests/test04_UserErrorCodes-Macros.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/test04_UserErrorCodes-Macros.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CECSSingleton.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/CECSSingleton.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +167,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "deletionFromPopupRequiresConfirmation": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "18-GenericErrorByDefault",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/vasil/CLionProjects/CECS2/unitTests",
     "node.js.detected.package.eslint": "true",
