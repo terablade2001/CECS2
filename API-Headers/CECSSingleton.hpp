@@ -80,6 +80,11 @@ public:
   std::string getErrorsMapAtExit() const noexcept(false);
   std::string getErrorsMapOnIntReturn() const noexcept(false);
 
+  static std::string getCECSVersion() noexcept;
+  static int         getCECSVersionMajor() noexcept;
+  static int         getCECSVersionMinor() noexcept;
+  static int         getCECSVersionPatch() noexcept;
+
   // Avoid using this method. Use reConfigure() instead.
   void initializeLogger(const Configuration &config) noexcept(false);
 
