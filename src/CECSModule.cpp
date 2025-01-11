@@ -71,9 +71,9 @@ void CECSModule::RecLog(const uint32_t line_, const Logger::L level_, const std:
   } catch (std::exception &e) {
     const std::string keepModuleName = moduleName;
     try {
-      moduleName = "CECSModule{@"+moduleName+"}";
+      moduleName = "CECSModule{@" + moduleName + "}";
       RecError(moduleName.c_str(), __LINE__, "", "CECS::RecLog():: " + string(e.what()));
-    } catch (std::exception &) { }
+    } catch (std::exception &) {}
     moduleName = keepModuleName;
     throw runtime_error("CECS::RecLog() failed.");
   }

@@ -136,7 +136,7 @@ namespace docTests {
       CECS.setConfiguration(configuration);
       CHECK_NOTHROW(CECS.reconfigure());
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-      CECSSingleton::resetNumberOfErrors();
+      CECS.resetNumberOfErrors();
       try {
         constexpr int val = -938;
         _ERRT(1, "This is an error throw message with id %i", val)
@@ -150,7 +150,7 @@ namespace docTests {
       LOG_TEST_CASE("02 Test Basic Macros", "Checking the _ERRT Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-      CECSSingleton::resetNumberOfErrors();
+      CECS.resetNumberOfErrors();
       int err;
       err = retFunction(1, 2);
       CHECK_EQ(0, err);
@@ -165,7 +165,7 @@ namespace docTests {
       LOG_TEST_CASE("02 Test Basic Macros", "Checking the _ERR Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-      CECSSingleton::resetNumberOfErrors();
+      CECS.resetNumberOfErrors();
       int res = 0;
       retFunctionR(1, 2, res);
       CHECK_EQ(1, res);
@@ -180,7 +180,7 @@ namespace docTests {
       LOG_TEST_CASE("02 Test Basic Macros", "Checking the _ERRN Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-      CECSSingleton::resetNumberOfErrors();
+      CECS.resetNumberOfErrors();
       int res = 0;
       retFunctionR(1, 2, res);
       CHECK_EQ(1, res);
@@ -195,7 +195,7 @@ namespace docTests {
       LOG_TEST_CASE("02 Test Basic Macros", "Checking the _ERRB Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-      CECSSingleton::resetNumberOfErrors();
+      CECS.resetNumberOfErrors();
       bool res{false};
       res = retFunctionB(1, 2);
       CHECK_EQ(true, res);
@@ -210,7 +210,7 @@ namespace docTests {
       LOG_TEST_CASE("02 Test Basic Macros", "Checking the _ERRO Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-      CECSSingleton::resetNumberOfErrors();
+      CECS.resetNumberOfErrors();
       std::string s;
       s = retFunctionS(1, 1);
       CHECK_EQ("Hello World", s);
@@ -225,7 +225,7 @@ namespace docTests {
       LOG_TEST_CASE("02 Test Basic Macros", "Checking the _ERRSTR Macro that properly records")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-      CECSSingleton::resetNumberOfErrors();
+      CECS.resetNumberOfErrors();
       std::string s;
       s = retFunctionS2(1, 1);
       CHECK_EQ("Hello World", s);
@@ -240,7 +240,7 @@ namespace docTests {
       LOG_TEST_CASE("02 Test Basic Macros", "Checking nested functions errors in CRITICAL mode")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-      CECSSingleton::resetNumberOfErrors();
+      CECS.resetNumberOfErrors();
       int err;
       err = test02ErrFunc01(1);
       CHECK_EQ(0, err);
@@ -270,7 +270,7 @@ namespace docTests {
       LOG_TEST_CASE("02 Test Basic Macros", "Checking nested functions errors in ERROR Mode")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
-      CECSSingleton::resetNumberOfErrors();
+      CECS.resetNumberOfErrors();
       _CECS_MODE_ERR_
       int err;
       err = test02ErrFunc01(1);
@@ -284,10 +284,40 @@ namespace docTests {
           CHECK_EQ(1, 1);
           cout << "CECSSingleton::getNumberOfErrors() after _ECSCLS_ = "
                << CECSSingleton::getNumberOfErrors() << endl;
-        } catch (const std::exception &e) {
-          cout << e.what() << endl;
-          CHECK_EQ(0, 1);
-        }
+        } catch (const std::exception &e) { CHECK_EQ(0, 1); }
+      }
+      _CECS_MODE_CRIT_
+    }
+
+    TEST_CASE("Checking _ECSCLS(n) macro") {
+      LOG_TEST_CASE("02 Test Basic Macros", "Checking _ECSCLS(n) macro")
+      auto &CECS = CECSSingleton::getInstance();
+      CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
+      CECS.resetNumberOfErrors();
+      _CECS_MODE_ERR_
+      int err;
+      err = test02ErrFunc01(1);
+      CHECK_EQ(0, err);
+      err = test02ErrFunc01(-1);
+      CHECK_NE(0, err);
+      cout << "CECSSingleton::getNumberOfErrors() = " << CECSSingleton::getNumberOfErrors() << endl;
+      SUBCASE(
+          "Cleaning one by one errors via _ECSCLS(n) while in ERROR mode ... It should not throw."
+      ) {
+        try {
+          _ECSCLS(1)
+          CHECK_EQ(1, 1);
+          cout << "CECSSingleton::getNumberOfErrors() after _ECSCLS_ = "
+               << CECSSingleton::getNumberOfErrors() << endl;
+          _ECSCLS(1)
+          CHECK_EQ(1, 1);
+          cout << "CECSSingleton::getNumberOfErrors() after _ECSCLS_ = "
+               << CECSSingleton::getNumberOfErrors() << endl;
+          _ECSCLS(1)
+          CHECK_EQ(1, 1);
+          cout << "CECSSingleton::getNumberOfErrors() after _ECSCLS_ = "
+               << CECSSingleton::getNumberOfErrors() << endl;
+        } catch (const std::exception &e) { CHECK_EQ(0, 1); }
       }
       _CECS_MODE_CRIT_
     }

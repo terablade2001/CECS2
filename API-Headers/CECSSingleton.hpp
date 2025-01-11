@@ -1,32 +1,11 @@
 #pragma once
 // NOLINTBEGIN
-#include <memory>
-#include <string>
-#include <utility>
-#include <cstdint>
-#include <mutex>
-#include <memory>
-#include <string>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <iterator>
-#include <fstream>
-#include <sstream>
-#include <cctype>
-#include <cassert>
-#include <ostream>
+#include <CECSMacros.hpp>
 #include <spdlog/common.h>
 #include <spdlog/spdlog.h>
 #include <spdlog/logger.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
-
-
-#ifndef __FNAME__
-#define __FNAMEBSL__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
-#define __FNAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FNAMEBSL__)
-#endif
 
 // NOLINTEND
 
@@ -35,6 +14,9 @@ namespace Logger {
 }
 
 // -------------------------------------------------------------------------------------------------
+
+class CECSErrorCodesAtExit;
+class CECSErrorCodesOnIntReturn;
 
 class CECSSingleton {
 public:
@@ -73,18 +55,30 @@ public:
   void        Shutdown();
 
   static uint32_t getNumberOfErrors() noexcept;
-  static void
-  resetNumberOfErrors(uint32_t reduceValue = std::numeric_limits<uint32_t>::max()) noexcept;
+  void
+  resetNumberOfErrors(uint32_t reduceValue = std::numeric_limits<uint32_t>::max()) const noexcept;
 
-  static void resetNumberOfErrorsWithErrorModeCheck(
+  void resetNumberOfErrorsWithErrorModeCheck(
       uint32_t reduceValue = std::numeric_limits<uint32_t>::max()
-  ) noexcept(false);
+  ) const noexcept(false);
 
   static int       getDefaultErrorReturnValue() noexcept;
   static void      setErrorMode(ErrorMode mode_) noexcept(false);
   static ErrorMode getErrorMode() noexcept;
   Configuration    getConfiguration() noexcept;
   void             setConfiguration(Configuration config) noexcept;
+  int              getErrorIntegerAtExit() const noexcept(false);
+  int              getErrorIntegerOnIntReturn() const noexcept(false);
+
+  void setNewErrorAtExit(
+      const std::string &tag_, int errorNum_, const std::string &description_
+  ) const noexcept(false);
+  void setNewErrorOnIntReturn(
+      const std::string &tag_, int errorNum_, const std::string &description_
+  ) const noexcept(false);
+
+  std::string getErrorsMapAtExit() const noexcept(false);
+  std::string getErrorsMapOnIntReturn() const noexcept(false);
 
   // Avoid using this method. Use reConfigure() instead.
   void initializeLogger(const Configuration &config) noexcept(false);
@@ -101,7 +95,12 @@ private:
   static std::atomic<uint32_t>           numberOfRecordedErrors;
   static std::shared_ptr<spdlog::logger> logger;
 
+  std::shared_ptr<CECSErrorCodesAtExit>      cecsErrorCodesAtExit;
+  std::shared_ptr<CECSErrorCodesOnIntReturn> cecsErrorCodesOnIntReturn;
+
   explicit CECSSingleton(std::string ecsNameStr_);
   void        handleErrId(const std::string &errId) noexcept(false);
+  bool        handleErrIdAtExit(const std::string &errId) const noexcept(false);
+  bool        handleErrIdOnIntReturn(const std::string &errId) const noexcept(false);
   static void verifyEnumsHaveNotChange() noexcept(false);
 };
