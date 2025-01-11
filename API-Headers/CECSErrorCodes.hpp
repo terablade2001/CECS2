@@ -22,7 +22,7 @@ public:
   void        clearErrorCode() noexcept;
   std::string getErrorCodesListing() const noexcept;
   bool        isTagExistInMap(const std::string &tag_) const noexcept;
-  int         handleErrorCode(const std::string &tag_) noexcept(false);
+  void        handleErrorCode(const std::string &tag_) noexcept(false);
 
 
   virtual int

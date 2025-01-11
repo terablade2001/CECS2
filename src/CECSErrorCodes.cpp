@@ -21,8 +21,8 @@ std::string CECSErrorCodes::getErrorCodesListing() const noexcept {
   // for (const auto &el: mapTagsToErrorcodes) {
   for (auto it = mapTagsToErrorcodes.begin(); it != mapTagsToErrorcodes.end(); ++it) {
     const auto &el = *it;
-    oss << " - " << std::setw(4) << std::setfill(' ') << el.second.code << ": [" << el.first << "] > "
-        << el.second.description;
+    oss << " - " << std::setw(4) << std::setfill(' ') << el.second.code << ": [" << el.first
+        << "] > " << el.second.description;
     if (std::next(it) != mapTagsToErrorcodes.end()) { oss << "\n"; }
   }
   return oss.str();
@@ -34,7 +34,7 @@ bool CECSErrorCodes::isTagExistInMap(
   return mapTagsToErrorcodes.count(tag_) != 0;
 }
 
-int CECSErrorCodes::handleErrorCode(const std::string &tag_) noexcept(false){
+void  CECSErrorCodes::handleErrorCode(const std::string &tag_) noexcept(false){
   // Update the errorCode only the first time an error occurs. This error code is the reason for
   // failure
   if (errorCode == 0) {
@@ -47,7 +47,6 @@ int CECSErrorCodes::handleErrorCode(const std::string &tag_) noexcept(false){
     const auto &el = mapTagsToErrorcodes.at(tag_);
     errorCode      = el.code;
   }
-  return errorCode;
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -86,6 +85,9 @@ void CECSErrorCodesAtExit::reset() noexcept {
   addPreconfiguredErrorCodes();
   errorCode = 0;
 }
+
+// -------------------------------------------------------------------------------------------------
+
 
 int CECSErrorCodesOnIntReturn::addNewErrorCode(
     const std::string &tag_, const ErrorCodeList &newErrorCode_
