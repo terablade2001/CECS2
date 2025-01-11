@@ -70,7 +70,7 @@
 #define _ERRIU(ExpR, UserErrID, args...)                                                           \
   if ((ExpR)) {                                                                                    \
     __ECSOBJ__.RecError(__FNAME__, __LINE__, UserErrID, args);                                     \
-    return CECSSingleton::getIntent().getErrorIntegerOnIntReturn();                                \
+    return CECSSingleton::getInstance().getErrorIntegerOnIntReturn();                              \
   }
 
 #define _ERR(ExpR, args...)                                                                        \

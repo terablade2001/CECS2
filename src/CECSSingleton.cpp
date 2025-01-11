@@ -188,7 +188,8 @@ void CECSSingleton::resetNumberOfErrors(
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (reduceValue >= numberOfRecordedErrors) {
     numberOfRecordedErrors = 0;
-    if (cecsErrorCodesAtExit != nullptr) { cecsErrorCodesAtExit->clearErrorCode(); }
+    if (cecsErrorCodesAtExit) { cecsErrorCodesAtExit->clearErrorCode(); }
+    if (cecsErrorCodesOnIntReturn) { cecsErrorCodesOnIntReturn->clearErrorCode(); }
     return;
   }
   numberOfRecordedErrors -= reduceValue;
@@ -254,7 +255,9 @@ int CECSSingleton::getErrorIntegerOnIntReturn() const noexcept(
 ) {
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (cecsErrorCodesOnIntReturn == nullptr) {
-    throw runtime_error("CECS: getErrorIntegerOnIntReturn() failed. cecsErrorCodesOnIntReturn is nullptr.");
+    throw runtime_error(
+        "CECS: getErrorIntegerOnIntReturn() failed. cecsErrorCodesOnIntReturn is nullptr."
+    );
   }
   return cecsErrorCodesOnIntReturn->errorCode;
 }

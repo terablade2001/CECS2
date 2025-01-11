@@ -32,6 +32,17 @@ namespace docTests {
       "MODULE:Test04"
   )
 
+  int functionPositiveMinMax(
+      const int min, const int max
+  ) {
+    _ERRIU(min < 0, "NEGATIVE NUMBER DETECTED", "Min [=%i] < 0", min)
+    _ERRIU(max < 0, "NEGATIVE NUMBER DETECTED", "Max [=%i] < 0", max)
+    _ERRIU(min > max, "MIN > MAX", "Min [=%i] > Max [=%i]", min, max)
+    _ERRIU(min == max, "MIN == MAX", "Min [=%i] == Max [=%i]", min, max)
+    // Do something ...
+    return 0;
+  }
+
   DOCTEST_TEST_SUITE(
       "04 Test User Error Codes Macros"
   ) {
@@ -108,34 +119,74 @@ namespace docTests {
       } catch (const std::exception &) { CHECK_EQ(1011, _CECS_CODE_ONINTRETURN_); }
     }
 
-    // TEST_CASE("_ERRIU with custon OnIntReturn codes") { // NOLINT
-    //   LOG_TEST_CASE(
-    //       "04 Test User Error Codes Macros",
-    //       // NOLINTNEXTLINE
-    //       "_ERRIU with custon OnIntReturn codes"
-    //   )
-    //   auto &CECS = CECSSingleton::getInstance();
-    //   CHECK_NOTHROW(CECS.reconfigure());
-    //   CHECK_EQ(0, CECS.getErrorIntegerAtExit());
-    //   CHECK_NOTHROW(
-    //       CECS.setNewErrorOnIntReturn("TEST-ERROR-1001", 1011, "Testing with a custom error
-    //       1001")
-    //   );
-    //   cout << "--- Registered errors AtExit: " << endl;
-    //   cout << CECS.getErrorsMapAtExit() << endl;
-    //   cout << "--- Registered errors on integers returns: " << endl;
-    //   cout << CECS.getErrorsMapOnIntReturn() << endl;
-    //   try {
-    //     _ERRTU(1, "TEST-ERROR-11", "Testing with the custom AtExit error 11.")
-    //     CHECK_EQ(2, 1);
-    //   } catch (const std::exception &) { CHECK_EQ(11, CECS.getErrorIntegerAtExit()); }
-    //
-    //   try {
-    //     _ERRTU(1, "TEST-ERROR-1001", "Testing with the custom OnIntReturn error 11.")
-    //     CHECK_EQ(2, 1);
-    //   } catch (const std::exception &) { CHECK_EQ(1011, CECS.getErrorIntegerOnIntReturn()); }
-    // }
+    TEST_CASE("_ERRIU with custon OnIntReturn codes") { // NOLINT
+      LOG_TEST_CASE(
+          "04 Test User Error Codes Macros",
+          // NOLINTNEXTLINE
+          "_ERRIU with custon OnIntReturn codes"
+      )
+      auto &CECS = CECSSingleton::getInstance();
+      CHECK_NOTHROW(CECS.reconfigure());
+      CHECK_EQ(0, CECS.getErrorIntegerAtExit());
+      CHECK_NOTHROW(CECS.setNewErrorOnIntReturn(
+          "MIN > MAX", 1011, "Minimum value provides is larger than Maximum value provided!"
+      ));
+      CHECK_NOTHROW(CECS.setNewErrorOnIntReturn(
+          "MIN == MAX", 1012, "Minimum value provides is equal to Maximum value provided!"
+      ));
+      CHECK_NOTHROW(CECS.setNewErrorOnIntReturn(
+          "NEGATIVE NUMBER DETECTED", 1013, "A Negative number was detected."
+      ));
+      cout << "--- Registered errors on integers returns: " << endl;
+      cout << CECS.getErrorsMapOnIntReturn() << endl;
+      int retCode;
 
-    // --------------------------------------------------------------------------------------------
+      // Using ERR mode to clear the errors on demand. If not clear the first error occurred is
+      // kept.
+      _CECS_MODE_ERR_
+
+      retCode = functionPositiveMinMax(10, 5);
+      CHECK_EQ(retCode, 1011);
+      cout << "Expected 1011 error code if min > max. Result: " << retCode << endl;
+
+      retCode = functionPositiveMinMax(10, 10);
+      CHECK_EQ(retCode, 1011);
+      cout << "Expected 1011 error code if min == max, because we have not cleared the errors. "
+              "Result: "
+           << retCode << endl;
+      cout << "Cleaning recorded errors... " << endl;
+      _ECSCLS_
+
+      retCode = functionPositiveMinMax(10, 10);
+      CHECK_EQ(retCode, 1012);
+      cout << "Expected 1012 error code if min == max. Result: " << retCode << endl;
+      cout << "Cleaning recorded errors... " << endl;
+      _ECSCLS_
+
+      retCode = functionPositiveMinMax(-1, 10);
+      CHECK_EQ(retCode, 1013);
+      cout << "Cleaning recorded errors... " << endl;
+      _ECSCLS_
+
+      retCode = functionPositiveMinMax(10, -10);
+      CHECK_EQ(retCode, 1013);
+      cout << "Cleaning recorded errors... " << endl;
+      _ECSCLS_
+
+      retCode = functionPositiveMinMax(-99, -110);
+      CHECK_EQ(retCode, 1013);
+      cout << "Expected 1013 error code if min or max are less than 0. Result: " << retCode << endl;
+      cout << "Cleaning recorded errors... " << endl;
+      _ECSCLS_
+
+      retCode = functionPositiveMinMax(5, 10);
+      CHECK_EQ(retCode, 0);
+      cout << "Expected 0 error code if min < max. Result: " << retCode << endl;
+      _ECSCLS_
+
+      _CECS_MODE_CRIT_
+    }
   }
+
+  // --------------------------------------------------------------------------------------------
 } // namespace docTests
