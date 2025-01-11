@@ -1,6 +1,7 @@
 #include "CECSErrorCodes.hpp"
-
 #include <atomic>
+
+#include "../version.h"
 
 using namespace std;
 
@@ -307,6 +308,14 @@ std::string CECSSingleton::getErrorsMapOnIntReturn() const noexcept(
   }
   return cecsErrorCodesOnIntReturn->getErrorCodesListing();
 }
+
+std::string CECSSingleton::getCECSVersion() noexcept { return PROJECT_VERSION; }
+
+int CECSSingleton::getCECSVersionMajor() noexcept { return PROJECT_VERSION_MAJOR; }
+
+int CECSSingleton::getCECSVersionMinor() noexcept { return PROJECT_VERSION_MINOR; }
+
+int CECSSingleton::getCECSVersionPatch() noexcept { return PROJECT_VERSION_PATCH; }
 
 void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
     false

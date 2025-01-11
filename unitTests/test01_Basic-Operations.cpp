@@ -42,6 +42,17 @@ namespace docTests {
   DOCTEST_TEST_SUITE(
       "01 Basic Operations"
   ) {
+    TEST_CASE("Check Version") {
+      LOG_TEST_CASE("01 Basic Operations", "Check Version")
+      cout << "CECS Version: " << CECSSingleton::getCECSVersion() << endl;
+#include "../version.h"
+
+      CHECK_EQ(PROJECT_VERSION, CECSSingleton::getCECSVersion());
+      CHECK_EQ(PROJECT_VERSION_MAJOR, CECSSingleton::getCECSVersionMajor());
+      CHECK_EQ(PROJECT_VERSION_MINOR, CECSSingleton::getCECSVersionMinor());
+      CHECK_EQ(PROJECT_VERSION_PATCH, CECSSingleton::getCECSVersionPatch());
+    }
+
     TEST_CASE("Renaming the CECS Singleton") {
       std::lock_guard<std::mutex> lock(testMutex);
       LOG_TEST_CASE("01 Basic Operations", "Renaming the CECS Singleton")
