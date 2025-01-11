@@ -198,7 +198,6 @@ namespace docTests {
       }
       _ECSCLS_
 
-
       _CECS_MODE_CRIT_
     }
   }

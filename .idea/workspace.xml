@@ -74,7 +74,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="96ff6be1-98c0-4672-9605-394c8eedfe23" name="Changes" comment="(0.02)[I#16]: Add version tracking and testing support.&#10;&#10;Introduced version definition through `version.h` with integration into CMake. Updated `CECSSingleton` to provide version access methods and added a related test case. Adjusted `.gitignore` for `version.h` and revised project configuration files." />
+    <list default="true" id="96ff6be1-98c0-4672-9605-394c8eedfe23" name="Changes" comment="(0.02)[I#16]: Add version tracking and testing support.&#10;&#10;Introduced version definition through `version.h` with integration into CMake. Updated `CECSSingleton` to provide version access methods and added a related test case. Adjusted `.gitignore` for `version.h` and revised project configuration files.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitTests/test02_Basic-Macros.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/test02_Basic-Macros.cpp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -164,7 +167,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "deletionFromPopupRequiresConfirmation": "false",
-    "git-widget-placeholder": "16-Copyright",
+    "git-widget-placeholder": "18-GenericErrorByDefault",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/vasil/CLionProjects/CECS2/unitTests",
     "node.js.detected.package.eslint": "true",
@@ -303,7 +306,7 @@
       <workItem from="1736586549923" duration="1611000" />
       <workItem from="1736588176306" duration="4548000" />
       <workItem from="1736596692406" duration="7000" />
-      <workItem from="1736598180947" duration="5777000" />
+      <workItem from="1736598180947" duration="6850000" />
     </task>
     <task id="LOCAL-00001" summary="(0.18)[I#2]: Enabling CustomFormat.">
       <option name="closed" value="true" />
