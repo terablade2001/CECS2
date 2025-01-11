@@ -54,14 +54,14 @@ namespace docTests {
       try {
         _ERRTU(1, "GENERIC", "Testing Generic Error.")
         CHECK_EQ(2, 1);
-      } catch (const std::exception &) { CHECK_EQ(1, CECS.getErrorIntegerAtExit()); }
+      } catch (const std::exception &) { CHECK_EQ(1, _CECS_CODE_ATEXIT_); }
       SUBCASE("Evaluate the AtExit ErrorCode Without _ECSCLS_ call") {
         try {
           _ERRTU(1, "UNDEFINED", "Testing an Undefined Error.")
           CHECK_EQ(2, 1);
         } catch (const std::exception &) {
           cout << "The AtExit errorCode should not change after this throw." << endl;
-          CHECK_EQ(1, CECS.getErrorIntegerAtExit());
+          CHECK_EQ(1, _CECS_CODE_ATEXIT_);
         }
       }
       SUBCASE("Evaluate the AtExit ErrorCode With _ECSCLS_ call") {
@@ -75,7 +75,7 @@ namespace docTests {
           cout << "The AtExit errorCode should provide the MAGIC THROW ERROR CODE because "
                   "UNDEFINED error has not been defined in the error map at this point."
                << endl;
-          CHECK_EQ(_CECS_MAGIC_THROW_ERRORCODE_, CECS.getErrorIntegerAtExit());
+          CHECK_EQ(_CECS_MAGIC_THROW_ERRORCODE_, _CECS_CODE_ATEXIT_);
         }
       }
     }
@@ -100,12 +100,12 @@ namespace docTests {
       try {
         _ERRTU(1, "TEST-ERROR-11", "Testing with the custom AtExit error 11.")
         CHECK_EQ(2, 1);
-      } catch (const std::exception &) { CHECK_EQ(11, CECS.getErrorIntegerAtExit()); }
+      } catch (const std::exception &) { CHECK_EQ(11, _CECS_CODE_ATEXIT_); }
 
       try {
         _ERRTU(1, "TEST-ERROR-1011", "Testing with the custom OnIntReturn error 1011.")
         CHECK_EQ(2, 1);
-      } catch (const std::exception &) { CHECK_EQ(1011, CECS.getErrorIntegerOnIntReturn()); }
+      } catch (const std::exception &) { CHECK_EQ(1011, _CECS_CODE_ONINTRETURN_); }
     }
 
     // TEST_CASE("_ERRIU with custon OnIntReturn codes") { // NOLINT

@@ -62,6 +62,7 @@
   <component name="ChangeListManager">
     <list default="true" id="96ff6be1-98c0-4672-9605-394c8eedfe23" name="Changes" comment="(0.19)[I#2]: Enabling CustomFormat.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API-Headers/CECSMacros.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/API-Headers/CECSMacros.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unitTests/test04_UserErrorCodes-Macros.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/test04_UserErrorCodes-Macros.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -274,7 +275,7 @@
       <workItem from="1736536458403" duration="3210000" />
       <workItem from="1736539981355" duration="2964000" />
       <workItem from="1736586549923" duration="1611000" />
-      <workItem from="1736588176306" duration="769000" />
+      <workItem from="1736588176306" duration="1029000" />
     </task>
     <task id="LOCAL-00001" summary="(0.18)[I#2]: Enabling CustomFormat.">
       <option name="closed" value="true" />

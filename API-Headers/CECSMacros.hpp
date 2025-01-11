@@ -42,6 +42,8 @@
   { CECSSingleton::getInstance().resetNumberOfErrorsWithErrorModeCheck(numberOfLatestRecords); }
 
 #define _NERR_ (CECSSingleton::getNumberOfErrors())
+#define _CECS_CODE_ATEXIT_ (CECSSingleton::getInstance().getErrorIntegerAtExit())
+#define _CECS_CODE_ONINTRETURN_ (CECSSingleton::getInstance().getErrorIntegerOnIntReturn())
 
 #ifndef _MSC_VER
 
@@ -68,7 +70,7 @@
 #define _ERRIU(ExpR, UserErrID, args...)                                                           \
   if ((ExpR)) {                                                                                    \
     __ECSOBJ__.RecError(__FNAME__, __LINE__, UserErrID, args);                                     \
-    return CECSSingleton::getDefaultErrorReturnValue();                                            \
+    return CECSSingleton::getIntent().getErrorIntegerOnIntReturn();                                \
   }
 
 #define _ERR(ExpR, args...)                                                                        \
