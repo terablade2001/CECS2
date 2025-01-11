@@ -249,6 +249,16 @@ int CECSSingleton::getErrorIntegerAtExit() const noexcept(
   return cecsErrorCodesAtExit->errorCode;
 }
 
+int CECSSingleton::getErrorIntegerOnIntReturn() const noexcept(
+    false
+) {
+  std::lock_guard<std::recursive_mutex> lock(cecsMtx);
+  if (cecsErrorCodesOnIntReturn == nullptr) {
+    throw runtime_error("CECS: getErrorIntegerOnIntReturn() failed. cecsErrorCodesOnIntReturn is nullptr.");
+  }
+  return cecsErrorCodesOnIntReturn->errorCode;
+}
+
 void CECSSingleton::setNewErrorAtExit(
     const std::string &tag_, const int errorNum_, const std::string &description_
 ) const noexcept(false) {

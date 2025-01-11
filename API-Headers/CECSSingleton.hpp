@@ -68,6 +68,7 @@ public:
   Configuration    getConfiguration() noexcept;
   void             setConfiguration(Configuration config) noexcept;
   int              getErrorIntegerAtExit() const noexcept(false);
+  int              getErrorIntegerOnIntReturn() const noexcept(false);
 
   void setNewErrorAtExit(
       const std::string &tag_, int errorNum_, const std::string &description_
