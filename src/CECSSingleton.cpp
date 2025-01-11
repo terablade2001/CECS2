@@ -355,7 +355,7 @@ bool CECSSingleton::handleErrIdOnIntReturn(const std::string &errId) const  noex
   }
   const bool isTagExistOnIntReturn = cecsErrorCodesOnIntReturn->isTagExistInMap(errId);
   if (!isTagExistOnIntReturn) { return false; }
-  cecsErrorCodesAtExit->handleErrorCode(errId);
+  cecsErrorCodesOnIntReturn->handleErrorCode(errId);
   return true;
 }
 
