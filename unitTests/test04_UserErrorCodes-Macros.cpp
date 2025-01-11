@@ -35,9 +35,15 @@ namespace docTests {
   DOCTEST_TEST_SUITE(
       "04 Test User Error Codes Macros"
   ) {
-    TEST_CASE("Testing _ERRTU with custom error code") { // NOLINT
-      // NOLINTNEXTLINE
-      LOG_TEST_CASE("04 Test User Error Codes Macros", "Testing _ERRTU with custom error code")
+    TEST_CASE(
+        // NOLINTNEXTLINE
+        "Testing _ERRTU GENERIC and UNDEFINED codes. Evaluation when also clearing them or not."
+    ) {
+      LOG_TEST_CASE(
+          "04 Test User Error Codes Macros",
+          // NOLINTNEXTLINE
+          "Testing _ERRTU GENERIC and UNDEFINED codes. Evaluation when also clearing them or not."
+      )
       auto &CECS                 = CECSSingleton::getInstance();
       auto  configuration        = CECS.getConfiguration();
       configuration.fileLogLevel = Logger::L::TRC;
@@ -74,9 +80,12 @@ namespace docTests {
       }
     }
 
-    TEST_CASE("_ERRTU with added custom error code") { // NOLINT
-      // NOLINTNEXTLINE
-      LOG_TEST_CASE("04 Test User Error Codes Macros", "_ERRTU with added custom error code")
+    TEST_CASE("_ERRTU with adding custom AtExit and OnIntReturn error codes") { // NOLINT
+      LOG_TEST_CASE(
+          "04 Test User Error Codes Macros",
+          // NOLINTNEXTLINE
+          "_ERRTU with adding custom AtExit and OnIntReturn error codes"
+      )
       auto &CECS = CECSSingleton::getInstance();
       CHECK_NOTHROW(CECS.reconfigure());
       CHECK_EQ(0, CECS.getErrorIntegerAtExit());
@@ -89,32 +98,14 @@ namespace docTests {
       cout << "--- Registered errors on integers returns: " << endl;
       cout << CECS.getErrorsMapOnIntReturn() << endl;
       try {
-        _ERRTU(1, "TEST-ERROR-11", "Testing with the custom error 11.")
+        _ERRTU(1, "TEST-ERROR-11", "Testing with the custom AtExit error 11.")
         CHECK_EQ(2, 1);
       } catch (const std::exception &) { CHECK_EQ(11, CECS.getErrorIntegerAtExit()); }
-      // SUBCASE("Evaluate the AtExit ErrorCode Without _ECSCLS_ call") {
-      //   try {
-      //     _ERRTU(1, "UNDEFINED", "Testing an Undefined Error.")
-      //     CHECK_EQ(2, 1);
-      //   } catch (const std::exception &) {
-      //     cout << "The AtExit errorCode should not change after this throw." << endl;
-      //     CHECK_EQ(1, CECS.getErrorIntegerAtExit());
-      //   }
-      // }
-      // SUBCASE("Evaluate the AtExit ErrorCode With _ECSCLS_ call") {
-      //   _CECS_MODE_ERR_
-      //   _ECSCLS_
-      //   _CECS_MODE_CRIT_
-      //   try {
-      //     _ERRTU(1, "UNDEFINED", "Testing an Undefined Error.")
-      //     CHECK_EQ(2, 1);
-      //   } catch (const std::exception &) {
-      //     cout << "The AtExit errorCode should provide the MAGIC THROW ERROR CODE because "
-      //             "UNDEFINED error has not been defined in the error map at this point."
-      //          << endl;
-      //     CHECK_EQ(_CECS_MAGIC_THROW_ERRORCODE_, CECS.getErrorIntegerAtExit());
-      //   }
-      // }
+
+      try {
+        _ERRTU(1, "TEST-ERROR-1001", "Testing with the custom OnIntReturn error 11.")
+        CHECK_EQ(2, 1);
+      } catch (const std::exception &) { CHECK_EQ(1011, CECS.getErrorIntegerOnIntReturn()); }
     }
   }
 } // namespace docTests
