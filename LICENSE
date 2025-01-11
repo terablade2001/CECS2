@@ -25,3 +25,8 @@ SOFTWARE.
 This software depends on the spdlog lib (MIT License),
 and users must comply to its license.
 https://github.com/gabime/spdlog
+
+-- NOTE: Third party unit testing library used --
+This software has been tested using the doctest lib (MIT License),
+and internally contains relative code for testing purposes only.
+https://github.com/doctest/doctest
