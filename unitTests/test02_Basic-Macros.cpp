@@ -298,6 +298,7 @@ namespace docTests {
       int err;
       err = test02ErrFunc01(1);
       CHECK_EQ(0, err);
+      cout << "_CECS_CODE_ATEXIT_: " << _CECS_CODE_ATEXIT_ << endl; // NOLINT
       err = test02ErrFunc01(-1);
       CHECK_NE(0, err);
       cout << "CECSSingleton::getNumberOfErrors() = " << CECSSingleton::getNumberOfErrors() << endl;
@@ -318,6 +319,10 @@ namespace docTests {
           cout << "CECSSingleton::getNumberOfErrors() after _ECSCLS_ = "
                << CECSSingleton::getNumberOfErrors() << endl;
         } catch (const std::exception &e) { CHECK_EQ(0, 1); }
+      }
+      SUBCASE("On error we must have _CECS_CODE_ATEXIT_ = 1 (GENERIC error)") {
+        cout << "_CECS_CODE_ATEXIT_: " << _CECS_CODE_ATEXIT_ << endl; // NOLINT
+        CHECK_EQ(1, _CECS_CODE_ATEXIT_);
       }
       _CECS_MODE_CRIT_
     }
