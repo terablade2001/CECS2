@@ -265,7 +265,9 @@ void CECSSingleton::setNewErrorOnIntReturn(
   ) const noexcept(false){
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (cecsErrorCodesOnIntReturn == nullptr) {
-    throw runtime_error("CECS: setNewErrorOnIntReturn() failed. cecsErrorCodesOnIntReturn is nullptr.");
+    throw runtime_error(
+        "CECS: setNewErrorOnIntReturn() failed. cecsErrorCodesOnIntReturn is nullptr."
+    );
   }
   const CECSErrorCodes::ErrorCodeList errorCodeList{errorNum_, description_};
   cecsErrorCodesOnIntReturn->addNewErrorCode(tag_, errorCodeList);

@@ -284,9 +284,7 @@ namespace docTests {
           CHECK_EQ(1, 1);
           cout << "CECSSingleton::getNumberOfErrors() after _ECSCLS_ = "
                << CECSSingleton::getNumberOfErrors() << endl;
-        } catch (const std::exception &e) {
-          CHECK_EQ(0, 1);
-        }
+        } catch (const std::exception &e) { CHECK_EQ(0, 1); }
       }
       _CECS_MODE_CRIT_
     }
@@ -303,7 +301,9 @@ namespace docTests {
       err = test02ErrFunc01(-1);
       CHECK_NE(0, err);
       cout << "CECSSingleton::getNumberOfErrors() = " << CECSSingleton::getNumberOfErrors() << endl;
-      SUBCASE("Cleaning one by one errors via _ECSCLS(n) while in ERROR mode ... It should not throw.") {
+      SUBCASE(
+          "Cleaning one by one errors via _ECSCLS(n) while in ERROR mode ... It should not throw."
+      ) {
         try {
           _ECSCLS(1)
           CHECK_EQ(1, 1);
@@ -317,9 +317,7 @@ namespace docTests {
           CHECK_EQ(1, 1);
           cout << "CECSSingleton::getNumberOfErrors() after _ECSCLS_ = "
                << CECSSingleton::getNumberOfErrors() << endl;
-        } catch (const std::exception &e) {
-          CHECK_EQ(0, 1);
-        }
+        } catch (const std::exception &e) { CHECK_EQ(0, 1); }
       }
       _CECS_MODE_CRIT_
     }

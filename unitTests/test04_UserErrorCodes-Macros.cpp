@@ -77,11 +77,13 @@ namespace docTests {
     TEST_CASE("_ERRTU with added custom error code") { // NOLINT
       // NOLINTNEXTLINE
       LOG_TEST_CASE("04 Test User Error Codes Macros", "_ERRTU with added custom error code")
-      auto &CECS                 = CECSSingleton::getInstance();
+      auto &CECS = CECSSingleton::getInstance();
       CHECK_NOTHROW(CECS.reconfigure());
       CHECK_EQ(0, CECS.getErrorIntegerAtExit());
-      CHECK_NOTHROW(CECS.setNewErrorAtExit("TEST-ERROR-11",11,"Testing with a custom error 11"));
-      CHECK_NOTHROW(CECS.setNewErrorOnIntReturn("TEST-ERROR-1001",1011,"Testing with a custom error 1001"));
+      CHECK_NOTHROW(CECS.setNewErrorAtExit("TEST-ERROR-11", 11, "Testing with a custom error 11"));
+      CHECK_NOTHROW(
+          CECS.setNewErrorOnIntReturn("TEST-ERROR-1001", 1011, "Testing with a custom error 1001")
+      );
       cout << "--- Registered errors AtExit: " << endl;
       cout << CECS.getErrorsMapAtExit() << endl;
       cout << "--- Registered errors on integers returns: " << endl;
