@@ -91,7 +91,7 @@ namespace docTests {
       CHECK_EQ(0, CECS.getErrorIntegerAtExit());
       CHECK_NOTHROW(CECS.setNewErrorAtExit("TEST-ERROR-11", 11, "Testing with a custom error 11"));
       CHECK_NOTHROW(
-          CECS.setNewErrorOnIntReturn("TEST-ERROR-1001", 1011, "Testing with a custom error 1001")
+          CECS.setNewErrorOnIntReturn("TEST-ERROR-1011", 1011, "Testing with a custom error 1011")
       );
       cout << "--- Registered errors AtExit: " << endl;
       cout << CECS.getErrorsMapAtExit() << endl;
@@ -103,9 +103,39 @@ namespace docTests {
       } catch (const std::exception &) { CHECK_EQ(11, CECS.getErrorIntegerAtExit()); }
 
       try {
-        _ERRTU(1, "TEST-ERROR-1001", "Testing with the custom OnIntReturn error 11.")
+        _ERRTU(1, "TEST-ERROR-1011", "Testing with the custom OnIntReturn error 1011.")
         CHECK_EQ(2, 1);
       } catch (const std::exception &) { CHECK_EQ(1011, CECS.getErrorIntegerOnIntReturn()); }
     }
+
+    // TEST_CASE("_ERRIU with custon OnIntReturn codes") { // NOLINT
+    //   LOG_TEST_CASE(
+    //       "04 Test User Error Codes Macros",
+    //       // NOLINTNEXTLINE
+    //       "_ERRIU with custon OnIntReturn codes"
+    //   )
+    //   auto &CECS = CECSSingleton::getInstance();
+    //   CHECK_NOTHROW(CECS.reconfigure());
+    //   CHECK_EQ(0, CECS.getErrorIntegerAtExit());
+    //   CHECK_NOTHROW(
+    //       CECS.setNewErrorOnIntReturn("TEST-ERROR-1001", 1011, "Testing with a custom error
+    //       1001")
+    //   );
+    //   cout << "--- Registered errors AtExit: " << endl;
+    //   cout << CECS.getErrorsMapAtExit() << endl;
+    //   cout << "--- Registered errors on integers returns: " << endl;
+    //   cout << CECS.getErrorsMapOnIntReturn() << endl;
+    //   try {
+    //     _ERRTU(1, "TEST-ERROR-11", "Testing with the custom AtExit error 11.")
+    //     CHECK_EQ(2, 1);
+    //   } catch (const std::exception &) { CHECK_EQ(11, CECS.getErrorIntegerAtExit()); }
+    //
+    //   try {
+    //     _ERRTU(1, "TEST-ERROR-1001", "Testing with the custom OnIntReturn error 11.")
+    //     CHECK_EQ(2, 1);
+    //   } catch (const std::exception &) { CHECK_EQ(1011, CECS.getErrorIntegerOnIntReturn()); }
+    // }
+
+    // --------------------------------------------------------------------------------------------
   }
 } // namespace docTests
