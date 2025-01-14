@@ -18,6 +18,7 @@
 #include <map>
 #include <ostream>
 #include <iomanip>
+#include <cstring>
 
 #ifndef __FNAME__
 #define __FNAMEBSL__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)

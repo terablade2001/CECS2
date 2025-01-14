@@ -1,6 +1,9 @@
-#include "CECSErrorCodes.hpp"
-#include <atomic>
-
+#include <CECSErrorCodes.hpp>
+#include <spdlog/common.h>
+#include <spdlog/spdlog.h>
+#include <spdlog/logger.h>
+#include <spdlog/sinks/rotating_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
 #include "../version.h"
 
 using namespace std;

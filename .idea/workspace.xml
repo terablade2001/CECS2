@@ -26,7 +26,6 @@
     <option name="/Default/RiderDebugger/RiderRestoreDecompile/RestoreDecompileSetting/@EntryValue" value="false" type="bool" />
     <option name="/Default/Housekeeping/GlobalSettingsUpgraded/IsUpgraded/@EntryValue" value="true" type="bool" />
     <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
-    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexRemoved" />
     <option name="/Default/Environment/Hierarchy/GeneratedFilesCacheKey/Timestamp/@EntryValue" value="3" type="long" />
     <option name="/Default/Housekeeping/OptionsDialog/SelectedPageId/@EntryValue" value="CppFormatterOtherPage" type="string" />
     <option name="/Default/Environment/UserInterface/HierarchyView/ViewStyle/@EntryValue" value="SuperTypes" type="string" />
@@ -75,13 +74,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="96ff6be1-98c0-4672-9605-394c8eedfe23" name="Changes" comment="(0.02)[I#16]: Add version tracking and testing support.&#10;&#10;Introduced version definition through `version.h` with integration into CMake. Updated `CECSSingleton` to provide version access methods and added a related test case. Adjusted `.gitignore` for `version.h` and revised project configuration files.">
-      <change beforePath="$PROJECT_DIR$/API-Headers/CECSMacros.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/API-Headers/CECSMacros.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API-Headers/CECSSingleton.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/API-Headers/CECSSingleton.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CECSSingleton.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/CECSSingleton.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unitTests/test01_Basic-Operations.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/test01_Basic-Operations.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unitTests/test02_Basic-Macros.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/test02_Basic-Macros.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unitTests/test03_MsgLogging-Macros.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/test03_MsgLogging-Macros.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unitTests/test04_UserErrorCodes-Macros.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/test04_UserErrorCodes-Macros.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,11 +182,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Doctest.All in CECS_Tests">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="All in CECS_Tests" type="CMakeDoctestTestRunConfigurationType" factoryName="doctest Test" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CECS" TARGET_NAME="CECS_Tests" CONFIG_NAME="Release-TDM-MinGW-64" RUN_TARGET_PROJECT_NAME="CECS" RUN_TARGET_NAME="CECS_Tests" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -216,6 +206,11 @@
       </method>
     </configuration>
     <configuration name="CECS_Tests" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CECS" TARGET_NAME="CECS_Tests" CONFIG_NAME="Release-TDM-MinGW-64" RUN_TARGET_PROJECT_NAME="CECS" RUN_TARGET_NAME="CECS_Tests">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -296,7 +291,8 @@
       <workItem from="1736596692406" duration="7000" />
       <workItem from="1736598180947" duration="6850000" />
       <workItem from="1736885291394" duration="338000" />
-      <workItem from="1736885686324" duration="1059000" />
+      <workItem from="1736885686324" duration="1311000" />
+      <workItem from="1736887015199" duration="98000" />
     </task>
     <task id="LOCAL-00001" summary="(0.18)[I#2]: Enabling CustomFormat.">
       <option name="closed" value="true" />

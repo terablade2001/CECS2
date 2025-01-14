@@ -1,12 +1,7 @@
 #pragma once
 // NOLINTBEGIN
 #include <CECSMacros.hpp>
-#include <spdlog/common.h>
-#include <spdlog/spdlog.h>
-#include <spdlog/logger.h>
-#include <spdlog/sinks/rotating_file_sink.h>
-#include <spdlog/sinks/stdout_color_sinks.h>
-
+#include<atomic>
 // NOLINTEND
 
 namespace Logger {
@@ -17,6 +12,7 @@ namespace Logger {
 
 class CECSErrorCodesAtExit;
 class CECSErrorCodesOnIntReturn;
+namespace spdlog { class logger; }
 
 class CECSSingleton {
 public:
