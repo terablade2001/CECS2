@@ -20,15 +20,5 @@ struct TestCaseInfo {
 
 #define LOG_TEST_CASE(suiteName, testName) addTestCase({suiteName, testName, __FNAME__, __LINE__});
 
-
-// #define DOCUMENT_TEST_CASE(suiteName, testName)  \
-//   DOCTEST_TEST_CASE(testName) \
-//   {  \
-//     static bool added = []() {  \
-//       addTestCase({suiteName, testName, __FILE__, __LINE__});  \
-//       return true;  \
-//     }();  \
-//   }
-
 void addTestCase(const TestCaseInfo &test_case_info);
 void exportTestCasesToLog(const std::string &filename);
