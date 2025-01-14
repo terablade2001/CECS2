@@ -355,9 +355,7 @@ void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
 
 // NOLINTNEXTLINE
 void CECSSingleton::handleErrId(const std::string &errId)  noexcept(false) {
-  if (errId.empty()) {
-    throw std::invalid_argument("CECS: handleErrId() failed. errId is empty.");
-  }
+  if (errId.empty()) { throw std::invalid_argument("CECS: handleErrId() failed. errId is empty."); }
   if (errId == "__ERRSTR_CALL__") {
     --numberOfRecordedErrors;
     return;

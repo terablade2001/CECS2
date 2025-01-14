@@ -35,7 +35,7 @@ namespace docTests {
   int functionPositiveMinMax(
       const int min, const int max
   ) {
-    _ERRIU((min == -1)&&(max==-1), "UNDEFINED-TEST-CASE", "Min == Max == -1")
+    _ERRIU((min == -1) && (max == -1), "UNDEFINED-TEST-CASE", "Min == Max == -1")
     _ERRIU(min < 0, "NEGATIVE NUMBER DETECTED", "Min [=%i] < 0", min)
     _ERRIU(max < 0, "NEGATIVE NUMBER DETECTED", "Max [=%i] < 0", max)
     _ERRIU(min > max, "MIN > MAX", "Min [=%i] > Max [=%i]", min, max)
@@ -194,7 +194,8 @@ namespace docTests {
         cout << "Expected 0 error code for 'UNDEFINED-TEST_CASE'. Result: " << retCode << endl;
         CHECK_EQ(_CECS_MAGIC_THROW_ERRORCODE_, _CECS_CODE_ATEXIT_);
         cout << "Unlisted error code is correctly detected!" << endl;
-        cout << "Due to 'UNDEFINED-TEST_CASE' we expect AtExit error code to "<<_CECS_MAGIC_THROW_ERRORCODE_<<". Result: " << _CECS_CODE_ATEXIT_ << endl;
+        cout << "Due to 'UNDEFINED-TEST_CASE' we expect AtExit error code to "
+             << _CECS_MAGIC_THROW_ERRORCODE_ << ". Result: " << _CECS_CODE_ATEXIT_ << endl;
       }
       _ECSCLS_
 

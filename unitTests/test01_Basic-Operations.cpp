@@ -47,6 +47,7 @@ namespace docTests {
       cout << "CECS Version: " << CECSSingleton::getCECSVersion() << endl;
 #include "../version.h"
 
+
       CHECK_EQ(PROJECT_VERSION, CECSSingleton::getCECSVersion());
       CHECK_EQ(PROJECT_VERSION_MAJOR, CECSSingleton::getCECSVersionMajor());
       CHECK_EQ(PROJECT_VERSION_MINOR, CECSSingleton::getCECSVersionMinor());

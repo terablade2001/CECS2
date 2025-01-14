@@ -48,10 +48,7 @@ namespace docTests {
       CHECK_NOTHROW(CECS.reconfigure());
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       try {
-        HLog_(
-            L::TRC, "This is a trace message with fileLogLevel = %i",
-            configuration.fileLogLevel
-        );
+        HLog_(L::TRC, "This is a trace message with fileLogLevel = %i", configuration.fileLogLevel);
         ostringstream oss;
         oss << "This is a debug message with logCustomFormatForFile = "
             << configuration.logCustomFormatForFile;
@@ -106,10 +103,7 @@ namespace docTests {
       CHECK_NOTHROW(CECS.reconfigure());
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       try {
-        ILog_(
-            L::TRC, "This is a trace message with fileLogLevel = %i",
-            configuration.fileLogLevel
-        );
+        ILog_(L::TRC, "This is a trace message with fileLogLevel = %i", configuration.fileLogLevel);
         ostringstream oss;
         oss << "This is a debug message with logCustomFormatForFile = "
             << configuration.logCustomFormatForFile;

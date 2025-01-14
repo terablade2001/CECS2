@@ -50,6 +50,10 @@
 #define ILog_(level, args...) __ECSOBJ__.RecLog(__LINE__, level, args);
 #define HLog_(level, args...) __ECSOBJ__.RecLog(level, args);
 #define ILogs_(level, string) __ECSOBJ__.RecLog(level, string);
+#define _ERRINF(ExpR, args...)                                                                     \
+  if ((ExpR)) { ILog_(Logger::L::ERR, args); }
+#define _ERRL(ExpR, args...)                                                                       \
+  if ((ExpR)) { ILog_(Logger::L::ERR, args); }
 
 #define _ERRT(ExpR, args...)                                                                       \
   if ((ExpR)) {                                                                                    \

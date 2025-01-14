@@ -78,7 +78,10 @@
       <change beforePath="$PROJECT_DIR$/API-Headers/CECSMacros.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/API-Headers/CECSMacros.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API-Headers/CECSSingleton.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/API-Headers/CECSSingleton.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CECSSingleton.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/CECSSingleton.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitTests/test01_Basic-Operations.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/test01_Basic-Operations.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unitTests/test02_Basic-Macros.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/test02_Basic-Macros.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitTests/test03_MsgLogging-Macros.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/test03_MsgLogging-Macros.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitTests/test04_UserErrorCodes-Macros.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/test04_UserErrorCodes-Macros.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -293,7 +296,7 @@
       <workItem from="1736596692406" duration="7000" />
       <workItem from="1736598180947" duration="6850000" />
       <workItem from="1736885291394" duration="338000" />
-      <workItem from="1736885686324" duration="759000" />
+      <workItem from="1736885686324" duration="1059000" />
     </task>
     <task id="LOCAL-00001" summary="(0.18)[I#2]: Enabling CustomFormat.">
       <option name="closed" value="true" />

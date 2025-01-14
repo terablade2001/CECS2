@@ -237,7 +237,9 @@ namespace docTests {
     }
 
     TEST_CASE("Checking nested functions errors in CRITICAL_MODE mode") {
-      LOG_TEST_CASE("02 Test Basic Macros", "Checking nested functions errors in CRITICAL_MODE mode")
+      LOG_TEST_CASE(
+          "02 Test Basic Macros", "Checking nested functions errors in CRITICAL_MODE mode"
+      )
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       CECS.resetNumberOfErrors();
