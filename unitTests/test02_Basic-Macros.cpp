@@ -284,7 +284,7 @@ namespace docTests {
           CHECK_EQ(1, 1);
           cout << "CECSSingleton::getNumberOfErrors() after _ECSCLS_ = "
                << CECSSingleton::getNumberOfErrors() << endl;
-        } catch (const std::exception &e) { CHECK_EQ(0, 1); }
+        } catch (const std::exception &) { CHECK_EQ(0, 1); }
       }
       _CECS_MODE_CRIT_
     }
@@ -326,7 +326,7 @@ namespace docTests {
           // NOLINTNEXTLINE
           cout << "_CECS_CODE_ATEXIT_ == 0, because we have no more errors now!" << endl;
           CHECK_EQ(0, _CECS_CODE_ATEXIT_);
-        } catch (const std::exception &e) { CHECK_EQ(0, 1); }
+        } catch (const std::exception &) { CHECK_EQ(0, 1); }
       }
       SUBCASE("On error we must have _CECS_CODE_ATEXIT_ = 1 (GENERIC error)") {
         cout << "_CECS_CODE_ATEXIT_ = 1 " << endl; // NOLINT

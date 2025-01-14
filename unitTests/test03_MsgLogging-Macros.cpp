@@ -50,7 +50,7 @@ namespace docTests {
       try {
         HLog_(
             L::TRC, "This is a trace message with fileLogLevel = %i",
-            static_cast<int>(configuration.fileLogLevel)
+            configuration.fileLogLevel
         );
         ostringstream oss;
         oss << "This is a debug message with logCustomFormatForFile = "
@@ -108,7 +108,7 @@ namespace docTests {
       try {
         ILog_(
             L::TRC, "This is a trace message with fileLogLevel = %i",
-            static_cast<int>(configuration.fileLogLevel)
+            configuration.fileLogLevel
         );
         ostringstream oss;
         oss << "This is a debug message with logCustomFormatForFile = "

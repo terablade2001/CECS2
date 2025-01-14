@@ -172,7 +172,7 @@ void CECSSingleton::critMsg(const std::string &log_, const std::string &errId)  
   }
 
   try {
-    const int _errorMode = static_cast<int>(errorMode);
+    const int _errorMode = errorMode;
     logger->log(static_cast<spdlog::level::level_enum>(_errorMode), log_);
   } catch (std::exception &e) {
     string errMsg{"CECS - critMsg() Failed:: Logger is not initialized. Use initializeLogger() ..."
@@ -200,7 +200,7 @@ void CECSSingleton::resetNumberOfErrors(
   numberOfRecordedErrors -= reduceValue;
 }
 
-void CECSSingleton::resetNumberOfErrorsWithErrorModeCheck(uint32_t reduceValue) const noexcept(false){
+void CECSSingleton::resetNumberOfErrorsWithErrorModeCheck(const uint32_t reduceValue) const noexcept(false){
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (errorMode.load() == ErrorMode::CRITICAL) {
     throw std::runtime_error(
@@ -279,7 +279,7 @@ void CECSSingleton::setNewErrorAtExit(
 }
 
 void CECSSingleton::setNewErrorOnIntReturn(
-  const std::string &tag_, int errorNum_, const std::string &description_
+  const std::string &tag_, const int errorNum_, const std::string &description_
   ) const noexcept(false){
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (cecsErrorCodesOnIntReturn == nullptr) {

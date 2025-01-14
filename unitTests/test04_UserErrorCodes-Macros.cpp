@@ -189,7 +189,7 @@ namespace docTests {
       try {
         retCode = functionPositiveMinMax(-1, -1);
         CHECK_EQ(1, 0); // The above should throw!
-      } catch (std::exception &e) {
+      } catch (std::exception &) {
         CHECK_EQ(retCode, 0);
         cout << "Expected 0 error code for 'UNDEFINED-TEST_CASE'. Result: " << retCode << endl;
         CHECK_EQ(_CECS_MAGIC_THROW_ERRORCODE_, _CECS_CODE_ATEXIT_);
