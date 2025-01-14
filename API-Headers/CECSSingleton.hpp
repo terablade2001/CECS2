@@ -1,7 +1,8 @@
 #pragma once
 // NOLINTBEGIN
 #include <CECSMacros.hpp>
-#include<atomic>
+#include <atomic>
+
 // NOLINTEND
 
 namespace Logger {
@@ -12,7 +13,10 @@ namespace Logger {
 
 class CECSErrorCodesAtExit;
 class CECSErrorCodesOnIntReturn;
-namespace spdlog { class logger; }
+
+namespace spdlog {
+  class logger;
+}
 
 class CECSSingleton {
 public:
