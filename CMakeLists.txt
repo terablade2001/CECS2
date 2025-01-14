@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.30)
 
 project(CECS)
-project(${PROJECT_NAME} VERSION 0.1.0)
+project(${PROJECT_NAME} VERSION 0.1.1)
 configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/API-Headers/version.h.in"
   "${CMAKE_CURRENT_SOURCE_DIR}/version.h"
@@ -31,11 +31,6 @@ file(GLOB_RECURSE LIB_SOURCE_FILES
 file(GLOB LIB_HEADER_FILES
   ${LIB_HEADERS_DIR}/*.hpp
 )
-
-#message(STATUS "CMAKE_CURRENT_SOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}")
-#message(STATUS "LIB_HEADERS_DIR=${LIB_HEADERS_DIR}")
-#message(STATUS "LIB_SOURCE_FILES=${LIB_SOURCE_FILES}")
-#message(STATUS "LIB_HEADER_FILES=${LIB_HEADER_FILES}")
 
 add_library(${PROJECT_NAME} SHARED ${LIB_SOURCE_FILES})
 target_include_directories(${PROJECT_NAME} PUBLIC ${LIB_HEADERS_DIR})

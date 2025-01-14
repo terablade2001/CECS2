@@ -1,6 +1,9 @@
-#include "CECSErrorCodes.hpp"
-#include <atomic>
-
+#include <CECSErrorCodes.hpp>
+#include <spdlog/common.h>
+#include <spdlog/spdlog.h>
+#include <spdlog/logger.h>
+#include <spdlog/sinks/rotating_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
 #include "../version.h"
 
 using namespace std;
@@ -8,7 +11,7 @@ using namespace std;
 static constexpr int CECS_DEFAULT_ERROR_RETURN_VALUE = std::numeric_limits<int>::min();
 
 CECSSingleton                    CECSSingleton::instance{"CECS-Default"};
-atomic<CECSSingleton::ErrorMode> CECSSingleton::errorMode{ErrorMode::CRITICAL};
+atomic<CECSSingleton::ErrorMode> CECSSingleton::errorMode{ErrorMode::CRITICAL_MODE};
 std::recursive_mutex             CECSSingleton::cecsMtx;
 atomic<uint32_t>                 CECSSingleton::numberOfRecordedErrors{0};
 shared_ptr<spdlog::logger>       CECSSingleton::logger{nullptr};
@@ -172,7 +175,7 @@ void CECSSingleton::critMsg(const std::string &log_, const std::string &errId)  
   }
 
   try {
-    const int _errorMode = static_cast<int>(errorMode);
+    const int _errorMode = errorMode;
     logger->log(static_cast<spdlog::level::level_enum>(_errorMode), log_);
   } catch (std::exception &e) {
     string errMsg{"CECS - critMsg() Failed:: Logger is not initialized. Use initializeLogger() ..."
@@ -200,9 +203,9 @@ void CECSSingleton::resetNumberOfErrors(
   numberOfRecordedErrors -= reduceValue;
 }
 
-void CECSSingleton::resetNumberOfErrorsWithErrorModeCheck(uint32_t reduceValue) const noexcept(false){
+void CECSSingleton::resetNumberOfErrorsWithErrorModeCheck(const uint32_t reduceValue) const noexcept(false){
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
-  if (errorMode.load() == ErrorMode::CRITICAL) {
+  if (errorMode.load() == ErrorMode::CRITICAL_MODE) {
     throw std::runtime_error(
         "CECS: Modifying Number of Errors in CRITICAL mode is prohibited! Use ERROR mode instead."
     );
@@ -219,8 +222,8 @@ void CECSSingleton::setErrorMode(
   if (errorMode == mode_) return;
   if (logger != nullptr) {
     string outString{"CECS: *** ErrorMode Set to [ "};
-    if (mode_ == ErrorMode::CRITICAL) {
-      outString += "CRITICAL ] ***";
+    if (mode_ == ErrorMode::CRITICAL_MODE) {
+      outString += "CRITICAL_MODE ] ***";
     } else {
       outString += "ERROR ] ***";
     }
@@ -279,7 +282,7 @@ void CECSSingleton::setNewErrorAtExit(
 }
 
 void CECSSingleton::setNewErrorOnIntReturn(
-  const std::string &tag_, int errorNum_, const std::string &description_
+  const std::string &tag_, const int errorNum_, const std::string &description_
   ) const noexcept(false){
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
   if (cecsErrorCodesOnIntReturn == nullptr) {
@@ -355,9 +358,7 @@ void CECSSingleton::verifyEnumsHaveNotChange() noexcept(
 
 // NOLINTNEXTLINE
 void CECSSingleton::handleErrId(const std::string &errId)  noexcept(false) {
-  if (errId.empty()) {
-    throw std::invalid_argument("CECS: handleErrId() failed. errId is empty.");
-  }
+  if (errId.empty()) { throw std::invalid_argument("CECS: handleErrId() failed. errId is empty."); }
   if (errId == "__ERRSTR_CALL__") {
     --numberOfRecordedErrors;
     return;

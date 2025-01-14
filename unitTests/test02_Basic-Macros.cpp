@@ -236,8 +236,10 @@ namespace docTests {
       CHECK_EQ(2, CECSSingleton::getNumberOfErrors());
     }
 
-    TEST_CASE("Checking nested functions errors in CRITICAL mode") {
-      LOG_TEST_CASE("02 Test Basic Macros", "Checking nested functions errors in CRITICAL mode")
+    TEST_CASE("Checking nested functions errors in CRITICAL_MODE mode") {
+      LOG_TEST_CASE(
+          "02 Test Basic Macros", "Checking nested functions errors in CRITICAL_MODE mode"
+      )
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       CECS.resetNumberOfErrors();
@@ -247,7 +249,7 @@ namespace docTests {
       err = test02ErrFunc01(-1);
       CHECK_NE(0, err);
       cout << "CECSSingleton::getNumberOfErrors() = " << CECSSingleton::getNumberOfErrors() << endl;
-      SUBCASE("Try to clean the errors while in CRITICAL mode ... It should throw.") {
+      SUBCASE("Try to clean the errors while in CRITICAL_MODE mode ... It should throw.") {
         try {
           _ECSCLS_
           CHECK_EQ(0, 1);
@@ -284,7 +286,7 @@ namespace docTests {
           CHECK_EQ(1, 1);
           cout << "CECSSingleton::getNumberOfErrors() after _ECSCLS_ = "
                << CECSSingleton::getNumberOfErrors() << endl;
-        } catch (const std::exception &e) { CHECK_EQ(0, 1); }
+        } catch (const std::exception &) { CHECK_EQ(0, 1); }
       }
       _CECS_MODE_CRIT_
     }
@@ -326,7 +328,7 @@ namespace docTests {
           // NOLINTNEXTLINE
           cout << "_CECS_CODE_ATEXIT_ == 0, because we have no more errors now!" << endl;
           CHECK_EQ(0, _CECS_CODE_ATEXIT_);
-        } catch (const std::exception &e) { CHECK_EQ(0, 1); }
+        } catch (const std::exception &) { CHECK_EQ(0, 1); }
       }
       SUBCASE("On error we must have _CECS_CODE_ATEXIT_ = 1 (GENERIC error)") {
         cout << "_CECS_CODE_ATEXIT_ = 1 " << endl; // NOLINT

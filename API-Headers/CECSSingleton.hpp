@@ -1,11 +1,7 @@
 #pragma once
 // NOLINTBEGIN
 #include <CECSMacros.hpp>
-#include <spdlog/common.h>
-#include <spdlog/spdlog.h>
-#include <spdlog/logger.h>
-#include <spdlog/sinks/rotating_file_sink.h>
-#include <spdlog/sinks/stdout_color_sinks.h>
+#include <atomic>
 
 // NOLINTEND
 
@@ -18,11 +14,15 @@ namespace Logger {
 class CECSErrorCodesAtExit;
 class CECSErrorCodesOnIntReturn;
 
+namespace spdlog {
+  class logger;
+}
+
 class CECSSingleton {
 public:
   enum State { NOT_INIT = 0, INIT = 1, INTERNAL_ERROR = 2 };
 
-  enum ErrorMode { CRITICAL = 5, ERROR = 4 };
+  enum ErrorMode { CRITICAL_MODE = 5, ERROR_MODE = 4 };
 
   std::atomic<State> state{State::NOT_INIT};
 

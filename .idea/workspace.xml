@@ -16,7 +16,7 @@
   </component>
   <component name="AnalysisUIOptions">
     <option name="ANALYZE_INJECTED_CODE" value="false" />
-    <option name="SCOPE_TYPE" value="8" />
+    <option name="SCOPE_TYPE" value="3" />
     <option name="CUSTOM_SCOPE_NAME" value="BasicCode" />
   </component>
   <component name="AutoImportSettings">
@@ -26,7 +26,7 @@
     <option name="/Default/RiderDebugger/RiderRestoreDecompile/RestoreDecompileSetting/@EntryValue" value="false" type="bool" />
     <option name="/Default/Housekeeping/GlobalSettingsUpgraded/IsUpgraded/@EntryValue" value="true" type="bool" />
     <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
-    <option name="/Default/Environment/Hierarchy/GeneratedFilesCacheKey/Timestamp/@EntryValue" value="10" type="long" />
+    <option name="/Default/Environment/Hierarchy/GeneratedFilesCacheKey/Timestamp/@EntryValue" value="5" type="long" />
     <option name="/Default/Housekeeping/OptionsDialog/SelectedPageId/@EntryValue" value="CppFormatterOtherPage" type="string" />
     <option name="/Default/Environment/UserInterface/HierarchyView/ViewStyle/@EntryValue" value="SuperTypes" type="string" />
     <option name="/Default/CodeEditing/CppDocumentationComment/AddBriefTag/@EntryValue" value="true" type="bool" />
@@ -46,7 +46,6 @@
     <option name="/Default/CodeEditing/CppCodeGeneration/EmptyCtorsAndDtorsBodyKind/@EntryValue" value="Empty" type="string" />
     <option name="/Default/Housekeeping/RefactoringsMru/RenameRefactoring/DoSearchForTextInStrings/@EntryValue" value="true" type="bool" />
     <option name="/Default/Housekeeping/Search/SearchForLateBound/@EntryValue" value="true" type="bool" />
-    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexRemoved" />
   </component>
   <component name="BookmarksViewState">
     <option name="autoscrollToSource" value="true" />
@@ -69,14 +68,16 @@
   </component>
   <component name="CMakeSettings">
     <configurations>
-      <configuration PROFILE_NAME="Release-TDM-MinGW-64" ENABLED="true" CONFIG_NAME="Release" TOOLCHAIN_NAME="TDM-MinGW-64" GENERATION_OPTIONS="-G &quot;MinGW Makefiles&quot;" />
+      <configuration PROFILE_NAME="Release-TDM-MinGW-64" ENABLED="true" CONFIG_NAME="Release" TOOLCHAIN_NAME="TDM-MinGW-64" GENERATION_OPTIONS="-G &quot;MinGW Makefiles&quot; -DCMAKE_CXX_FLAGS=&quot;-O3 -s -Wall -std=c++11&quot;" />
       <configuration PROFILE_NAME="Debug-Coverage" ENABLED="true" CONFIG_NAME="Debug" TOOLCHAIN_NAME="TDM-MinGW-64" GENERATION_OPTIONS="-G &quot;MinGW Makefiles&quot; -DCMAKE_CXX_OUTPUT_EXTENSION_REPLACE=1 -DCMAKE_CXX_FLAGS=&quot;-g --coverage -ftest-coverage -fprofile-arcs&quot; -DCMAKE_C_FLAGS=&quot;-g --coverage -ftest-coverage -fprofile-arcs&quot; -DCMAKE_EXE_LINKER_FLAGS=&quot;-g --coverage -ftest-coverage -fprofile-arcs&quot; -DCMAKE_SHARED_LINKER_FLAGS=&quot;-g --coverage -ftest-coverage -fprofile-arcs&quot;" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="96ff6be1-98c0-4672-9605-394c8eedfe23" name="Changes" comment="(0.02)[I#16]: Add version tracking and testing support.&#10;&#10;Introduced version definition through `version.h` with integration into CMake. Updated `CECSSingleton` to provide version access methods and added a related test case. Adjusted `.gitignore` for `version.h` and revised project configuration files.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unitTests/test02_Basic-Macros.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/test02_Basic-Macros.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CECSModule.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/CECSModule.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitTests/include/TestsDescriptionLogger.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/include/TestsDescriptionLogger.hpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,27 +95,9 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/API-Headers/CECS.hpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/vasil/CLionProjects/CECS2/API-Headers/CECSSingleton.hpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/vasil/CLionProjects/CECS2/API-Headers/CECSSingleton.hpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/vasil/CLionProjects/CECS2/src/CECSSingleton.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/vasil/CLionProjects/CECS2/src/CECSSingleton.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/unitTests/TestsDescriptionLogger.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/unitTests/include/TestsDescriptionLogger.hpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/vasil/CLionProjects/CECS2/unitTests/test01_Basic-Operations.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/vasil/CLionProjects/CECS2/unitTests/test01_Basic-Operations.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/unitTests/test04_UserErrorCodes-Macros.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="NamedScopeManager">
@@ -167,16 +150,16 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "deletionFromPopupRequiresConfirmation": "false",
-    "git-widget-placeholder": "18-GenericErrorByDefault",
+    "git-widget-placeholder": "20-ProvideMoreMacrosAndFixes",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/vasil/CLionProjects/CECS2/unitTests",
+    "last_opened_file_path": "C:/Git/terablade2001/CECS2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "ml.llm.AIAssistantPromptsLibrary",
+    "settings.editor.selected.configurable": "CMakeSettings",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -199,11 +182,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Doctest.All in CECS_Tests">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="All in CECS_Tests" type="CMakeDoctestTestRunConfigurationType" factoryName="doctest Test" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CECS" TARGET_NAME="CECS_Tests" CONFIG_NAME="Release-TDM-MinGW-64" RUN_TARGET_PROJECT_NAME="CECS" RUN_TARGET_NAME="CECS_Tests" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -228,6 +206,11 @@
       </method>
     </configuration>
     <configuration name="CECS_Tests" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CECS" TARGET_NAME="CECS_Tests" CONFIG_NAME="Release-TDM-MinGW-64" RUN_TARGET_PROJECT_NAME="CECS" RUN_TARGET_NAME="CECS_Tests">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -307,6 +290,9 @@
       <workItem from="1736588176306" duration="4548000" />
       <workItem from="1736596692406" duration="7000" />
       <workItem from="1736598180947" duration="6850000" />
+      <workItem from="1736885291394" duration="338000" />
+      <workItem from="1736885686324" duration="1311000" />
+      <workItem from="1736887015199" duration="881000" />
     </task>
     <task id="LOCAL-00001" summary="(0.18)[I#2]: Enabling CustomFormat.">
       <option name="closed" value="true" />
@@ -355,6 +341,17 @@
     <MESSAGE value="(0.02)[I#16]: Add version tracking and testing support.&#10;&#10;Introduced version definition through `version.h` with integration into CMake. Updated `CECSSingleton` to provide version access methods and added a related test case. Adjusted `.gitignore` for `version.h` and revised project configuration files." />
     <option name="LAST_COMMIT_MESSAGE" value="(0.02)[I#16]: Add version tracking and testing support.&#10;&#10;Introduced version definition through `version.h` with integration into CMake. Updated `CECSSingleton` to provide version access methods and added a related test case. Adjusted `.gitignore` for `version.h` and revised project configuration files." />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/API-Headers/CECSMacros.hpp</url>
+          <line>2</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

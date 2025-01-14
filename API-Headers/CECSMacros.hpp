@@ -18,6 +18,7 @@
 #include <map>
 #include <ostream>
 #include <iomanip>
+#include <cstring>
 
 #ifndef __FNAME__
 #define __FNAMEBSL__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
@@ -33,8 +34,8 @@
 #define CECS_MODULE(moduleName) static CECSModule __ECSOBJ__(moduleName);
 #define CECS_MAIN_MODULE(moduleName, projectName)                                                  \
   static CECSModule __ECSOBJ__(moduleName, projectName);
-#define _CECS_MODE_CRIT_ CECSSingleton::setErrorMode(CECSSingleton::ErrorMode::CRITICAL);
-#define _CECS_MODE_ERR_ CECSSingleton::setErrorMode(CECSSingleton::ErrorMode::ERROR);
+#define _CECS_MODE_CRIT_ CECSSingleton::setErrorMode(CECSSingleton::ErrorMode::CRITICAL_MODE);
+#define _CECS_MODE_ERR_ CECSSingleton::setErrorMode(CECSSingleton::ErrorMode::ERROR_MODE);
 
 #define _ECSCLS_                                                                                   \
   { CECSSingleton::getInstance().resetNumberOfErrorsWithErrorModeCheck(); }
@@ -50,6 +51,10 @@
 #define ILog_(level, args...) __ECSOBJ__.RecLog(__LINE__, level, args);
 #define HLog_(level, args...) __ECSOBJ__.RecLog(level, args);
 #define ILogs_(level, string) __ECSOBJ__.RecLog(level, string);
+#define _ERRINF(ExpR, args...)                                                                     \
+  if ((ExpR)) { ILog_(Logger::L::ERR, args); }
+#define _ERRL(ExpR, args...)                                                                       \
+  if ((ExpR)) { ILog_(Logger::L::ERR, args); }
 
 #define _ERRT(ExpR, args...)                                                                       \
   if ((ExpR)) {                                                                                    \
