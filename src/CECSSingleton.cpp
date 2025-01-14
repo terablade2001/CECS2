@@ -8,7 +8,7 @@ using namespace std;
 static constexpr int CECS_DEFAULT_ERROR_RETURN_VALUE = std::numeric_limits<int>::min();
 
 CECSSingleton                    CECSSingleton::instance{"CECS-Default"};
-atomic<CECSSingleton::ErrorMode> CECSSingleton::errorMode{ErrorMode::CRITICAL};
+atomic<CECSSingleton::ErrorMode> CECSSingleton::errorMode{ErrorMode::CRITICAL_MODE};
 std::recursive_mutex             CECSSingleton::cecsMtx;
 atomic<uint32_t>                 CECSSingleton::numberOfRecordedErrors{0};
 shared_ptr<spdlog::logger>       CECSSingleton::logger{nullptr};
@@ -202,7 +202,7 @@ void CECSSingleton::resetNumberOfErrors(
 
 void CECSSingleton::resetNumberOfErrorsWithErrorModeCheck(const uint32_t reduceValue) const noexcept(false){
   std::lock_guard<std::recursive_mutex> lock(cecsMtx);
-  if (errorMode.load() == ErrorMode::CRITICAL) {
+  if (errorMode.load() == ErrorMode::CRITICAL_MODE) {
     throw std::runtime_error(
         "CECS: Modifying Number of Errors in CRITICAL mode is prohibited! Use ERROR mode instead."
     );
@@ -219,8 +219,8 @@ void CECSSingleton::setErrorMode(
   if (errorMode == mode_) return;
   if (logger != nullptr) {
     string outString{"CECS: *** ErrorMode Set to [ "};
-    if (mode_ == ErrorMode::CRITICAL) {
-      outString += "CRITICAL ] ***";
+    if (mode_ == ErrorMode::CRITICAL_MODE) {
+      outString += "CRITICAL_MODE ] ***";
     } else {
       outString += "ERROR ] ***";
     }

@@ -236,8 +236,8 @@ namespace docTests {
       CHECK_EQ(2, CECSSingleton::getNumberOfErrors());
     }
 
-    TEST_CASE("Checking nested functions errors in CRITICAL mode") {
-      LOG_TEST_CASE("02 Test Basic Macros", "Checking nested functions errors in CRITICAL mode")
+    TEST_CASE("Checking nested functions errors in CRITICAL_MODE mode") {
+      LOG_TEST_CASE("02 Test Basic Macros", "Checking nested functions errors in CRITICAL_MODE mode")
       auto &CECS = CECSSingleton::getInstance();
       CHECK_EQ(CECS.state, CECSSingleton::State::INIT);
       CECS.resetNumberOfErrors();
@@ -247,7 +247,7 @@ namespace docTests {
       err = test02ErrFunc01(-1);
       CHECK_NE(0, err);
       cout << "CECSSingleton::getNumberOfErrors() = " << CECSSingleton::getNumberOfErrors() << endl;
-      SUBCASE("Try to clean the errors while in CRITICAL mode ... It should throw.") {
+      SUBCASE("Try to clean the errors while in CRITICAL_MODE mode ... It should throw.") {
         try {
           _ECSCLS_
           CHECK_EQ(0, 1);

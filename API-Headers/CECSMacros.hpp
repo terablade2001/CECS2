@@ -33,8 +33,8 @@
 #define CECS_MODULE(moduleName) static CECSModule __ECSOBJ__(moduleName);
 #define CECS_MAIN_MODULE(moduleName, projectName)                                                  \
   static CECSModule __ECSOBJ__(moduleName, projectName);
-#define _CECS_MODE_CRIT_ CECSSingleton::setErrorMode(CECSSingleton::ErrorMode::CRITICAL);
-#define _CECS_MODE_ERR_ CECSSingleton::setErrorMode(CECSSingleton::ErrorMode::ERROR);
+#define _CECS_MODE_CRIT_ CECSSingleton::setErrorMode(CECSSingleton::ErrorMode::CRITICAL_MODE);
+#define _CECS_MODE_ERR_ CECSSingleton::setErrorMode(CECSSingleton::ErrorMode::ERROR_MODE);
 
 #define _ECSCLS_                                                                                   \
   { CECSSingleton::getInstance().resetNumberOfErrorsWithErrorModeCheck(); }

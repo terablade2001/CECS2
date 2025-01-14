@@ -75,11 +75,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="96ff6be1-98c0-4672-9605-394c8eedfe23" name="Changes" comment="(0.02)[I#16]: Add version tracking and testing support.&#10;&#10;Introduced version definition through `version.h` with integration into CMake. Updated `CECSSingleton` to provide version access methods and added a related test case. Adjusted `.gitignore` for `version.h` and revised project configuration files.">
-      <change beforePath="$PROJECT_DIR$/src/CECSModule.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/CECSModule.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API-Headers/CECSMacros.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/API-Headers/CECSMacros.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API-Headers/CECSSingleton.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/API-Headers/CECSSingleton.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CECSSingleton.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/CECSSingleton.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unitTests/test02_Basic-Macros.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/test02_Basic-Macros.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unitTests/test03_MsgLogging-Macros.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/test03_MsgLogging-Macros.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unitTests/test04_UserErrorCodes-Macros.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/test04_UserErrorCodes-Macros.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,26 +97,9 @@
     <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/API-Headers/CECS.hpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/vasil/CLionProjects/CECS2/API-Headers/CECSSingleton.hpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/vasil/CLionProjects/CECS2/API-Headers/CECSSingleton.hpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/vasil/CLionProjects/CECS2/src/CECSSingleton.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/vasil/CLionProjects/CECS2/src/CECSSingleton.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/unitTests/TestsDescriptionLogger.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/unitTests/include/TestsDescriptionLogger.hpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/vasil/CLionProjects/CECS2/unitTests/test01_Basic-Operations.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/vasil/CLionProjects/CECS2/unitTests/test01_Basic-Operations.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/unitTests/test04_UserErrorCodes-Macros.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="NamedScopeManager">
@@ -311,7 +293,7 @@
       <workItem from="1736596692406" duration="7000" />
       <workItem from="1736598180947" duration="6850000" />
       <workItem from="1736885291394" duration="338000" />
-      <workItem from="1736885686324" duration="384000" />
+      <workItem from="1736885686324" duration="759000" />
     </task>
     <task id="LOCAL-00001" summary="(0.18)[I#2]: Enabling CustomFormat.">
       <option name="closed" value="true" />
