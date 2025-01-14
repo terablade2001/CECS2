@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.30)
 
 project(CECS)
-project(${PROJECT_NAME} VERSION 0.1.0)
+project(${PROJECT_NAME} VERSION 0.1.1)
 configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/API-Headers/version.h.in"
   "${CMAKE_CURRENT_SOURCE_DIR}/version.h"
